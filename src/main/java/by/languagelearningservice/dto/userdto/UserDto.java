@@ -20,7 +20,6 @@ public class UserDto {
     @Email(message = "Email некорректный")
     private String email;
 
-//    @NotBlank(message = "Пожалуйста заполните поле")
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
     private String password;
 
@@ -30,4 +29,6 @@ public class UserDto {
 
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
     private String name;
+
+    private String learning;
 }

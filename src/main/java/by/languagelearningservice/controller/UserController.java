@@ -29,8 +29,9 @@ public class UserController {
     private ModelMapper mapper;
 
     @GetMapping("/registration")
-    public String reg(Model model) {
+    public String reg(Model model,String learning) {
         model.addAttribute("newUser", new User());
+        model.addAttribute("language", learning);
         return "/user/registration";
     }
 
@@ -82,5 +83,9 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("/choose-your-language")
+    public String chooseYourLanguage(){
+        return "/user/choose-your-language";
+    }
 
 }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Какой язык тебе бы хотелось изучать ?</title>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row g-2">
+        <h1 class="text-center">Я хочу изучать...</h1>
+    </div>
+    <div class="row justify-content-around">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start p-3">
+            <div class="col">
+                <a href="/user/registration?learning=en">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-en.svg}" alt="английский">
+                </span>
+                    <p class="text-center">английский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=es">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-es.svg}" alt="испанский">
+                </span>
+                    <p class="text-center">испанский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=ja">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-ja.svg}" alt="японский">
+                </span>
+                    <p class="text-center">японский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=fr">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-fr.svg}" alt="французский">
+                </span>
+                    <p class="text-center">французский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=de">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-de.svg}" alt="немецкий">
+                </span>
+                    <p class="text-center">немецкий</p>
+                </a>
+            </div>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row g-2">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start p-3">
+            <div class="col">
+                <a href="/user/registration?learning=it">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-it.svg}" alt="итальянский">
+                </span>
+                    <p class="text-center">итальянский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=pt">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-pt.svg}" alt="португальский">
+                </span>
+                    <p class="text-center">португальский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=ru">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-ru.svg}" alt="русский">
+                </span>
+                    <p class="text-center">русский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=zh">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-zh.svg}" alt="китайский">
+                </span>
+                    <p class="text-center">китайский</p>
+                </a>
+            </div>
+            <div class="col">
+                <a href="/user/registration?learning=ar">
+                <span class="icon icon--circle flag-text__icon">
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-ar.svg}" alt="арабский">
+                </span>
+                    <p class="text-center">арабский</p>
+                </a>
+            </div>
+        </div>
+    </div><!-- /.row -->
+
+    <div class="row g-2">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start p-3">
+            <div class="col-sm-6">
+                <a href="/user/registration?learning=tr">
+                <span>
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-tr.svg}" alt="турецкий">
+                </span>
+                    <p class="text-center">турецкий</p>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <a href="/user/registration?learning=pl">
+                <span>
+                    <img class="rounded mx-auto d-block" th:src="@{/icons/flags/icon_flag-pl.svg}" alt="польский">
+                </span>
+                    <p class="text-center">польский</p>
+                </a>
+            </div>
+        </div>
+    </div><!-- /.row -->
+</div>
+</body>
+</html>
