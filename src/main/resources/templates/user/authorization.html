@@ -22,13 +22,22 @@
                 <div class="col-sm-6">
                     <br>
                     <h3 class="header-title">Авторизация</h3>
-                    <form class="login-form">
+                    <form class="login-form" th:action="@{/user/authorization}" th:object="${authUser}" th:method="post">
                         <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Email">
+                            <span th:text="${emailError}"></span>
+                            <span th:if="${notFoundEmail}==true">
+                                <span>email не найден</span>
+                            </span>
+                            <input type="email" class="form-control" th:classappend="${emailError} ? is-invalid : ''"
+                                   th:field="*{email}" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="Password" class="form-control" placeholder="Пароль">
-<!--                            <a href="#!" class="forgot-password">Forgot Password?</a>-->
+                            <span th:text="${passwordError}"></span>
+                            <span th:if="${notFoundPassword}==true">
+                                <span>пароль совпадает</span>
+                            </span>
+                            <input type="password" class="form-control" th:classappend="${passwordError} ? is-invalid : ''"
+                                   th:field="*{password}" placeholder="Пароль">
                         </div>
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <button class="btn btn-primary btn-block">Войти</button>
