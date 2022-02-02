@@ -29,7 +29,7 @@ public class UserController {
     private ModelMapper mapper;
 
     @GetMapping("/registration")
-    public String reg(Model model,String learning) {
+    public String reg(Model model, String learning) {
         model.addAttribute("newUser", new User());
         model.addAttribute("language", learning);
         return "/user/registration";
@@ -68,6 +68,7 @@ public class UserController {
             }
             if (userDto.getPassword().equals(user.getPassword())) {
                 httpSession.setAttribute("authUser", user);
+//                userService.test(user);
                 return "redirect:/";
             } else {
                 model.addAttribute("notFoundPassword", true);
@@ -84,7 +85,7 @@ public class UserController {
     }
 
     @GetMapping("/choose-your-language")
-    public String chooseYourLanguage(){
+    public String chooseYourLanguage() {
         return "/user/choose-your-language";
     }
 
