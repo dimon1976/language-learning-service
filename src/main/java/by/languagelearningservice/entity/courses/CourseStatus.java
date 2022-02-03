@@ -4,7 +4,8 @@ public enum CourseStatus {
     DRAFT("Черновик"),
     PRIVATE("Приватный"),
     INACTIVE("Неактивный"),
-    OPEN("Открытый");
+    OPEN("Открытый"),
+    ALL("Все");
 
 
     private String translation;

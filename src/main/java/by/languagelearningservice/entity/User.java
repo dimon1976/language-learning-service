@@ -21,7 +21,11 @@ public class User {
     private long id;
     private String email;
     private String password;
-    private String name;
+    private String firstname;
+    private String lastname;
+
+    private String description;
+    private String shortDescription;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<Course> courses;
@@ -31,6 +35,8 @@ public class User {
 
     @Column(updatable = false)
     private LocalDateTime dateCreating;
+
+    private Boolean teacher;
 
     @PrePersist
     protected void onCreate() {

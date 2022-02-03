@@ -1,13 +1,14 @@
-package by.languagelearningservice.entity.courses;
+package by.languagelearningservice.dto.userdto;
 
 import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
+import by.languagelearningservice.entity.courses.CourseStatus;
+import by.languagelearningservice.entity.courses.Level;
+import by.languagelearningservice.entity.courses.Module;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,46 +16,21 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Course {
+@Component
+public class CourseDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
-    @Length(min = 0,max = 55)
     private String nameCourse;
     private String description;
     private String shortDescription;
     private Boolean published;
     private String requirements;
     private String TheTargetAudience;
-
-    @Column(updatable = false)
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;
-
-
-    @ManyToOne
     private User teacher;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<User> users;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Module> modules;
-
-    @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
-
-    @Enumerated(EnumType.STRING)
     private Language language;
-
-    @Enumerated(EnumType.STRING)
     private Level level;
-
-    @PrePersist
-    protected void onCreate() {
-        this.dateCreating = LocalDateTime.now();
-    }
 }

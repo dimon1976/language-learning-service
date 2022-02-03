@@ -25,9 +25,9 @@
                     </div>
                 </a>
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <!--                    <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>-->
-                    <!--                    <li><a href="#" class="nav-link px-2 link-dark">Inventory</a></li>-->
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 px-2">
+<!--                                        <li><a href="#" class="nav-link px-2 link-secondary">Overview</a></li>-->
+                                        <li><a href="/teach/courses" class="nav-link px-2 link-dark">Преподавание</a></li>
                     <!--                    <li><a href="#" class="nav-link px-2 link-dark">Customers</a></li>-->
                     <!--                    <li><a href="#" class="nav-link px-2 link-dark">Products</a></li>-->
 
@@ -45,16 +45,20 @@
                         <li><a class="dropdown-item" href="/user/logout">Выйти</a></li>
                     </ul>
                 </div>
-                <div class="col-md-3 text-end" th:if="${session.authUser==null}">
+                <div class="col-md-5 text-end" th:if="${session.authUser==null}">
                     <a class="btn btn-outline-primary me-2" href="/user/choose-your-language"
                        role="button">Зарегистрироваться</a>
+                    <a class="btn btn-outline-primary me-2" href="/user/registration?learning=TC"
+                       role="button">Стать преподавателем</a>
                     <a class="btn btn-primary" href="/user/authorization" role="button">Войти</a>
                 </div>
             </div>
         </div>
-    </header>
 
-    <div class="b-example-divider"></div>
+    </header>
+    <div class="row"><div class="b-example-divider"></div></div>
+
+
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
             integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"

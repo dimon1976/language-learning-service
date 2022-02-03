@@ -23,7 +23,7 @@ public class Module {
     private String description;
     private LocalDateTime dateLaunch;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons;
 
     @ManyToOne

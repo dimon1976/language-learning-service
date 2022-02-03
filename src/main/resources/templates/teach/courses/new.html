@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row">
+        <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+            <a href="/teach/courses/new"
+               class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                <button type="button" class="btn btn-outline-secondary"><span>+ Новый курс</span></button>
+            </a>
+            <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                    <a href="/teach/courses">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#home-collapse" aria-expanded="true">
+                        Курсы
+                    </button></a>
+                    <div class="collapse show" id="home-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">Уроки</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        Классы
+                    </button>
+                    <div class="collapse" id="dashboard-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">Мои классы</a></li>
+                            <li><a href="#" class="link-dark rounded">Мои учащиеся</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="border-top my-3"></li>
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                            data-bs-target="#orders-collapse" aria-expanded="false">
+                        Профиль
+                    </button>
+                    <div class="collapse" id="orders-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="#" class="link-dark rounded">New</a></li>
+                            <li><a href="#" class="link-dark rounded">Processed</a></li>
+                            <li><a href="#" class="link-dark rounded">Shipped</a></li>
+                            <li><a href="#" class="link-dark rounded">Returned</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--        Форма добавления нового курса-->
+        <div class="col-sm-9">
+            <form class="login-form" th:action="@{/teach/courses/new}" th:object="${courseNull}" th:method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Название курса</label>
+                    <input type="text" class="form-control" th:field="${courseNull.nameCourse}" id="exampleInputEmail1"
+                           aria-describedby="emailHelp" required="" maxlength="64" size="64" minlength="3">
+                    <div id="emailHelp" class="form-text">Максимум 64 символа</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Описание</label>
+                    <textarea type="text" th:field="${courseNull.description}" class="form-control"
+                              id="exampleInputPassword1" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="shortDescription" class="form-label">Краткое описание</label>
+                    <textarea type="text" class="form-control" th:field="${courseNull.shortDescription}"
+                              id="shortDescription" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+
+        </div>
+        <!--        Форма добавления нового курса-->
+
+    </div>
+
+</div>
+</body>
+</html>

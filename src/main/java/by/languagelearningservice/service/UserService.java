@@ -20,8 +20,14 @@ public class UserService {
             throw new RuntimeException(String.format("User %s already exist! ", user.getEmail()));
         } else {
             log.info(String.format("User {} save", user.getEmail()));
-            userRepository.save(user);
-            return user;
+            if (user.getTeacher() == null) {
+                user.setTeacher(false);
+                userRepository.save(user);
+                return user;
+            } else {
+                userRepository.save(user);
+                return user;
+            }
         }
     }
 

@@ -31,7 +31,13 @@ public class UserDto {
     private String password2;
 
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
-    private String name;
+    private String firstname;
+    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    private String lastname;
+
+    private String description;
+    private String shortDescription;
+    private Boolean teacher;
 
     @Enumerated(EnumType.STRING)
     private Language learning;
