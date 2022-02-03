@@ -27,17 +27,23 @@
                         <div class="form-group">
                             <span th:text="${emailError}"></span>
                             <input type="email" class="form-control" th:classappend="${emailError} ? is-invalid : ''"
-                                   th:field="*{email}" placeholder="Email">
+                                   th:field="*{email}" placeholder="Твой электронный адрес">
+                        </div>
+                        <div class="form-group">
+                            <span th:text="${nameError}"></span>
+                            <input type="text" class="form-control" th:classappend="${nameError} ? is-invalid : ''"
+                                   th:field="*{name}" placeholder="Твоё имя">
                         </div>
                         <div class="form-group">
                             <span th:text="${passwordError}"></span>
                             <input type="password" class="form-control"
                                    th:classappend="${passwordError} ? is-invalid : ''"
-                                   th:field="*{password}" placeholder="Пароль">
+                                   th:field="*{password}" placeholder="Создать пароль">
                         </div>
-
                         <div class="d-grid gap-2 col-6 mx-auto">
-                            <button class="btn btn-primary btn-block">Зарегистрироваться</button>
+                            <button class="btn btn-primary btn-block" name="learning" th:value="${language}">
+                                Зарегистрироваться
+                            </button>
                         </div>
                         <div class="form-group">
                             <div class="text-center">Зарегистрированы? <a href="/user/authorization">Войти</a></div>

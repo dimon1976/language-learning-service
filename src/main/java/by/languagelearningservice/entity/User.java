@@ -19,5 +19,7 @@ public class User {
     private String email;
     private String password;
     private String name;
-    private String learning;
+
+    @Enumerated(EnumType.STRING)
+    private Language learning;
 }

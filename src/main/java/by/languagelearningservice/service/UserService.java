@@ -1,6 +1,7 @@
 package by.languagelearningservice.service;
 
 
+import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,12 @@ public class UserService {
     public User findByEmail(String email) {
         log.info(String.format("Request email {} exist", email));
         return userRepository.findByEmail(email).orElse(null);
+    }
 
+    public void test(User user) {
+        Language.EN.setLevel("Начальный");
+        user.setLearning(Language.EN);
+        System.out.println(user.getLearning().getTranslation() + " " + user.getLearning().getLevel());
     }
 
 }
