@@ -1,7 +1,5 @@
 package by.languagelearningservice.entity;
 
-import java.util.List;
-
 public enum Language {
     AR("Арабский"),
     SP("Испанский"),
