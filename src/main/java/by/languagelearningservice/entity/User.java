@@ -1,10 +1,13 @@
 package by.languagelearningservice.entity;
 
+import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +23,17 @@ public class User {
     private String password;
     private String name;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Course> courses;
+
     @Enumerated(EnumType.STRING)
     private Language learning;
+
+    @Column(updatable = false)
+    private LocalDateTime dateCreating;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dateCreating = LocalDateTime.now();
+    }
 }
