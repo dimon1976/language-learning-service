@@ -68,7 +68,6 @@ public class UserController {
             }
             if (userDto.getPassword().equals(user.getPassword())) {
                 httpSession.setAttribute("authUser", user);
-//                userService.test(user);
                 return "redirect:/";
             } else {
                 model.addAttribute("notFoundPassword", true);

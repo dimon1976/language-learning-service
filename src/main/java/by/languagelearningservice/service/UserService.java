@@ -36,10 +36,4 @@ public class UserService {
         return userRepository.findByEmail(email).orElse(null);
     }
 
-    public void test(User user) {
-        Language.EN.setLevel("Начальный");
-        user.setLearning(Language.EN);
-        System.out.println(user.getLearning().getTranslation() + " " + user.getLearning().getLevel());
-    }
-
 }
