@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -25,11 +25,14 @@ public class ModuleController {
     private ModelMapper mapper;
 
     @PostMapping("/add{id}")
-    public String edit(@ModelAttribute("newModule") Module module, Long id, Model model) {
+    public String add(@ModelAttribute("newModule") Module module, Long id, Model model) {
         Optional<Course> course = courseService.findById(id);
+        List<Course> allListCourse = courseService.getAllListCourse();
         course.get().getModules().add(module);
+        courseService.save(course.get());
+        model.addAttribute("coursesList",allListCourse);
         model.addAttribute("course",course);
-        return "teach/courses/modules/edit";
+        return "teach/courses/index";
     }
 
 }

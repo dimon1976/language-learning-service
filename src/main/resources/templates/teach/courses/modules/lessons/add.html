@@ -58,6 +58,26 @@
         </div>
         <!--        Новый модуль-->
         <div class="col-sm-9 p-3">
+            <!--        Форма добавления уроков-->
+            <div class="col-sm-9 p-3">
+                <form class="login-form" th:action="@{/teach/courses/{courseid}/modules/{moduleid}/lessons/add(moduleid=${module.id},courseid=${course.get().id})}" th:object="${newLesson}"
+                      th:method="post">
+                    <div class="mb-3">
+                        <label for="newLesson.name" class="form-label">Добавить урок</label>
+                        <input type="text" class="form-control" th:field="${newLesson.name}" id="newLesson.name"
+                               aria-describedby="emailHelp" required="" maxlength="64" size="64" minlength="3">
+                        <div id="emailHelp" class="form-text">Максимум 64 символа</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newModule.name.label" class="form-label">Описание</label>
+                        <input type="text" class="form-control" th:field="${newLesson.description}" id="newModule.name.label"
+                               aria-describedby="newModule.name" required="" maxlength="64" size="64" minlength="3">
+                        <div id="newModule.name" class="form-text">Максимум 64 символа</div>
+                    </div>
+                    <button class="btn btn-primary"> Добавить</button>
+                </form>
+            </div>
+            <!--        Форма добавления уроков-->
         </div>
     </div>
 </div>

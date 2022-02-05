@@ -41,7 +41,6 @@ public class CourseController {
     public String newCourse(@ModelAttribute("courseNull") Course course, BindingResult bindingResult, Model model) {
         Course c = courseService.save(mapper.map(course, Course.class));
         List<Course> coursesList = courseService.getAllListCourse();
-        model.addAttribute("course", null);
         model.addAttribute("coursesList", coursesList);
         return "teach/courses/index";
     }
@@ -50,7 +49,7 @@ public class CourseController {
     public String filterByStatus(CourseStatus status, Model model) {
         List<Course> coursesList = courseService.getListCourseByStatus(status).orElse(new ArrayList<>());
         model.addAttribute("coursesList", coursesList);
-        return "/teach/courses/index";
+        return "teach/courses/index";
     }
 
     @GetMapping("/{id}/syllabus")
@@ -68,7 +67,6 @@ public class CourseController {
             model.addAttribute("course", course);
             return "teach/courses/modules/add";
         }
-//        model.addAttribute("newModule", module);
         model.addAttribute("course", course);
         return "teach/courses/edit";
     }

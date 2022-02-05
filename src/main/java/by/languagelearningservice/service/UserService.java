@@ -1,7 +1,6 @@
 package by.languagelearningservice.service;
 
 
-import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

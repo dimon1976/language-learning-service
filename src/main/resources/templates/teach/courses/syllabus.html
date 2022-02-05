@@ -52,41 +52,49 @@
                 </li>
             </ul>
         </div>
+
         <div class="col-sm-9">
             <!--                Описание курса-->
             <div class="row p-2">
                 <div class="card" th:if="${course.get.modules.isEmpty()}">
-                    <div class="card-header">
-                        Описание
-                    </div>
+                    <div class="card-header">Описание</div>
                     <div class="card-body">
                         <h5 class="card-title">Программа курса</h5>
                         <p class="card-text">В курсе пока что нет ни одного урока.
                             Добавьте свой первый урок в редакторе содержания курса.</p>
-                        <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id})}" class="btn btn-primary">Редактировать содержание</a>
+                        <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id})}" class="btn btn-primary">Редактировать
+                            содержание</a>
                     </div>
                 </div>
+
                 <div class="row g-3" th:if="${!course.get.modules.isEmpty()}">
                     <div class="card">
-                        <div class="card-header" th:text="${course}"></div>
-                        <!--                        <div class="card-body">-->
-                        <!--                            <a th:href="@{/teach/courses/{id}/syllabus(id=${course.id})}"><h5 class="card-title" th:text="${course.nameCourse}"></h5></a>-->
-                        <!--                            <p class="card-text" th:text="${course.description}"></p>-->
-                        <!--                            <a href="#" class="card-link">Описание</a>-->
-                        <!--                            <a href="#" class="card-link">Содержание</a>-->
-                        <!--                        </div>-->
-                        <!--                        <span class="card-footer text-muted"-->
-                        <!--                              th:text="${course.dateCreating}">-->
-                        <!--                        </span>-->
+                        <h5 class="card-header" th:text="${'Программа курса - '+course.get().nameCourse}"></h5>
+                        <div class="col-auto">
+                            <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id},module='edit')}">
+                                <button class="btn btn-primary btn-sm m-1">Редактировать содержание</button>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                        <div class="card-body" th:each="module:${course.get().modules}">
+                            <h5 class="card-title" th:text="${module.name}"></h5>
+                            <p class="card-text" th:text="${module.description}"></p>
+                            <div class="card-body m-1" th:each="lesson:${module.getLessons()}">
+                                <h5 class="card-title" th:text="${lesson.name}"></h5>
+                            </div>
+                            <div class="col-auto">
+                                <a th:href="@{/teach/courses/{courseid}/modules/{moduleid}/lessons/add(moduleid=${module.id},courseid=${course.get().id})}">
+                                    <button class="btn btn-primary btn-sm m-1">Добавить уроки</button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!--                Описание курса-->
             </div>
-            <!--                Описание курса-->
-
         </div>
+
     </div>
-
-
 </div>
 </body>
 </html>

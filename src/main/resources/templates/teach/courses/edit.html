@@ -58,7 +58,7 @@
         </div>
         <!--        Новый модуль-->
         <div class="col-sm-9 p-3">
-            <div class="card text-center">
+            <div class="card text-center"th:if="${course.get().modules.isEmpty()}">
                 <div class="card-header">
                     Описание
                 </div>
@@ -72,6 +72,12 @@
             </div>
         </div>
         <!--        Новый модуль-->
+
+        <!--       Редактирование курса-->
+        <div class="col-sm-9 p-3">
+
+        </div>
+        <!--       Редактирование курса-->
     </div>
 </div>
 </body>
