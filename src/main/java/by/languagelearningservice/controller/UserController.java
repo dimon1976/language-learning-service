@@ -1,6 +1,6 @@
 package by.languagelearningservice.controller;
 
-import by.languagelearningservice.dto.userdto.UserDto;
+import by.languagelearningservice.dto.UserDto;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -46,7 +46,6 @@ public class UserController {
             return "redirect:/user/authorization";
         }
     }
-
 
     @GetMapping("/authorization")
     public String auth(Model model) {

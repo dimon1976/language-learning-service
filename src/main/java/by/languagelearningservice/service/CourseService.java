@@ -2,13 +2,11 @@ package by.languagelearningservice.service;
 
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
-import by.languagelearningservice.entity.courses.Module;
 import by.languagelearningservice.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +16,8 @@ public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private UserService userService;
 
     public Course save(Course course) {
         course.setCourseStatus(CourseStatus.DRAFT);

@@ -58,7 +58,7 @@
         </div>
         <!--        Форма добавления нового курса-->
         <div class="col-sm-9">
-            <form class="login-form" th:action="@{/teach/courses/new}" th:object="${courseNull}" th:method="post">
+            <form class="login-form" th:action="@{/teach/courses/new(user=${session.authUser.id})}" th:object="${courseNull}" th:method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Название курса</label>
                     <input type="text" class="form-control" th:field="${courseNull.nameCourse}" id="exampleInputEmail1"
@@ -75,7 +75,7 @@
                     <textarea type="text" class="form-control" th:field="${courseNull.shortDescription}"
                               id="shortDescription" rows="2"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Сохранить</button>
+                <button type="submit"  class="btn btn-primary">Сохранить</button>
             </form>
 
         </div>

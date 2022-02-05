@@ -1,10 +1,13 @@
 package by.languagelearningservice.controller;
 
 
+import by.languagelearningservice.dto.CourseDto;
+import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
 import by.languagelearningservice.entity.courses.Module;
 import by.languagelearningservice.service.CourseService;
+import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +26,8 @@ import java.util.Optional;
 public class CourseController {
     @Autowired
     private CourseService courseService;
+    @Autowired
+    private UserService userService;
     @Autowired
     private ModelMapper mapper;
 
@@ -37,11 +44,20 @@ public class CourseController {
         return "teach/courses/new";
     }
 
-    @PostMapping("/new")
-    public String newCourse(@ModelAttribute("courseNull") Course course, BindingResult bindingResult, Model model) {
-        Course c = courseService.save(mapper.map(course, Course.class));
-        List<Course> coursesList = courseService.getAllListCourse();
-        model.addAttribute("coursesList", coursesList);
+    @PostMapping("/new{user}")
+    public String newCourse(@ModelAttribute("courseNull") @Valid CourseDto courseDto, BindingResult result, Model model, Long user) {
+        if (result.hasErrors()) {
+            Map<String, String> errorsMap = ExController.getErrors(result);
+            model.mergeAttributes(errorsMap);
+            return "teach/courses/index";
+        } else {
+            Course c = courseService.save(mapper.map(courseDto, Course.class));
+            User u = userService.getUserById(user);
+            u.getCourses().add(c);
+            userService.update(u);
+            List<Course> coursesList = courseService.getAllListCourse();
+            model.addAttribute("coursesList", coursesList);
+        }
         return "teach/courses/index";
     }
 
