@@ -26,6 +26,7 @@ public class CourseDto {
     private String description;
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 130")
     private String shortDescription;
+    private Long teacherId;
 
     private Boolean published;
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")

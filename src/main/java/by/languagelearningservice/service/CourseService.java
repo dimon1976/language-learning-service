@@ -1,14 +1,16 @@
 package by.languagelearningservice.service;
 
+import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
 import by.languagelearningservice.repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -24,20 +26,27 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    public List<Course> getAllListCourse() {
-        return courseRepository.findAll();
+    public Page<Course> getAllListCourse(Pageable pageable) {
+        return courseRepository.findAll(pageable);
     }
 
-    public Optional<List<Course>> getListCourseByStatus(CourseStatus status) {
+    public List<Course> getListCourseByStatus(CourseStatus status, Pageable pageable) {
         if (status.toString().equals("ALL")) {
-            return courseRepository.findAllBy();
+            return courseRepository.findAllBy(pageable).get();
         } else {
-            Optional<List<Course>> byCourseStatus = courseRepository.findByCourseStatus(status);
+            List<Course> byCourseStatus = courseRepository.findByCourseStatus(status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
             return byCourseStatus;
         }
     }
 
-    public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
+    public Course findById(Long id) {
+        log.info(String.format("Request Course findById %s exist", id));
+        Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", id)));
+        return course;
     }
+
+    public Course update(Course course) {
+        return courseRepository.save(course);
+    }
+
 }

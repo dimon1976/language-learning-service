@@ -54,40 +54,55 @@
         </div>
 
         <div class="col-sm-9">
-            <!--                Описание курса-->
+            <!--                Описание курса если пусто-->
             <div class="row p-2">
-                <div class="card" th:if="${course.get.modules.isEmpty()}">
+                <div class="card" th:if="${course.modules.isEmpty()}">
                     <div class="card-header">Описание</div>
                     <div class="card-body">
                         <h5 class="card-title">Программа курса</h5>
                         <p class="card-text">В курсе пока что нет ни одного урока.
                             Добавьте свой первый урок в редакторе содержания курса.</p>
-                        <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id})}" class="btn btn-primary">Редактировать
+                        <a th:href="@{/teach/courses/{id}/edit(id=${course.id})}" class="btn btn-primary">Редактировать
                             содержание</a>
                     </div>
                 </div>
+                <!--                Описание курса если пусто-->
 
-                <div class="row g-3" th:if="${!course.get.modules.isEmpty()}">
+
+                <div class="row g-3" th:if="${!course.modules.isEmpty()}">
+                    <h5 class="text-center" th:text="${'Программа курса - '+course.nameCourse}"></h5>
+                    <div class="text-center">
+                        <a th:href="@{/teach/courses/{id}/edit(id=${course.id},module='edit')}">
+                            <button class="btn btn-outline-secondary">Редактировать содержание</button>
+                        </a>
+                    </div>
                     <div class="card">
-                        <h5 class="card-header" th:text="${'Программа курса - '+course.get().nameCourse}"></h5>
-                        <div class="col-auto">
-                            <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id},module='edit')}">
-                                <button class="btn btn-primary btn-sm m-1">Редактировать содержание</button>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                        <div class="card-body" th:each="module:${course.get().modules}">
-                            <h5 class="card-title" th:text="${module.name}"></h5>
-                            <p class="card-text" th:text="${module.description}"></p>
-                            <div class="card-body m-1" th:each="lesson:${module.getLessons()}">
-                                <h5 class="card-title" th:text="${lesson.name}"></h5>
+                        <!--                        Модули-->
+                        <!-- Bootstrap 5 -->
+                        <div class="accordion" id="menu" th:each="modules,counts1:${course.modules}">
+                            <!-- item-# -->
+                            <div class="accordion-item mt-1">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" th:data-bs-toggle="collapse"
+                                            th:data-bs-target="${'#item-'+modules.id}" data-bs-parent="#menu"
+                                            th:text="${counts1.count}+${'. '+modules.name}">
+                                    </button>
+                                </h2>
+                                <div th:id="${'item-'+modules.id}" class="accordion-collapse collapse"
+                                     data-bs-parent="#menu">
+                                    <th:block th:each="lessons,counts2:${modules.lessons}">
+                                        <div class="accordion-body"
+                                             th:text="${counts2.count}+${'. '+lessons.name}"></div>
+                                    </th:block>
+
+                                    <a th:href="@{/teach/courses/{courseid}/modules/{moduleid}/lessons/add(moduleid=${modules.id},courseid=${course.id})}"
+                                       class="btn btn-outline-secondary m-2">Добавить уроки</a>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <a th:href="@{/teach/courses/{courseid}/modules/{moduleid}/lessons/add(moduleid=${module.id},courseid=${course.get().id})}">
-                                    <button class="btn btn-primary btn-sm m-1">Добавить уроки</button>
-                                </a>
-                            </div>
                         </div>
+                        <br>
+                        <!--                        Модули-->
+
                     </div>
                 </div>
                 <!--                Описание курса-->

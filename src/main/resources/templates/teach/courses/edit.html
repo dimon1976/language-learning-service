@@ -56,19 +56,51 @@
                 </li>
             </ul>
         </div>
+
         <!--        Новый модуль-->
         <div class="col-sm-9 p-3">
-            <div class="card text-center"th:if="${course.get().modules.isEmpty()}">
+            <div class="card text-center" th:if="${course.modules.isEmpty()}">
                 <div class="card-header">
                     Описание
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${course.get().nameCourse}"></h5>
+                    <h5 class="card-title" th:text="${course.nameCourse}"></h5>
                     <p class="card-text">В курсе пока нет ни одного урока.
                         Создайте первый модуль, чтобы добавить уроки</p>
-                    <a th:href="@{/teach/courses/{id}/edit(id=${course.get().id},module='add')}"
+                    <a th:href="@{/teach/courses/{id}/edit(id=${course.id},module='add')}"
                        class="btn btn-primary">+ Новый модуль</a>
                 </div>
+            </div>
+            <div class="row" th:unless="${course.modules.isEmpty()}">
+                <div class="header">
+                    <h4 th:text="${'Программа курса: '+course.nameCourse}"></h4>
+                </div>
+
+                <!--                        Модули-->
+                <div class="accordion" id="menu" th:each="modules,counts1:${course.modules}">
+                    <!-- item-# -->
+                    <div class="accordion-item mt-1">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" th:data-bs-toggle="collapse"
+                                    th:data-bs-target="${'#item-'+modules.id}" data-bs-parent="#menu"
+                                    th:text="${counts1.count}+${'. '+modules.name}">
+                            </button>
+                        </h2>
+                        <div th:id="${'item-'+modules.id}" class="accordion-collapse collapse " data-bs-parent="#menu"
+                             th:each="lessons,counts2:${modules.lessons}">
+                            <div class="accordion-body" th:text="${counts2.count}+${'. '+lessons.name}"></div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!--                        Модули-->
+                <div class="card text-center">
+                    <div class="card-body">
+                        <a th:href="@{/teach/courses/{id}/edit(id=${course.id},module='add')}"
+                           class="btn btn-primary">Добавить модуль</a>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!--        Новый модуль-->

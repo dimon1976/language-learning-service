@@ -80,17 +80,17 @@
 
             <!--                Список курсов-->
             <div class="row p-2" th:if="${coursesList!=null}">
-                <div class="row g-3" th:each="course:${coursesList}">
+                <div class="row g-1" th:each="course:${coursesList}">
                     <div class="card">
-                        <div class="card-header" th:text="${course.dateCreating}"></div>
+<!--                        <div class="card-header" th:text="${{course.dateCreating}}"></div>-->
                         <div class="card-body">
                             <a th:href="@{/teach/courses/{id}/syllabus(id=${course.id})}"><h5 class="card-title" th:text="${course.nameCourse}"></h5></a>
                             <p class="card-text" th:text="${course.description}"></p>
-                            <a href="#" class="card-link">Описание</a>
-                            <a href="#" class="card-link">Содержание</a>
+                            <a th:href="@{/teach/courses/{id}/info(id=${course.id})}" class="card-link">Описание</a>
+                            <a th:href="@{/teach/courses/{id}/syllabus(id=${course.id})}" class="card-link">Содержание</a>
                         </div>
                         <span class="card-footer text-muted"
-                              th:text="${course.dateCreating}">
+                              th:text="${{course.dateCreating}}">
                         </span>
                     </div>
                 </div>

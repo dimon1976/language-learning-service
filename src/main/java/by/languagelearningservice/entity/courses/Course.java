@@ -22,11 +22,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Length(min = 0,max = 55)
     private String nameCourse;
     private String description;
     private String shortDescription;
-    private Boolean published;
     private String requirements;
     private String TheTargetAudience;
 
@@ -34,9 +32,7 @@ public class Course {
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;
 
-
-    @ManyToOne
-    private User teacher;
+    private Long teacherId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<User> users;

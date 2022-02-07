@@ -61,19 +61,21 @@
 
         <!--        Форма добавления нового модуля-->
         <div class="col-sm-9 p-3">
-            <form class="login-form" th:action="@{/teach/courses/modules/add(id=${course.get().id})}" th:object="${newModule}"
+            <form class="login-form" th:action="@{/teach/courses/modules/add(id=${course.id})}" th:object="${newModule}"
                   th:method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Новый модуль</label>
+                    <span th:text="${nameError}"></span>
                     <input type="text" class="form-control" th:field="${newModule.name}" id="exampleInputEmail1"
-                           aria-describedby="emailHelp" required="" maxlength="64" size="64" minlength="3">
-                    <div id="emailHelp" class="form-text">Максимум 64 символа</div>
+                           aria-describedby="nameError" required="" maxlength="64" size="64" minlength="3" th:classappend="${nameError} ? is-invalid : ''">
+                    <div id="nameError" class="form-text">Максимум 64 символа</div>
                 </div>
                 <div class="mb-3">
                     <label for="newModule.name.label" class="form-label">Описание</label>
+                    <span th:text="${descriptionError}"></span>
                     <input type="text" class="form-control" th:field="${newModule.description}" id="newModule.name.label"
-                           aria-describedby="newModule.name" required="" maxlength="64" size="64" minlength="3">
-                    <div id="newModule.name" class="form-text">Максимум 64 символа</div>
+                           aria-describedby="descriptionError" required="" maxlength="255" size="255" minlength="3" th:classappend="${descriptionError} ? is-invalid : ''">
+                    <div id="descriptionError" class="form-text">Максимум 255 символа</div>
                 </div>
                 <button class="btn btn-primary"> Добавить</button>
             </form>

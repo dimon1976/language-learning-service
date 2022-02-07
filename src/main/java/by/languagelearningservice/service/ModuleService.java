@@ -16,6 +16,7 @@ public class ModuleService {
     private ModuleRepository moduleRepository;
 
     public Module getByModuleId(long id){
+        log.info(String.format("Request module by id %s ", id));
         Optional<Module> module = moduleRepository.findById(id);
         if(module.isPresent()){
             return module.get();
@@ -23,7 +24,8 @@ public class ModuleService {
         return null;
     }
 
-    public void save(Module module){
-        moduleRepository.save(module);
+    public Module save(Module module){
+        log.info(String.format("Request Module %s save", module.getId()));
+       return moduleRepository.save(module);
     }
 }

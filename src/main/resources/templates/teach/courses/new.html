@@ -58,22 +58,27 @@
         </div>
         <!--        Форма добавления нового курса-->
         <div class="col-sm-9">
-            <form class="login-form" th:action="@{/teach/courses/new(user=${session.authUser.id})}" th:object="${courseNull}" th:method="post">
+            <form class="login-form" th:action="@{/teach/courses/new(teacherId=${session.authUser.id})}" th:object="${courseNull}" th:method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Название курса</label>
+                    <span th:text="${nameCourseError}"></span>
                     <input type="text" class="form-control" th:field="${courseNull.nameCourse}" id="exampleInputEmail1"
-                           aria-describedby="emailHelp" required="" maxlength="64" size="64" minlength="3">
-                    <div id="emailHelp" class="form-text">Максимум 64 символа</div>
+                           aria-describedby="emailHelp1" maxlength="64" size="64" minlength="3" th:classappend="${nameCourseError} ? is-invalid : ''">
+                    <div id="emailHelp1" class="form-text">Максимум 64 символа</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Описание</label>
+                    <span th:text="${descriptionError}"></span>
                     <textarea type="text" th:field="${courseNull.description}" class="form-control"
-                              id="exampleInputPassword1" rows="3"></textarea>
+                              id="exampleInputPassword1" aria-describedby="emailHelp2" rows="3" maxlength="255" size="255" minlength="3" th:classappend="${descriptionError} ? is-invalid : ''"></textarea>
+                    <div id="emailHelp2" class="form-text">Максимум 255 символов</div>
                 </div>
                 <div class="mb-3">
                     <label for="shortDescription" class="form-label">Краткое описание</label>
+                    <span th:text="${shortDescriptionError}"></span>
                     <textarea type="text" class="form-control" th:field="${courseNull.shortDescription}"
-                              id="shortDescription" rows="2"></textarea>
+                              id="shortDescription" aria-describedby="emailHelp3" rows="2" maxlength="130" size="130" minlength="3" th:classappend="${shortDescriptionError} ? is-invalid : ''"></textarea>
+                    <div id="emailHelp3" class="form-text">Максимум 130 символов</div>
                 </div>
                 <button type="submit"  class="btn btn-primary">Сохранить</button>
             </form>

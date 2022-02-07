@@ -22,30 +22,27 @@ public class UserService {
             log.info(String.format("User {} save", user.getEmail()));
             if (user.getTeacher() == null) {
                 user.setTeacher(false);
-                userRepository.save(user);
-                return user;
+                return userRepository.save(user);
             } else {
-                userRepository.save(user);
-                return user;
+                return userRepository.save(user);
             }
         }
     }
 
     public User findByEmail(String email) {
-        log.info(String.format("Request User findByEmail {} exist", email));
-        return userRepository.findByEmail(email).orElse(null);
+        log.info(String.format("Request User findByEmail %s exist", email));
+        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException(String.format("User byEmail %s not found", email)));
     }
 
     public User getUserById(long id) {
-        log.info(String.format("Request User findById {} exist", id));
-        return userRepository.findById(id).orElse(null);
+        log.info(String.format("Request User findById %s exist", id));
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("User byId %s not found", id)));
     }
 
     public User update(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             log.info(String.format("User {} update", user.getEmail()));
-            userRepository.save(user);
-            return user;
+            return userRepository.save(user);
         } else {
             throw new RuntimeException(String.format("User email %s not found! ", user.getEmail()));
         }

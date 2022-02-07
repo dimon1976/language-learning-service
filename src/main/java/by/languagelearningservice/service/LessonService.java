@@ -29,4 +29,8 @@ public class LessonService {
         }
         return null;
     }
+
+    public Lesson save(Lesson lesson){
+        return lessonRepository.save(lesson);
+    }
 }
