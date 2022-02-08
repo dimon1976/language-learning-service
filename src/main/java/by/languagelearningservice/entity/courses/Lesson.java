@@ -18,6 +18,7 @@ public class Lesson {
     private long lessonId;
 
     private String name;
+    @Lob
     private String description;
     private Boolean activeComment;
 

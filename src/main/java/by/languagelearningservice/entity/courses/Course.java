@@ -23,7 +23,11 @@ public class Course {
     private long courseId;
 
     private String nameCourse;
+
+    @Lob
     private String description;
+
+    @Column(length = 2048)
     private String shortDescription;
     private String requirements;
     private String TheTargetAudience;

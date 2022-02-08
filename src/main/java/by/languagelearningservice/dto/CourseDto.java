@@ -23,16 +23,16 @@ public class CourseDto {
     private long courseId;
     @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String nameCourse;
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3,message = "Значение меньше 3-х")
     private String description;
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 130")
+    @Length(min = 3, max = 1024,message = "Значение меньше 3-х либо больше 1024")
     private String shortDescription;
     private Long teacherId;
 
     private Boolean published;
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3,message = "Значение меньше 3-х")
     private String requirements;
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3,message = "Значение меньше 3-х")
     private String TheTargetAudience;
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;

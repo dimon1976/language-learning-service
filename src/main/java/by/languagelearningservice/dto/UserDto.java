@@ -26,16 +26,16 @@ public class UserDto {
     @Email(message = "Email некорректный")
     private String email;
 
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String password;
 
     @Transient
     @Length(message = "Подтвержденный пароль не совпадает")
     private String password2;
 
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String firstname;
-    @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
+    @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String lastname;
     private List<Course> courses;
 

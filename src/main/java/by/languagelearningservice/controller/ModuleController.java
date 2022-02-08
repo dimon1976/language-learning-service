@@ -58,10 +58,11 @@ public class ModuleController {
                 course.getModules().add(module);
                 courseService.update(course);
                 User userById = userService.getUserById(course.getTeacherId());
-                model.addAttribute("coursesList", courseService.getAllListCourse(pageable));
+                model.addAttribute("coursesList",
+                        courseService.getTeacherListCourse(course.getTeacherId(), pageable));
                 model.addAttribute("teacher", userById);
                 model.addAttribute("course", course);
-                return "teach/courses/index";
+                return "teach/courses/modules/add";
             }
         }
     }

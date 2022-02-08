@@ -1,6 +1,5 @@
 package by.languagelearningservice.service;
 
-import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
 import by.languagelearningservice.repository.CourseRepository;
@@ -30,13 +29,9 @@ public class CourseService {
         return courseRepository.findAll(pageable);
     }
 
-    public List<Course> getListCourseByStatus(CourseStatus status, Pageable pageable) {
-        if (status.toString().equals("ALL")) {
-            return courseRepository.findAllBy(pageable).get();
-        } else {
-            List<Course> byCourseStatus = courseRepository.findByCourseStatus(status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
-            return byCourseStatus;
-        }
+    public List<Course> getTeacherListCourse(Long userId, Pageable pageable) {
+        List<Course> allCourseByUserId = courseRepository.findAllByTeacherId(userId, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", userId)));
+        return allCourseByUserId;
     }
 
     public Course findById(Long id) {
@@ -49,4 +44,12 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
+    public List<Course> getTeacherListCourseByStatus(CourseStatus status, Pageable pageable, Long userId) {
+        if (status.toString().equals("ALL")) {
+            return courseRepository.findAllByTeacherId(userId, pageable).get();
+        } else {
+            List<Course> byCourseTeacherId = courseRepository.findAllByTeacherIdAndCourseStatus(userId, status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
+            return byCourseTeacherId;
+        }
+    }
 }

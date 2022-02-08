@@ -20,6 +20,7 @@ public class Module {
     private long moduleId;
 
     private String name;
+    @Column(length = 2048)
     private String description;
     private LocalDateTime dateLaunch;
 

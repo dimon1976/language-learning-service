@@ -10,7 +10,6 @@ import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,9 +41,8 @@ public class CourseController {
                         @RequestParam Optional<Integer> size,
                         @RequestParam Optional<String> sortBy) {
         Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
-        Page<Course> coursesList = courseService.getAllListCourse(pageable);
         User userById = userService.getUserById(userId);
-        model.addAttribute("coursesList", coursesList);
+        model.addAttribute("coursesList", courseService.getTeacherListCourse(userId, pageable));
         model.addAttribute("teacher", userById);
         return "/teach/courses/index";
     }
@@ -71,7 +69,10 @@ public class CourseController {
 
 
     @GetMapping("/new")
-    public String newCourse(Model model) {
+    public String newCourse(Model model,
+                            Long teacherId) {
+        User userById = userService.getUserById(teacherId);
+        model.addAttribute("teacher", userById);
         model.addAttribute("courseNull", new Course());
         return "teach/courses/new";
     }
@@ -95,22 +96,24 @@ public class CourseController {
                 User userById = userService.getUserById(teacherId);
                 userById.getCourses().add(c);
                 userService.update(userById);
-                model.addAttribute("coursesList", courseService.getAllListCourse(pageable));
+                model.addAttribute("coursesList", courseService.getTeacherListCourse(teacherId, pageable));
                 model.addAttribute("teacher", userById);
             }
             return "teach/courses/index";
         }
     }
 
-    //исправить для определенного юзера
-    @GetMapping("/filter")
+    @GetMapping("/filter{teacherId}")
     public String filterByStatus(CourseStatus status, Model model,
+                                 @PathVariable("teacherId") Long teacherId,
                                  @RequestParam Optional<Integer> page,
                                  @RequestParam Optional<Integer> size,
                                  @RequestParam Optional<String> sortBy) {
         Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
         {
-            List<Course> coursesList = courseService.getListCourseByStatus(status, pageable);
+            List<Course> coursesList = courseService.getTeacherListCourseByStatus(status, pageable, teacherId);
+            User userById = userService.getUserById(teacherId);
+            model.addAttribute("teacher", userById);
             model.addAttribute("coursesList", coursesList);
             return "teach/courses/index";
         }
