@@ -109,7 +109,10 @@ public class CourseController {
                                  @RequestParam Optional<Integer> page,
                                  @RequestParam Optional<Integer> size,
                                  @RequestParam Optional<String> sortBy) {
-        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
+        Pageable pageable = PageRequest.of(page.orElse(0),
+                size.orElse(5),
+                Sort.Direction.DESC,
+                sortBy.orElse("courseId"));
         {
             List<Course> coursesList = courseService.getTeacherListCourseByStatus(status, pageable, teacherId);
             User userById = userService.getUserById(teacherId);
@@ -150,5 +153,26 @@ public class CourseController {
         model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
         return "teach/courses/edit";
+    }
+
+    @GetMapping("{courseId}/delete{teacherId}")
+    public String delete(@PathVariable("courseId") Long courseId,
+                         Long teacherId,
+                         @RequestParam Optional<Integer> page,
+                         @RequestParam Optional<Integer> size,
+                         @RequestParam Optional<String> sortBy,
+                         Model model) {
+        Pageable pageable = PageRequest.of(page.orElse(0),
+                size.orElse(5),
+                Sort.Direction.DESC,
+                sortBy.orElse("courseId"));
+        {
+            courseService.deleteById(courseId);
+            User userById = userService.getUserById(teacherId);
+            List<Course> coursesList = courseService.getTeacherListCourse(teacherId, pageable);
+            model.addAttribute("teacher", userById);
+            model.addAttribute("coursesList", coursesList);
+            return "teach/courses/index";
+        }
     }
 }

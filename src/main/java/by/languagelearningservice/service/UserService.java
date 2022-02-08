@@ -19,7 +19,7 @@ public class UserService {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             throw new RuntimeException(String.format("User %s already exist! ", user.getEmail()));
         } else {
-            log.info(String.format("User {} save", user.getEmail()));
+            log.info(String.format("User %s save", user.getEmail()));
             if (user.getTeacher() == null) {
                 user.setTeacher(false);
                 return userRepository.save(user);
@@ -41,7 +41,7 @@ public class UserService {
 
     public User update(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            log.info(String.format("User {} update", user.getEmail()));
+            log.info(String.format("User %s update", user.getEmail()));
             return userRepository.save(user);
         } else {
             throw new RuntimeException(String.format("User email %s not found! ", user.getEmail()));

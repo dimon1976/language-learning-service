@@ -2,12 +2,16 @@ package by.languagelearningservice.service;
 
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
+import by.languagelearningservice.entity.courses.Module;
 import by.languagelearningservice.repository.CourseRepository;
+import by.languagelearningservice.repository.LessonRepository;
+import by.languagelearningservice.repository.ModuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +19,8 @@ import java.util.List;
 @Service
 public class CourseService {
 
+    @Autowired
+    private ModuleService moduleService;
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -51,5 +57,16 @@ public class CourseService {
             List<Course> byCourseTeacherId = courseRepository.findAllByTeacherIdAndCourseStatus(userId, status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
             return byCourseTeacherId;
         }
+    }
+
+    @Transactional
+    public Boolean deleteById(Long courseId) {
+        log.info("Request delete {}", courseId);
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", courseId)));
+        for (Module m : course.getModules()) {
+            moduleService.deleteById(m.getModuleId());
+        }
+        courseRepository.deleteById(courseId);
+        return true;
     }
 }

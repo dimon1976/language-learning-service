@@ -24,10 +24,13 @@ public class User {
     private String firstname;
     private String lastname;
 
+    @Column(length = 2048)
     private String description;
+
+    @Column(length = 1028)
     private String shortDescription;
 
-    @OneToMany(fetch = FetchType.EAGER,orphanRemoval = true,cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Enumerated(EnumType.STRING)

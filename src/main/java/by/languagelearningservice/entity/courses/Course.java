@@ -5,10 +5,8 @@ import by.languagelearningservice.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,10 +36,14 @@ public class Course {
 
     private Long teacherId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User users;
 
-    @OneToMany
+    @JoinTable(name = "users_courses",
+            joinColumns = @JoinColumn(name = "courses_course_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_user_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH,targetEntity = Course.class)
+    private List<User> user;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Module> modules;
 
     @Enumerated(EnumType.STRING)

@@ -27,7 +27,7 @@ public class Module {
     @OneToMany
     private List<Lesson> lessons;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Course courses;
 
 }

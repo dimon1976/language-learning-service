@@ -128,12 +128,12 @@
                                     class="card-title"
                                     th:text="${course.nameCourse}"></h5>
                             </a>
-                            <p class="card-text" th:text="${#strings.substring(course.description,0,255)+' ...'}"></p>
+                            <!--                            <p class="card-text" th:text="${#strings.substring(course.description,0,255)+' ...'}"></p>-->
                             <a th:href="@{/teach/courses/{courseId}/info(courseId=${course.courseId})}"
                                class="card-link">Описание</a>
                             <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${course.courseId})}"
                                class="card-link">Содержание</a>
-                            <a th:href="@{/teach/courses/{courseId}/delete(courseId=${course.courseId})}"
+                            <a th:href="@{/teach/courses/{courseId}/delete(teacherId=${teacher.userId} ,courseId=${course.courseId})}"
                                class="card-link">Удалить!!!</a>
                         </div>
                         <span class="card-footer text-muted"

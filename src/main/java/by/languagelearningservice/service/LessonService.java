@@ -8,6 +8,7 @@ import by.languagelearningservice.repository.ModuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ public class LessonService {
     private ModuleRepository moduleRepository;
 
     public List<Lesson> findByModuleId(long id) {
+        log.info(String.format("Get Lesson list by %s module", id));
         Optional<Module> module = moduleRepository.findById(id);
         if (module.isPresent()) {
             return module.get().getLessons();
@@ -30,7 +32,14 @@ public class LessonService {
         return null;
     }
 
-    public Lesson save(Lesson lesson){
+    public Lesson save(Lesson lesson) {
+        log.info(String.format("Lesson %s update", lesson));
         return lessonRepository.save(lesson);
+    }
+
+    @Transactional
+    public void deleteById(Long lessonId) {
+        log.info(String.format("Lesson %s delete",lessonId));
+        lessonRepository.deleteById(lessonId);
     }
 }
