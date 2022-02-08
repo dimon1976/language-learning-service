@@ -13,12 +13,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @Service
 public class CourseService {
-
+    @Autowired
+    private LessonService lessonService;
     @Autowired
     private ModuleService moduleService;
     @Autowired
@@ -60,13 +62,14 @@ public class CourseService {
     }
 
     @Transactional
-    public Boolean deleteById(Long courseId) {
+    public void deleteById(Long courseId) {
         log.info("Request delete {}", courseId);
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", courseId)));
-        for (Module m : course.getModules()) {
-            moduleService.deleteById(m.getModuleId());
-        }
-        courseRepository.deleteById(courseId);
-        return true;
+        Collection<Module> moduleList = course.getModules();
+//        for (Module m : moduleList) {
+//            moduleService.deleteById(m.getModuleId());
+//        }
+//        courseRepository.deleteById(courseId);
+        courseRepository.deleteAllByCourseId(courseId);
     }
 }

@@ -124,7 +124,7 @@
                                 <h4>Описание курса</h4>
                                 <p th:if="${course.description.isEmpty()}">Поле не заполнено. Пожалуйста, заполните его
                                     в редакторе курса.</p>
-                                <p th:unless="${course.description.isEmpty()}" th:text="${course.description}"></p>
+                                <p th:unless="${course.description.isEmpty()}" th:text="${#strings.abbreviate(course.description,1024)}"></p>
                             </div>
                         </div>
                         <div class="col-sm-4 align-items-md-stretch">

@@ -42,7 +42,8 @@ public class CourseController {
                         @RequestParam Optional<String> sortBy) {
         Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
         User userById = userService.getUserById(userId);
-        model.addAttribute("coursesList", courseService.getTeacherListCourse(userId, pageable));
+        List<Course> coursesList = courseService.getTeacherListCourse(userId, pageable);
+        model.addAttribute("coursesListIndex", coursesList);
         model.addAttribute("teacher", userById);
         return "/teach/courses/index";
     }
@@ -85,7 +86,10 @@ public class CourseController {
                             @RequestParam Optional<Integer> page,
                             @RequestParam Optional<Integer> size,
                             @RequestParam Optional<String> sortBy) {
-        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
+        Pageable pageable = PageRequest.of(page.orElse(0),
+                size.orElse(5),
+                Sort.Direction.DESC,
+                sortBy.orElse("courseId"));
         {
             if (result.hasErrors()) {
                 Map<String, String> errorsMap = ExController.getErrors(result);
@@ -96,7 +100,8 @@ public class CourseController {
                 User userById = userService.getUserById(teacherId);
                 userById.getCourses().add(c);
                 userService.update(userById);
-                model.addAttribute("coursesList", courseService.getTeacherListCourse(teacherId, pageable));
+                List<Course> coursesList = courseService.getTeacherListCourse(teacherId, pageable);
+                model.addAttribute("coursesListIndex", coursesList);
                 model.addAttribute("teacher", userById);
             }
             return "teach/courses/index";
@@ -117,7 +122,7 @@ public class CourseController {
             List<Course> coursesList = courseService.getTeacherListCourseByStatus(status, pageable, teacherId);
             User userById = userService.getUserById(teacherId);
             model.addAttribute("teacher", userById);
-            model.addAttribute("coursesList", coursesList);
+            model.addAttribute("coursesListIndex", coursesList);
             return "teach/courses/index";
         }
     }
@@ -171,7 +176,7 @@ public class CourseController {
             User userById = userService.getUserById(teacherId);
             List<Course> coursesList = courseService.getTeacherListCourse(teacherId, pageable);
             model.addAttribute("teacher", userById);
-            model.addAttribute("coursesList", coursesList);
+            model.addAttribute("coursesListIndex", coursesList);
             return "teach/courses/index";
         }
     }

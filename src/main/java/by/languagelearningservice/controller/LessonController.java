@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +38,7 @@ public class LessonController {
 
     @GetMapping("/{courseId}/modules/{moduleId}/lessons/add")
     public String addLesson(@PathVariable("courseId") Long courseId, @PathVariable("moduleId") Long moduleId, Model model) {
-        List<Lesson> lessonList = lessonService.findByModuleId(moduleId);
+        Collection<Lesson> lessonList = lessonService.findByModuleId(moduleId);
         Module module = moduleService.getByModuleId(moduleId);
         Course course = courseService.findById(courseId);
         User userById = userService.getUserById(course.getTeacherId());

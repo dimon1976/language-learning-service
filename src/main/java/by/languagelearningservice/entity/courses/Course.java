@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -19,32 +20,28 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long courseId;
-
+    @Column(length = 1024)
     private String nameCourse;
-
     @Lob
     private String description;
-
     @Column(length = 2048)
     private String shortDescription;
     private String requirements;
     private String TheTargetAudience;
-
     @Column(updatable = false)
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;
-
     private Long teacherId;
-
-
     @JoinTable(name = "users_courses",
-            joinColumns = @JoinColumn(name = "courses_course_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_user_id"))
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH,targetEntity = Course.class)
-    private List<User> user;
+            joinColumns = @JoinColumn(name = "course_id",
+                    referencedColumnName = "courseId"),
+            inverseJoinColumns = @JoinColumn(name = "user_id",
+                    referencedColumnName = "userId"))
+    @ManyToMany
+    private Collection<User> user;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Module> modules;
+    private Collection<Module> modules;
 
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;

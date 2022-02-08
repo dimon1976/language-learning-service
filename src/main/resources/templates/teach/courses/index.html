@@ -120,24 +120,24 @@
             </div>
 
             <!--                Список курсов-->
-            <div class="row p-2" th:if="${coursesList!=null}">
-                <div class="row g-1" th:each="course:${coursesList}">
+            <div class="row p-2" th:if="${coursesListIndex!=null}">
+                <div class="row g-1" th:each="courses:${coursesListIndex}">
                     <div class="card">
                         <div class="card-body">
-                            <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${course.courseId})}"><h5
+                            <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${courses.courseId})}"><h5
                                     class="card-title"
-                                    th:text="${course.nameCourse}"></h5>
+                                    th:text="${courses.nameCourse}"></h5>
                             </a>
-                            <!--                            <p class="card-text" th:text="${#strings.substring(course.description,0,255)+' ...'}"></p>-->
-                            <a th:href="@{/teach/courses/{courseId}/info(courseId=${course.courseId})}"
+                            <p class="card-text" th:text="${#strings.abbreviate(courses.description,255)}"></p>
+                            <a th:href="@{/teach/courses/{courseId}/info(courseId=${courses.courseId})}"
                                class="card-link">Описание</a>
-                            <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${course.courseId})}"
+                            <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${courses.courseId})}"
                                class="card-link">Содержание</a>
-                            <a th:href="@{/teach/courses/{courseId}/delete(teacherId=${teacher.userId} ,courseId=${course.courseId})}"
+                            <a th:href="@{/teach/courses/{courseId}/delete(teacherId=${teacher.userId} ,courseId=${courses.courseId})}"
                                class="card-link">Удалить!!!</a>
                         </div>
                         <span class="card-footer text-muted"
-                              th:text="${{course.dateCreating}}">
+                              th:text="${{courses.dateCreating}}">
                         </span>
                     </div>
                 </div>

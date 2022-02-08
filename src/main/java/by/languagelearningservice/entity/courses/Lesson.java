@@ -22,6 +22,7 @@ public class Lesson {
     private String description;
     private Boolean activeComment;
 
-    @ManyToOne
-    private Module module;
+//    @ManyToOne
+//    private Module module;
+
 }

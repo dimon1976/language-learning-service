@@ -62,7 +62,7 @@ public class ModuleController {
                         courseService.getTeacherListCourse(course.getTeacherId(), pageable));
                 model.addAttribute("teacher", userById);
                 model.addAttribute("course", course);
-                return "teach/courses/modules/add";
+                return "teach/courses/edit";
             }
         }
     }

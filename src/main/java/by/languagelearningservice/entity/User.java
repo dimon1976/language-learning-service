@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -29,9 +30,12 @@ public class User {
 
     @Column(length = 1028)
     private String shortDescription;
-
-    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Course> courses;
+    @JoinTable(name = "users_courses",
+    joinColumns = @JoinColumn(name = "user_id",
+    referencedColumnName = "userId"),
+    inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "courseId"))
+    @ManyToMany
+    private Collection<Course> courses;
 
     @Enumerated(EnumType.STRING)
     private Language learning;

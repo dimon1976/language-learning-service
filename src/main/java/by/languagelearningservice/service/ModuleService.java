@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Slf4j
@@ -34,7 +35,8 @@ public class ModuleService {
     public void deleteById(Long moduleId) {
         log.info(String.format("Module %s delete", moduleId));
         Module module = getByModuleId(moduleId);
-        for (Lesson lesson : module.getLessons()) {
+        Collection<Lesson> lessonCollection = module.getLessons();
+        for (Lesson lesson : lessonCollection) {
             lessonService.deleteById(lesson.getLessonId());
         }
     }

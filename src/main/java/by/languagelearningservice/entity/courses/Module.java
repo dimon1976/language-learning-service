@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -25,9 +25,8 @@ public class Module {
     private LocalDateTime dateLaunch;
 
     @OneToMany
-    private List<Lesson> lessons;
+    private Collection<Lesson> lessons;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Course courses;
-
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    private Course courses;
 }

@@ -12,11 +12,11 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
     Optional<List<Course>> findByCourseStatus(CourseStatus status, Pageable pageable);
 
-    Optional<List<Course>> findAllByTeacherId(Long teacherId,Pageable pageable);
+    Optional<List<Course>> findAllByTeacherId(Long teacherId, Pageable pageable);
 
+    void deleteAllByCourseId(Long courseId);
 
-
-    Optional<List<Course>> findAllByTeacherIdAndCourseStatus(Long teacherId,CourseStatus status,Pageable pageable);
+    Optional<List<Course>> findAllByTeacherIdAndCourseStatus(Long teacherId, CourseStatus status, Pageable pageable);
 
 
 }
