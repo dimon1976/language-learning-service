@@ -21,6 +21,7 @@ import java.util.List;
 @Component
 public class UserDto {
 
+    private long userId;
     @NotBlank(message = "Пожалуйста заполните поле")
     @Email(message = "Email некорректный")
     private String email;

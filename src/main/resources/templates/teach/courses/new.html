@@ -58,7 +58,7 @@
         </div>
         <!--        Форма добавления нового курса-->
         <div class="col-sm-9">
-            <form class="login-form" th:action="@{/teach/courses/new(teacherId=${session.authUser.id})}" th:object="${courseNull}" th:method="post">
+            <form class="login-form" th:action="@{/teach/courses/new(teacherId=${session.authUser.userId})}" th:object="${courseNull}" th:method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Название курса</label>
                     <span th:text="${nameCourseError}"></span>

@@ -18,14 +18,11 @@ public class ModuleService {
     public Module getByModuleId(long id){
         log.info(String.format("Request module by id %s ", id));
         Optional<Module> module = moduleRepository.findById(id);
-        if(module.isPresent()){
-            return module.get();
-        }
-        return null;
+        return module.orElse(null);
     }
 
     public Module save(Module module){
-        log.info(String.format("Request Module %s save", module.getId()));
+        log.info(String.format("Request Module %s save", module.getModuleId()));
        return moduleRepository.save(module);
     }
 }

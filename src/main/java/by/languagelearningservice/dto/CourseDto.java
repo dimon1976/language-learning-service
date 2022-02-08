@@ -20,6 +20,7 @@ import java.util.List;
 @Component
 public class CourseDto {
 
+    private long courseId;
     @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String nameCourse;
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")
@@ -35,8 +36,7 @@ public class CourseDto {
     private String TheTargetAudience;
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;
-    private User user;
-    private List<User> users;
+    private User users;
     private List<Module> modules;
     private CourseStatus courseStatus;
     private Language language;

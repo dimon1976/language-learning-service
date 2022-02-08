@@ -17,13 +17,13 @@ public class Module {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long moduleId;
 
     private String name;
     private String description;
     private LocalDateTime dateLaunch;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<Lesson> lessons;
 
     @ManyToOne

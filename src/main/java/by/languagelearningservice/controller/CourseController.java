@@ -37,17 +37,20 @@ public class CourseController {
 
     @GetMapping
     public String index(Model model,
+                        @RequestParam("userId") Long userId,
                         @RequestParam Optional<Integer> page,
                         @RequestParam Optional<Integer> size,
                         @RequestParam Optional<String> sortBy) {
-        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("id"));
+        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
         Page<Course> coursesList = courseService.getAllListCourse(pageable);
+        User userById = userService.getUserById(userId);
         model.addAttribute("coursesList", coursesList);
+        model.addAttribute("teacher", userById);
         return "/teach/courses/index";
     }
 
-    @GetMapping("{id}/info")
-    public String info(@PathVariable("id") Long courseId, Model model) {
+    @GetMapping("{courseId}/info")
+    public String info(@PathVariable("courseId") Long courseId, Model model) {
         Course course = courseService.findById(courseId);
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
@@ -55,12 +58,14 @@ public class CourseController {
         return "teach/courses/info";
     }
 
-    @GetMapping("{id}/setting")
-    public String status(@PathVariable("id") Long courseId, CourseStatus status, Model model) {
+    @GetMapping("{courseId}/setting")
+    public String status(@PathVariable("courseId") Long courseId, CourseStatus status, Model model) {
         Course course = courseService.findById(courseId);
+        User userById = userService.getUserById(course.getTeacherId());
         course.setCourseStatus(status);
         courseService.update(course);
         model.addAttribute("course", course);
+        model.addAttribute("teacher", userById);
         return "teach/courses/info";
     }
 
@@ -72,11 +77,14 @@ public class CourseController {
     }
 
     @PostMapping("/new{teacherId}")
-    public String newCourse(@ModelAttribute("courseNull") @Valid CourseDto courseDto, BindingResult result, Model model, Long teacherId,
+    public String newCourse(@ModelAttribute("courseNull") @Valid CourseDto courseDto,
+                            BindingResult result,
+                            Model model,
+                            Long teacherId,
                             @RequestParam Optional<Integer> page,
                             @RequestParam Optional<Integer> size,
                             @RequestParam Optional<String> sortBy) {
-        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("id"));
+        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
         {
             if (result.hasErrors()) {
                 Map<String, String> errorsMap = ExController.getErrors(result);
@@ -84,22 +92,23 @@ public class CourseController {
                 return "teach/courses/new";
             } else {
                 Course c = courseService.save(mapper.map(courseDto, Course.class));
-                User u = userService.getUserById(teacherId);
-                u.getCourses().add(c);
-                userService.update(u);
+                User userById = userService.getUserById(teacherId);
+                userById.getCourses().add(c);
+                userService.update(userById);
                 model.addAttribute("coursesList", courseService.getAllListCourse(pageable));
-                model.addAttribute("user", u);
+                model.addAttribute("teacher", userById);
             }
             return "teach/courses/index";
         }
     }
 
+    //исправить для определенного юзера
     @GetMapping("/filter")
     public String filterByStatus(CourseStatus status, Model model,
                                  @RequestParam Optional<Integer> page,
                                  @RequestParam Optional<Integer> size,
                                  @RequestParam Optional<String> sortBy) {
-        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("id"));
+        Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
         {
             List<Course> coursesList = courseService.getListCourseByStatus(status, pageable);
             model.addAttribute("coursesList", coursesList);
@@ -107,8 +116,8 @@ public class CourseController {
         }
     }
 
-    @GetMapping("/{id}/promo")
-    public String promo(@PathVariable ("id") Long courseId, Model model){
+    @GetMapping("{courseId}/promo")
+    public String promo(@PathVariable("courseId") Long courseId, Model model) {
         Course course = courseService.findById(courseId);
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
@@ -116,22 +125,27 @@ public class CourseController {
         return "teach/courses/promo";
     }
 
-    @GetMapping("/{id}/syllabus")
-    public String syllabus(@PathVariable("id") Long courseId, Model model) {
+    @GetMapping("{courseId}/syllabus")
+    public String syllabus(@PathVariable("courseId") Long courseId, Model model) {
         Course course = courseService.findById(courseId);
+        User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("teacher", userById);
         model.addAttribute("course", course);
         return "teach/courses/syllabus";
     }
 
-    @GetMapping("/{id}/edit{module}")
-    public String edit(@PathVariable("id") Long courseId, String module, Model model) {
+    @GetMapping("{courseId}/edit{module}")
+    public String edit(@PathVariable("courseId") Long courseId, String module, Model model) {
         Course course = courseService.findById(courseId);
+        User userById = userService.getUserById(course.getTeacherId());
         if (module != null && module.equals("add")) {
             model.addAttribute("newModule", new ModuleDto());
             model.addAttribute("course", course);
+            model.addAttribute("teacher", userById);
             return "teach/courses/modules/add";
         }
         model.addAttribute("course", course);
+        model.addAttribute("teacher", userById);
         return "teach/courses/edit";
     }
 }

@@ -18,7 +18,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long userId;
     private String email;
     private String password;
     private String firstname;
@@ -27,7 +27,7 @@ public class User {
     private String description;
     private String shortDescription;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER,orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Course> courses;
 
     @Enumerated(EnumType.STRING)

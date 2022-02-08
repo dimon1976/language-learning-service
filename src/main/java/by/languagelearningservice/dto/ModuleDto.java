@@ -18,6 +18,7 @@ import java.util.List;
 @Component
 public class ModuleDto {
 
+    private long moduleId;
     @Length(min = 3, max = 64,message = "Значение меньше 3-х либо больше 64")
     private String name;
     @Length(min = 3, max = 255,message = "Значение меньше 3-х либо больше 255")

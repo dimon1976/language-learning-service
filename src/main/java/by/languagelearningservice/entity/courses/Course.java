@@ -20,7 +20,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long courseId;
 
     private String nameCourse;
     private String description;
@@ -34,10 +34,10 @@ public class Course {
 
     private Long teacherId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User users;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<Module> modules;
 
     @Enumerated(EnumType.STRING)

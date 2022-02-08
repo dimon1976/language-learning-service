@@ -1,17 +1,13 @@
-/*body {*/
-/*    min-height: 100vh;*/
-/*    min-height: -webkit-fill-available;*/
-/*}*/
+body {
+    min-height: 100vh;
+}
 
-/*html {*/
-/*    height: -webkit-fill-available;*/
-/*}*/
+
 
 main {
     display: flex;
     flex-wrap: nowrap;
     height: 100vh;
-    height: -webkit-fill-available;
     max-height: 100vh;
     overflow-x: auto;
     overflow-y: hidden;
@@ -51,7 +47,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
     color: rgba(0, 0, 0, .85);
-    background-color: #3BC3FF;
+    background-color: #d2f4ea;
 }
 
 .btn-toggle::before {
@@ -78,7 +74,7 @@ main {
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-    background-color: #6ea8b7;
+    background-color: #d2f4ea;
 }
 
 .scrollarea {

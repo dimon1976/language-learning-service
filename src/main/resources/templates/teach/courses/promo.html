@@ -61,9 +61,8 @@
                     </h3>
 
                     <article class="blog-post">
-                        <h2 class="blog-post-title">Описание</h2>
-                        <p class="blog-post-meta" th:text="*{{'дата создания курса - '+course.dateCreating}}"><a
-                                id="description"></a>
+                        <h2 class="blog-post-title" id="description">Описание</h2>
+                        <p class="blog-post-meta" th:text="*{{'дата создания курса - '+course.dateCreating}}">
                         </p>
 
                         <p th:text="${course.description}"></p>
@@ -91,30 +90,33 @@
                             </th:block>
                         </ul>
 
-                        <h3>Программа курса:</h3>
+                        <h3 id="menu">Программа курса:</h3>
                         <!--                        Модули-->
-                        <!-- Bootstrap 5 -->
-                        <div class="accordion" id="menu" th:each="modules,counts1:${course.modules}">
-                            <!-- item-# -->
+                        <div class="accordion" th:each="modules,counts1:${course.modules}">
                             <div class="accordion-item mt-1">
                                 <h2 class="accordion-header">
                                     <button class="accordion-button" type="button" th:data-bs-toggle="collapse"
-                                            th:data-bs-target="${'#item-'+modules.id}" data-bs-parent="#menu"
+                                            th:data-bs-target="${'#item-'+modules.moduleId}" data-bs-parent="#menu"
                                             th:text="${counts1.count}+${'. '+modules.name}">
                                     </button>
                                 </h2>
-                                <div th:id="${'item-'+modules.id}" class="accordion-collapse collapse "
-                                     data-bs-parent="#menu"
-                                     th:each="lessons,counts2:${modules.lessons}">
-                                    <div class="accordion-body" th:text="${counts2.count}+${'. '+lessons.name}"></div>
-                                    <p class="m-3" th:text="${lessons.description}"></p>
-                                    <hr>
+                                <div th:id="${'item-'+modules.moduleId}" class="accordion-collapse collapse"
+                                     data-bs-parent="#menu">
+                                    <span class="list-group list-group-numbered"
+                                          th:each="lessons,counts2:${modules.lessons}">
+                                        <span class="list-group-item d-flex justify-content-between align-items-start">
+                                            <div class="ms-2 me-auto">
+                                                <div class="fw-bold"
+                                                     th:text="${counts2.count}+${'. '+lessons.name}"></div>
+                                                <i class="mb-1" th:text="${lessons.description}"></i>
+                                            </div>
+                                            <!--                                            <i class="badge bg-primary rounded-pill">14</i>-->
+                                        </span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
-                        <br>
                         <!--                        Модули-->
-
 
 
                         <p>And this is a definition list:</p>
