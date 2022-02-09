@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -44,7 +45,8 @@ public class Course {
     @JoinTable(name = "course_modules",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "module_id"))
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Module> modules;
 
     @Enumerated(EnumType.STRING)
