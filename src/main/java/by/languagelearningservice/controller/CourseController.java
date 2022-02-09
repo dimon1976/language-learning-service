@@ -84,6 +84,7 @@ public class CourseController {
                          Model model) {
         Course course = courseService.update(mapper.map(courseDto, Course.class));
         User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("course",course);
         model.addAttribute("teacher", userById);
         return "teach/courses/info_edit";
     }

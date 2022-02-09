@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-//@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -29,9 +28,9 @@ public class User {
     @Column(length = 1028)
     private String shortDescription;
     @JoinTable(name = "users_courses",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "course_id"))
-    @ManyToMany(fetch = FetchType.EAGER,cascade = {
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
@@ -51,7 +50,6 @@ public class User {
     }
 
 
-
     public long getUserId() {
         return userId;
     }
@@ -65,7 +63,9 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email != null) {
+            this.email = email;
+        }
     }
 
     public String getPassword() {
@@ -73,7 +73,9 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null) {
+            this.password = password;
+        }
     }
 
     public String getFirstname() {
@@ -81,7 +83,9 @@ public class User {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        if (firstname != null) {
+            this.firstname = firstname;
+        }
     }
 
     public String getLastname() {
@@ -89,7 +93,9 @@ public class User {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        if (lastname != null) {
+            this.lastname = lastname;
+        }
     }
 
     public String getDescription() {
@@ -97,7 +103,9 @@ public class User {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description != null) {
+            this.description = description;
+        }
     }
 
     public String getShortDescription() {
@@ -105,7 +113,9 @@ public class User {
     }
 
     public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+        if (shortDescription != null) {
+            this.shortDescription = shortDescription;
+        }
     }
 
     public Set<Course> getCourses() {
@@ -121,7 +131,9 @@ public class User {
     }
 
     public void setLearning(Language learning) {
-        this.learning = learning;
+        if (learning != null) {
+            this.learning = learning;
+        }
     }
 
     public LocalDateTime getDateCreating() {
@@ -129,7 +141,9 @@ public class User {
     }
 
     public void setDateCreating(LocalDateTime dateCreating) {
-        this.dateCreating = dateCreating;
+        if (dateCreating != null) {
+            this.dateCreating = dateCreating;
+        }
     }
 
     public Boolean getTeacher() {
@@ -137,6 +151,8 @@ public class User {
     }
 
     public void setTeacher(Boolean teacher) {
-        this.teacher = teacher;
+        if (teacher != null) {
+            this.teacher = teacher;
+        }
     }
 }

@@ -3,18 +3,15 @@ package by.languagelearningservice.entity.courses;
 import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.data.jpa.repository.Modifying;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
-//@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -76,7 +73,9 @@ public class Course {
     }
 
     public void setNameCourse(String nameCourse) {
-        this.nameCourse = nameCourse;
+        if (nameCourse != null) {
+            this.nameCourse = nameCourse;
+        }
     }
 
     public String getDescription() {
@@ -84,7 +83,9 @@ public class Course {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description != null) {
+            this.description = description;
+        }
     }
 
     public String getShortDescription() {
@@ -92,7 +93,9 @@ public class Course {
     }
 
     public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+        if (shortDescription != null) {
+            this.shortDescription = shortDescription;
+        }
     }
 
     public String getRequirements() {
@@ -100,7 +103,9 @@ public class Course {
     }
 
     public void setRequirements(String requirements) {
-        this.requirements = requirements;
+        if (shortDescription != null) {
+            this.requirements = requirements;
+        }
     }
 
     public String getTheTargetAudience() {
@@ -108,7 +113,9 @@ public class Course {
     }
 
     public void setTheTargetAudience(String theTargetAudience) {
-        TheTargetAudience = theTargetAudience;
+        if (theTargetAudience != null) {
+            TheTargetAudience = theTargetAudience;
+        }
     }
 
     public LocalDateTime getDateCreating() {
@@ -116,7 +123,9 @@ public class Course {
     }
 
     public void setDateCreating(LocalDateTime dateCreating) {
-        this.dateCreating = dateCreating;
+        if (dateCreating != null) {
+            this.dateCreating = dateCreating;
+        }
     }
 
     public LocalDateTime getDateLaunch() {
@@ -124,7 +133,9 @@ public class Course {
     }
 
     public void setDateLaunch(LocalDateTime dateLaunch) {
-        this.dateLaunch = dateLaunch;
+        if (dateLaunch != null) {
+            this.dateLaunch = dateLaunch;
+        }
     }
 
     public Long getTeacherId() {
@@ -132,7 +143,10 @@ public class Course {
     }
 
     public void setTeacherId(Long teacherId) {
-        this.teacherId = teacherId;
+        if (teacherId != null) {
+            this.teacherId = teacherId;
+        }
+
     }
 
     public Collection<User> getUser() {
@@ -156,7 +170,10 @@ public class Course {
     }
 
     public void setCourseStatus(CourseStatus courseStatus) {
-        this.courseStatus = courseStatus;
+        if (courseStatus != null) {
+            this.courseStatus = courseStatus;
+        }
+
     }
 
     public Language getLanguage() {
@@ -164,7 +181,9 @@ public class Course {
     }
 
     public void setLanguage(Language language) {
-        this.language = language;
+        if (language != null) {
+            this.language = language;
+        }
     }
 
     public Level getLevel() {
@@ -172,6 +191,9 @@ public class Course {
     }
 
     public void setLevel(Level level) {
-        this.level = level;
+        if (level != null) {
+            this.level = level;
+        }
+
     }
 }

@@ -51,8 +51,11 @@ public class CourseService {
 
     @Modifying
     @Transactional
-    public Course update(Course course) {
-        log.info(String.format("Request  update Course %s", course));
+    public Course update(Course courseUpdate) {
+        log.info(String.format("Request  update Course %s", courseUpdate));
+        Course course = courseRepository.getById(courseUpdate.getCourseId());
+        course.setNameCourse(courseUpdate.getNameCourse());
+        course.setTheTargetAudience(courseUpdate.getTheTargetAudience());
         return courseRepository.save(course);
     }
 
