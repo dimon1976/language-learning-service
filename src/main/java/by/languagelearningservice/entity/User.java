@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,9 +30,8 @@ public class User {
     @Column(length = 1028)
     private String shortDescription;
     @JoinTable(name = "users_courses",
-    joinColumns = @JoinColumn(name = "user_id",
-    referencedColumnName = "userId"),
-    inverseJoinColumns = @JoinColumn(name = "course_id",referencedColumnName = "courseId"))
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "course_id"))
     @ManyToMany
     private Collection<Course> courses;
 

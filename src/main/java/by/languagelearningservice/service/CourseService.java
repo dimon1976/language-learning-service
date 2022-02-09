@@ -65,11 +65,6 @@ public class CourseService {
     public void deleteById(Long courseId) {
         log.info("Request delete {}", courseId);
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", courseId)));
-        Collection<Module> moduleList = course.getModules();
-//        for (Module m : moduleList) {
-//            moduleService.deleteById(m.getModuleId());
-//        }
-//        courseRepository.deleteById(courseId);
         courseRepository.deleteAllByCourseId(courseId);
     }
 }

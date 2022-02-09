@@ -24,6 +24,9 @@ public class Module {
     private String description;
     private LocalDateTime dateLaunch;
 
+    @JoinTable(name = "module_lessons",
+            joinColumns = @JoinColumn(name = "module_id"),
+            inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     @OneToMany
     private Collection<Lesson> lessons;
 
