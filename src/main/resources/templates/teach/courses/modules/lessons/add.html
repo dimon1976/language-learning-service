@@ -92,14 +92,14 @@
                         <label for="newLesson.name" class="form-label">Добавить урок</label>
                         <span th:text="${nameError}"></span>
                         <input type="text" class="form-control" th:field="${newLesson.name}" id="newLesson.name"
-                               aria-describedby="nameError" required="" maxlength="64" size="64" minlength="3" th:classappend="${nameError} ? is-invalid : ''">
+                               aria-describedby="nameError" th:classappend="${nameError} ? is-invalid : ''">
                         <div id="nameError" class="form-text">Максимум 64 символа</div>
                     </div>
                     <div class="mb-3">
                         <label for="newModule.name.label" class="form-label">Описание</label>
                         <span th:text="${descriptionError}"></span>
                         <input type="text" class="form-control" th:field="${newLesson.description}" id="newModule.name.label"
-                               aria-describedby="descriptionError" required="" maxlength="64" size="64" minlength="3" th:classappend="${descriptionError} ? is-invalid : ''">
+                               aria-describedby="descriptionError" th:classappend="${descriptionError} ? is-invalid : ''">
                         <div id="descriptionError" class="form-text">Максимум 64 символа</div>
                     </div>
                     <button class="btn btn-primary"> Добавить</button>

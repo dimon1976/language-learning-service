@@ -68,6 +68,27 @@ public class CourseController {
         return "teach/courses/info";
     }
 
+    @GetMapping("{courseId}/update")
+    public String update(@PathVariable("courseId") Long courseId, Model model) {
+        Course course = courseService.findById(courseId);
+        User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("course", course);
+        model.addAttribute("teacher", userById);
+        return "teach/courses/info_edit";
+    }
+
+    @PostMapping("{courseId}/update")
+    public String update(@PathVariable("courseId") Long courseId,
+                         @ModelAttribute("courseNull") @Valid CourseDto courseDto,
+                         BindingResult result,
+                         Model model) {
+        Course course = courseService.update(mapper.map(courseDto, Course.class));
+        User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("course",course);
+        model.addAttribute("teacher", userById);
+        return "teach/courses/info_edit";
+    }
+
 
     @GetMapping("/new")
     public String newCourse(Model model,

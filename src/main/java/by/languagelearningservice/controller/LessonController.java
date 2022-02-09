@@ -56,21 +56,25 @@ public class LessonController {
                              @ModelAttribute("newLesson") @Valid LessonDto lessonDto,
                              BindingResult result,
                              Model model) {
+        Module module = moduleService.getByModuleId(moduleId);
+        Course course = courseService.findById(courseId);
+        User userById = userService.getUserById(course.getTeacherId());
         if (result.hasErrors()) {
             Map<String, String> errorsMap = ExController.getErrors(result);
             model.mergeAttributes(errorsMap);
-            return "teach/courses/modules/lessons/add";
-        } else {
-            Lesson lesson = lessonService.save(mapper.map(lessonDto, Lesson.class));
-            Module module = moduleService.getByModuleId(moduleId);
-            Course course = courseService.findById(courseId);
-            module.getLessons().add(lesson);
-            moduleService.save(module);
-            User userById = userService.getUserById(course.getTeacherId());
             model.addAttribute("teacher", userById);
             model.addAttribute("course", course);
             model.addAttribute("module", module);
-            return "teach/courses/syllabus";
+            return "teach/courses/modules/lessons/add";
+        } else {
+            Lesson lesson = lessonService.save(mapper.map(lessonDto, Lesson.class));
+            module.getLessons().add(lesson);
+            moduleService.save(module);
+            User userById1 = userService.getUserById(course.getTeacherId());
+            model.addAttribute("teacher", userById1);
+            model.addAttribute("course", course);
+            model.addAttribute("module", module);
+            return "teach/courses/edit";
         }
     }
 }

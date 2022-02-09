@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Описание курса</title>
+    <title>Title</title>
     <link href="../static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
 </head>
 <body>
@@ -112,7 +112,6 @@
                                 </div>
                                 <div class="col-sm-4 d-flex align-content-center flex-wrap justify-content-center">
                                     <a th:href="@{/teach/courses/{courseId}/promo(courseId=${course.courseId})}">
-
                                         <button class="btn btn-outline-secondary" type="button">Посмотреть</button>
                                     </a>
                                 </div>
@@ -120,10 +119,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="h-100 d-flex align-content-center flex-wrap justify-content-center">
-                                <a th:href="@{/teach/courses/{courseId}/update(courseId=${course.courseId})}">
-                                    <button class="btn btn-outline-secondary" type="button">Редактировать информацию
-                                    </button>
-                                </a>
+                                <button class="btn btn-outline-secondary" type="button">Редактировать информацию
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -156,6 +153,20 @@
                                         <p th:unless="${course.language==null}"
                                            th:text="${course.language.translation}"></p>
                                     </div>
+                                    <form class="login-form"
+                                          th:action="@{/teach/courses/{courseId}/update(courseId=${course.courseId})}"
+                                          th:object="${course}" th:method="post">
+                                        <div class="mb-3">
+                                            <label for="exampleInputEmail1" class="form-label">Название курса</label>
+                                            <span th:text="${nameCourseError}"></span>
+                                            <input type="text" class="form-control" th:field="${course.nameCourse}"
+                                                   id="exampleInputEmail1"
+                                                   aria-describedby="emailHelp1"
+                                                   th:classappend="${nameCourseError} ? is-invalid : ''">
+                                            <div id="emailHelp1" class="form-text">Минимум 3 символа</div>
+                                        </div>
+                                        <button>Сохранить</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
