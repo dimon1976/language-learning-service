@@ -1,6 +1,6 @@
 package by.languagelearningservice.controller;
 
-import by.languagelearningservice.dto.userdto.UserDto;
+import by.languagelearningservice.dto.UserDto;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -47,7 +47,6 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/authorization")
     public String auth(Model model) {
         model.addAttribute("authUser", new User());
@@ -68,7 +67,6 @@ public class UserController {
             }
             if (userDto.getPassword().equals(user.getPassword())) {
                 httpSession.setAttribute("authUser", user);
-//                userService.test(user);
                 return "redirect:/";
             } else {
                 model.addAttribute("notFoundPassword", true);

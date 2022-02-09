@@ -18,7 +18,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" th:if="${language!='TC'}">
                 <div class="col-sm-6">
                     <br>
                     <h3 class="header-title">Регистрация</h3>
@@ -30,9 +30,9 @@
                                    th:field="*{email}" placeholder="Твой электронный адрес">
                         </div>
                         <div class="form-group">
-                            <span th:text="${nameError}"></span>
-                            <input type="text" class="form-control" th:classappend="${nameError} ? is-invalid : ''"
-                                   th:field="*{name}" placeholder="Твоё имя">
+                            <span th:text="${firstnameError}"></span>
+                            <input type="text" class="form-control" th:classappend="${firstnameError} ? is-invalid : ''"
+                                   th:field="*{firstname}" placeholder="Твоё имя">
                         </div>
                         <div class="form-group">
                             <span th:text="${passwordError}"></span>
@@ -51,8 +51,7 @@
                     </form>
                 </div>
                 <div class="col-sm-6 hide-on-mobile">
-                    <div id="demo" class="carousel slide" data-ride="carousel">
-
+                    <div id="demo1" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="slider-feature-card">
@@ -65,6 +64,54 @@
                     </div>
                 </div>
             </div>
+<!--Блок регистрации учителя-->
+            <div class="row" th:if="${language=='TC'}">
+                <div class="col-sm-6">
+                    <br>
+                    <h3 class="header-title">Регистрация</h3>
+                    <form class="login-form" th:action="@{/user/registration}" th:object="${newUser}"
+                          th:method="post">
+                        <div class="form-group">
+                            <span th:text="${emailError}"></span>
+                            <input type="email" class="form-control" th:classappend="${emailError} ? is-invalid : ''"
+                                   th:field="*{email}" placeholder="Твой электронный адрес">
+                        </div>
+                        <div class="form-group">
+                            <span th:text="${firstnameError}"></span>
+                            <input type="text" class="form-control" th:classappend="${firstnameError} ? is-invalid : ''"
+                                   th:field="*{firstname}" placeholder="Имя">
+                        </div>
+                        <div class="form-group">
+                            <span th:text="${passwordError}"></span>
+                            <input type="password" class="form-control"
+                                   th:classappend="${passwordError} ? is-invalid : ''"
+                                   th:field="*{password}" placeholder="Создать пароль">
+                        </div>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button class="btn btn-primary btn-block" name="teacher" th:value="${'true'}">
+                                Зарегистрироваться
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-center">Зарегистрированы? <a href="/user/authorization">Войти</a></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6 hide-on-mobile">
+                    <div id="demo2" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="slider-feature-card">
+                                    <img src="https://i.imgur.com/YMn8Xo1.png" alt="">
+                                    <h3 class="slider-title">Hello</h3>
+                                    <p class="slider-description">Зарегистрируйся, чтобы начать изучать язык!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Блок регистрации учителя-->
         </div>
     </div>
 </section>
