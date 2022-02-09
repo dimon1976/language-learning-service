@@ -27,7 +27,7 @@ public class Module {
     @JoinTable(name = "module_lessons",
             joinColumns = @JoinColumn(name = "module_id"),
             inverseJoinColumns = @JoinColumn(name = "lesson_id"))
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private Collection<Lesson> lessons;
 
 //    @ManyToOne(fetch = FetchType.LAZY)
