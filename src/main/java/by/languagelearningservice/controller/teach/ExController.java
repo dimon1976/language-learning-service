@@ -1,4 +1,4 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

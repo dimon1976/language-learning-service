@@ -56,6 +56,12 @@ public class CourseService {
         Course course = courseRepository.getById(courseUpdate.getCourseId());
         course.setNameCourse(courseUpdate.getNameCourse());
         course.setTheTargetAudience(courseUpdate.getTheTargetAudience());
+        course.setDescription(courseUpdate.getDescription());
+        course.setShortDescription(courseUpdate.getShortDescription());
+        course.setDateLaunch(courseUpdate.getDateLaunch());
+        course.setCourseStatus(courseUpdate.getCourseStatus());
+        course.setLanguage(courseUpdate.getLanguage());
+        course.setLevel(courseUpdate.getLevel());
         return courseRepository.save(course);
     }
 

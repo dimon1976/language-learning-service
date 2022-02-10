@@ -2,10 +2,13 @@ package by.languagelearningservice.service;
 
 
 import by.languagelearningservice.entity.User;
+import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -46,5 +49,16 @@ public class UserService {
         } else {
             throw new RuntimeException(String.format("User email %s not found! ", user.getEmail()));
         }
+    }
+
+    public void addLearnCourse(long userId, Course course) {
+        log.info(String.format("Request User findById %s exist", userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(String.format(String.format("User Id %s not found", userId))));
+        log.info(String.format("Request Course findById %s exist", course.getCourseId()));
+        user.getCourses().add(course);
+    }
+
+    public List<Course> getLearnCourseListByUserId(long id){
+        return null;
     }
 }

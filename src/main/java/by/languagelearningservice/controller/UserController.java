@@ -1,7 +1,9 @@
 package by.languagelearningservice.controller;
 
+import by.languagelearningservice.controller.teach.ExController;
 import by.languagelearningservice.dto.UserDto;
 import by.languagelearningservice.entity.User;
+import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private CourseService courseService;
     @Autowired
     private ModelMapper mapper;
+
 
     @GetMapping("/registration")
     public String reg(Model model, String learning) {
@@ -49,12 +53,12 @@ public class UserController {
 
     @GetMapping("/authorization")
     public String auth(Model model) {
-        model.addAttribute("authUser", new User());
+        model.addAttribute("user", new User());
         return "/user/authorization";
     }
 
     @PostMapping("/authorization")
-    public String auth(@ModelAttribute("authUser") @Valid UserDto userDto, BindingResult result, Model model, HttpSession httpSession) {
+    public String auth(@ModelAttribute("user") @Valid UserDto userDto, BindingResult result, Model model, HttpSession httpSession) {
         if (result.hasErrors()) {
             Map<String, String> errorsMap = ExController.getErrors(result);
             model.mergeAttributes(errorsMap);
@@ -66,7 +70,7 @@ public class UserController {
                 return "/user/authorization";
             }
             if (userDto.getPassword().equals(user.getPassword())) {
-                httpSession.setAttribute("authUser", user);
+                httpSession.setAttribute("user", user);
                 return "redirect:/";
             } else {
                 model.addAttribute("notFoundPassword", true);
@@ -78,7 +82,7 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession, Model model) {
         httpSession.invalidate();
-        model.addAttribute("newUser", new User());
+//        model.addAttribute("newUser", new User());
         return "redirect:/";
     }
 

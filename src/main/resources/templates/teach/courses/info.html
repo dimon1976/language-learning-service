@@ -94,6 +94,7 @@
                     </ul>
                 </div>
                 <!--            Sidebar-->
+
                 <div class="col py-3">
                     <div class="row">
                         <div class="col-md-12 align-items-md-stretch">
@@ -135,7 +136,7 @@
                                 <p th:if="${course.description.isEmpty()}">Поле не заполнено. Пожалуйста, заполните его
                                     в редакторе курса.</p>
                                 <p th:unless="${course.description.isEmpty()}"
-                                   th:text="${#strings.abbreviate(course.description,1024)}"></p>
+                                   th:utext="${#strings.abbreviate(course.description,1024)}"></p>
                             </div>
                         </div>
                         <div class="col-sm-4 align-items-md-stretch">
@@ -147,7 +148,7 @@
                                             заполните его
                                             в редакторе курса.</p>
                                         <p th:unless="${course.shortDescription.isEmpty()}"
-                                           th:text="${course.shortDescription}"></p>
+                                           th:utext="${#strings.abbreviate(course.shortDescription,600)}"></p>
                                         <hr>
                                         <h6>Язык - </h6>
                                         <p text-muted th:if="${course.language==null}">Поле не заполнено. Пожалуйста,
@@ -162,14 +163,13 @@
                         <div class="col-sm-8 align-items-md-stretch mt-3">
                             <div class="p-3 bg-light border rounded-3">
                                 <h6>Преподаватель </h6>
-                                <a href="/user/profile"><p th:text="${teacher.firstname}">
-                                    <!--                                    <p th:if="${teacher.lastname!=null}" th:text="${teacher.lastname}"></p>-->
-                                </a>
+                                <a th:if="${teacher.lastname==null}" href="/user/profile"><p
+                                        th:text="${teacher.firstname}"></p></a>
+                                <a th:unless="${teacher.lastname==null}" href="/user/profile"><p
+                                        th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>

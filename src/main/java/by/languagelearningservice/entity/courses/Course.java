@@ -123,9 +123,7 @@ public class Course {
     }
 
     public void setDateCreating(LocalDateTime dateCreating) {
-        if (dateCreating != null) {
             this.dateCreating = dateCreating;
-        }
     }
 
     public LocalDateTime getDateLaunch() {
@@ -143,10 +141,7 @@ public class Course {
     }
 
     public void setTeacherId(Long teacherId) {
-        if (teacherId != null) {
             this.teacherId = teacherId;
-        }
-
     }
 
     public Collection<User> getUser() {
