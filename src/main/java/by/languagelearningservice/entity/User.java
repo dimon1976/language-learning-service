@@ -3,6 +3,7 @@ package by.languagelearningservice.entity;
 import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +20,8 @@ public class User {
     private long userId;
     private String email;
     private String password;
+    @Transient
+    private String password2;
     private String firstname;
     private String lastname;
 
@@ -38,6 +41,8 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Language learning;
+    @Enumerated(EnumType.STRING)
+    private Language nativeLang;
 
     @Column(updatable = false)
     private LocalDateTime dateCreating;
@@ -49,6 +54,13 @@ public class User {
         this.dateCreating = LocalDateTime.now();
     }
 
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
     public long getUserId() {
         return userId;
@@ -65,6 +77,16 @@ public class User {
     public void setEmail(String email) {
         if (email != null) {
             this.email = email;
+        }
+    }
+
+    public Language getNativeLang() {
+        return nativeLang;
+    }
+
+    public void setNativeLang(Language nativeLang) {
+        if (nativeLang != null) {
+            this.nativeLang = nativeLang;
         }
     }
 

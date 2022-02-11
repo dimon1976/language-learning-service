@@ -28,7 +28,7 @@
                     <li><a th:href="@{/}" class="nav-link px-2 link-dark">Каталог</a></li>
                     <th:block th:if="*{session.user}">
                         <li><a
-                                th:href="@{/user/learn(userId=${session.user.userId})}"
+                                th:href="@{/learn}"
                                 class="nav-link px-2 link-dark">Моё обучение</a>
                         </li>
                         <li><a th:if="${session.user.teacher}"
@@ -43,7 +43,7 @@
                         <span class="bi bi-person-check"></span>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
-                        <li><a class="dropdown-item" href="#">Профиль</a></li>
+                        <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

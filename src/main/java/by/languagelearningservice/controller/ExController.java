@@ -1,4 +1,4 @@
-package by.languagelearningservice.controller.teach;
+package by.languagelearningservice.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class ExController {
 
-    static Map<String, String> getErrors(BindingResult bindingResult) {
+     public static Map<String, String> getErrors(BindingResult bindingResult) {
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 fieldError -> fieldError.getField() + "Error",
                 FieldError::getDefaultMessage

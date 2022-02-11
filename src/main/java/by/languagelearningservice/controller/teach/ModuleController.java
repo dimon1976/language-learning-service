@@ -1,7 +1,7 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
 
-import by.languagelearningservice.controller.teach.ExController;
+import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.ModuleDto;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
@@ -52,6 +52,7 @@ public class ModuleController {
             if (result.hasErrors()) {
                 Map<String, String> errorsMap = ExController.getErrors(result);
                 model.mergeAttributes(errorsMap);
+                model.addAttribute("newModule",moduleDto);
                 return "teach/courses/modules/add";
             } else {
                 Course course = courseService.findById(courseId);

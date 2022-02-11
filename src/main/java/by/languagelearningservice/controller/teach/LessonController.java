@@ -1,6 +1,6 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
-import by.languagelearningservice.controller.teach.ExController;
+import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.LessonDto;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;

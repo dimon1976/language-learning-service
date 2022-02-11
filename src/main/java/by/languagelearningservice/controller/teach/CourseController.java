@@ -1,7 +1,7 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
 
-import by.languagelearningservice.controller.teach.ExController;
+import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.CourseDto;
 import by.languagelearningservice.dto.ModuleDto;
 import by.languagelearningservice.entity.User;
@@ -42,7 +42,7 @@ public class CourseController {
     private String learn(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         Set<Course> courseList = user.getCourses();
-        model.addAttribute("courseList",courseList);
+        model.addAttribute("courseList", courseList);
         return "user/learn";
     }
 
@@ -96,7 +96,7 @@ public class CourseController {
                          Model model) {
         Course course = courseService.update(mapper.map(courseDto, Course.class));
         User userById = userService.getUserById(course.getTeacherId());
-        model.addAttribute("course",course);
+        model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
         return "teach/courses/info_edit";
     }

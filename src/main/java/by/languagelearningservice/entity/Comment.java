@@ -19,6 +19,8 @@ public class Comment {
 
     private long postId;
 
+    private long rating;
+
     private String creatorUsername;
 
     private String description;
@@ -29,6 +31,14 @@ public class Comment {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public void setRating(long rating) {
+        this.rating = rating;
     }
 
     public long getId() {

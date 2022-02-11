@@ -261,7 +261,7 @@
                                 <a href="/user/choose-your-language" th:if="${session.user==null}">
                                     <button class="btn btn-outline-secondary" type="button">Поступить на курс</button>
                                 </a>
-                            <a href="/user/" th:unless="${session.user==null}">
+                            <a th:href="@{/learn/course/{courseId}/enroll(courseId=${course.courseId})}" th:unless="${session.user==null}">
                                 <button class="btn btn-outline-secondary" type="button">Поступить на курс</button>
                             </a>
                             </div>

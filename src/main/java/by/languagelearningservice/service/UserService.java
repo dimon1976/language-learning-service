@@ -42,12 +42,20 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("User byId %s not found", id)));
     }
 
-    public User update(User user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            log.info(String.format("User %s update", user.getEmail()));
+    public User update(User userUpdate) {
+        if (userRepository.findByEmail(userUpdate.getEmail()).isPresent()) {
+            log.info(String.format("User %s update", userUpdate.getEmail()));
+            User user = userRepository.findByEmail(userUpdate.getEmail()).get();
+            user.setNativeLang(userUpdate.getNativeLang());
+            user.setTeacher(userUpdate.getTeacher());
+            user.setFirstname(userUpdate.getFirstname());
+            user.setLastname(userUpdate.getLastname());
+            user.setDescription(userUpdate.getDescription());
+            user.setShortDescription(userUpdate.getShortDescription());
+            user.setLearning(userUpdate.getLearning());
             return userRepository.save(user);
         } else {
-            throw new RuntimeException(String.format("User email %s not found! ", user.getEmail()));
+            throw new RuntimeException(String.format("User email %s not found! ", userUpdate.getEmail()));
         }
     }
 
@@ -56,9 +64,13 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(String.format(String.format("User Id %s not found", userId))));
         log.info(String.format("Request Course findById %s exist", course.getCourseId()));
         user.getCourses().add(course);
+        userRepository.save(user);
     }
 
-    public List<Course> getLearnCourseListByUserId(long id){
-        return null;
+    public void removeCourse(long userId, Course course) {
+        log.info(String.format("Request User findById %s exist", userId));
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(String.format(String.format("User Id %s not found", userId))));
+        user.getCourses().remove(course);
+        userRepository.save(user);
     }
 }
