@@ -62,6 +62,8 @@ public class LearnCourseController {
         }
     }
 
+
+
     @GetMapping("/courses/favorites")
     private String info(Model model, HttpSession httpSession,
                         @RequestParam Optional<Integer> page,
@@ -158,7 +160,7 @@ public class LearnCourseController {
     }
 
 
-    @GetMapping("/courses/{courseId}/leave")
+    @GetMapping("/course/{courseId}/leave")
     public String leaveCourse(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         Course course = courseService.findById(courseId);
@@ -168,13 +170,40 @@ public class LearnCourseController {
         return "/learn/index";
     }
 
-    @GetMapping("/courses/{courseId}/info")
+    @GetMapping("/course/{courseId}/info")
     public String info(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
         Course course = courseService.findById(courseId);
         User teacher = courseService.findTeacherCourse(course);
         model.addAttribute("teacher",teacher);
         model.addAttribute("course", course);
         return "/learn/course/info";
+    }
+
+    @GetMapping("/course/{courseId}/news")
+    public String news(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
+        Course course = courseService.findById(courseId);
+        User teacher = courseService.findTeacherCourse(course);
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("course", course);
+        return "/learn/course/news";
+    }
+
+    @GetMapping("/course/{courseId}/comments")
+    public String comments(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
+        Course course = courseService.findById(courseId);
+        User teacher = courseService.findTeacherCourse(course);
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("course", course);
+        return "/learn/course/comments";
+    }
+
+    @GetMapping("/course/{courseId}/reviews")
+    public String reviews(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
+        Course course = courseService.findById(courseId);
+        User teacher = courseService.findTeacherCourse(course);
+        model.addAttribute("teacher",teacher);
+        model.addAttribute("course", course);
+        return "/learn/course/reviews";
     }
 
 }

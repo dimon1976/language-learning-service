@@ -37,12 +37,14 @@
                         </li>
                     </th:block>
                 </ul>
-                <div class="dropdown text-end" th:if="${session.user!=null}">
-                    <a class="nav-link dropdown-toggle " href="#" id="dropdownUser" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="bi bi-person-check"></span>
+                <div class="flex-shrink-0 dropdown" th:if="${session.user!=null}">
+                    <a th:if="${session.user.filename==null}" class="d-block link-dark text-decoration-none dropdown-toggle" href="#" id="dropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img width="50px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                        </a>
+                    <a th:if="${session.user.filename!=null}" class="d-block link-dark text-decoration-none dropdown-toggle" href="#" id="dropdownUser" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="rounded-circle" width="40px" th:src="${'/img/'+session.user.filename}" th:alt="${session.user.firstname}">
                     </a>
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser">
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser">
                         <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
                         <li>
                             <hr class="dropdown-divider">

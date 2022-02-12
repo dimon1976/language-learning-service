@@ -7,6 +7,9 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -24,6 +27,7 @@ public class User {
     private String password2;
     private String firstname;
     private String lastname;
+    private String filename;
 
     @Column(length = 2048)
     private String description;
@@ -41,6 +45,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Language learning;
+
     @Enumerated(EnumType.STRING)
     private Language nativeLang;
 
@@ -52,6 +57,14 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public String getPassword2() {
@@ -157,6 +170,7 @@ public class User {
             this.learning = learning;
         }
     }
+
 
     public LocalDateTime getDateCreating() {
         return dateCreating;

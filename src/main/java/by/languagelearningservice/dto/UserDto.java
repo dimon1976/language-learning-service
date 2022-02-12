@@ -24,6 +24,7 @@ public class UserDto {
     @NotBlank(message = "Пожалуйста заполните поле")
     @Email(message = "Email некорректный")
     private String email;
+    private String filename;
 
     @NotBlank(message = "поле не может быть пустым")
     @Length(min = 3, max = 64, message = "Значение меньше 3-х либо больше 64")
@@ -47,6 +48,14 @@ public class UserDto {
     @Enumerated(EnumType.STRING)
     private Language nativeLang;
 
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public Language getNativeLang() {
         return nativeLang;

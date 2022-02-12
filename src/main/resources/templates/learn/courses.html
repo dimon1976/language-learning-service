@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Прохожу курсы</title>
-    <link href="../static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
-    <link href="../static/css/modals.css" th:href="@{/css/modals.css}" rel="stylesheet"/>
+    <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <link href="/static/css/modals.css" th:href="@{/css/modals.css}" rel="stylesheet"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/modals/">
     <style>
         .bd-placeholder-img {
@@ -134,19 +134,19 @@
 
             <!--                Список курсов-->
             <div class="row p-2" th:if="${courseList!=null}">
-                <div class="row g-1" th:each="courses:${courseList}">
+                <div class="row g-1" th:each="course:${courseList}">
                     <div class="card">
                         <div class="card-body">
-                            <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${courses.courseId})}"><h5
+                            <a th:href="@{/teach/course/{courseId}/syllabus(courseId=${course.courseId})}"><h5
                                     class="card-title"
-                                    th:text="${courses.nameCourse}"></h5>
+                                    th:text="${course.nameCourse}"></h5>
                             </a>
-                            <p class="card-text" th:utext="${#strings.abbreviate(courses.description,500)}"></p>
-                            <a th:href="@{/learn/courses/{courseId}/info(courseId=${courses.courseId})}"
+                            <p class="card-text" th:utext="${#strings.abbreviate(course.description,500)}"></p>
+                            <a th:href="@{/learn/course/{courseId}/info(courseId=${course.courseId})}"
                                class="card-link">Описание</a>
-                            <a th:href="@{/learn/courses/{courseId}/syllabus(courseId=${courses.courseId})}"
+                            <a th:href="@{/learn/course/{courseId}/syllabus(courseId=${course.courseId})}"
                                class="card-link">Содержание</a>
-                            <a th:href="@{/learn/courses/{courseId}/leave(courseId=${courses.courseId})}"
+                            <a th:href="@{/learn/course/{courseId}/leave(courseId=${course.courseId})}"
                                class="card-link">Покинуть</a>
                         </div>
                         <!--                        <p class="card-footer text-muted"-->

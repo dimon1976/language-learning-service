@@ -53,6 +53,7 @@ public class UserService {
             user.setDescription(userUpdate.getDescription());
             user.setShortDescription(userUpdate.getShortDescription());
             user.setLearning(userUpdate.getLearning());
+            user.setFilename(userUpdate.getFilename());
             return userRepository.save(user);
         } else {
             throw new RuntimeException(String.format("User email %s not found! ", userUpdate.getEmail()));

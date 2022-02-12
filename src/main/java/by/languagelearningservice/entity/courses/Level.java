@@ -1,6 +1,7 @@
 package by.languagelearningservice.entity.courses;
 
 public enum Level {
+    A0("Я не говорю на этом языке"),
     A1("Начальный (A1)"),
     A2("Элементарный (A2)"),
     B1("Средний (B1)"),

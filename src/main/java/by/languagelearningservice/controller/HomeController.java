@@ -1,5 +1,6 @@
 package by.languagelearningservice.controller;
 
+import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -21,20 +23,22 @@ import java.util.Optional;
 @RequestMapping("/")
 public class HomeController {
 
-@Autowired
-private CourseService courseService;
+    @Autowired
+    private CourseService courseService;
 
     @GetMapping
     public String home(Model model,
                        @RequestParam Optional<Integer> page,
                        @RequestParam Optional<Integer> size,
-                       @RequestParam Optional<String> sortBy){
+                       @RequestParam Optional<String> sortBy,
+                       HttpSession httpSession) {
         Pageable pageable = PageRequest.of(page.orElse(0),
                 size.orElse(5),
                 Sort.Direction.DESC,
                 sortBy.orElse("courseId"));
+        User user = (User) httpSession.getAttribute("user");
         Page<Course> courseList = courseService.getAllListCourse(pageable);
-        model.addAttribute("courseList",courseList);
+        model.addAttribute("courseList", courseList);
         return "index";
     }
 }
