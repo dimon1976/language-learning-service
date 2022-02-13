@@ -1,5 +1,9 @@
 package by.languagelearningservice.entity;
 
+import by.languagelearningservice.entity.courses.Level;
+
+import java.util.List;
+
 public enum Language {
     AR("Арабский"),
     SP("Испанский"),
@@ -16,7 +20,7 @@ public enum Language {
 
     private String translation;
 
-    private String level;
+    private Level level;
 
     Language() {
     }
@@ -29,11 +33,11 @@ public enum Language {
         return translation;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
+    public Level getLevel() {
+        return level;
     }
 
-    public String getLevel() {
-        return level;
+    public void setLevel(Level level) {
+        this.level = level;
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${course.nameCourse}+' - Описание'"></title>
-    <link href="../static/css/promo.css" th:href="@{/css/promo.css}" rel="stylesheet"/>
+    <link href="/static/css/promo.css" th:href="@{/css/promo.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="_header :: content"></div>
@@ -14,7 +14,7 @@
             <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
                 <div class="col-md-6 px-0">
                     <h1 class="display-4 fst-italic" th:text="${course.nameCourse}"></h1>
-                    <p class="lead my-3" th:text="${course.shortDescription}"></p>
+                    <p class="lead my-3" th:utext="${#strings.abbreviate(course.shortDescription,1024)}"></p>
                     <p class="lead mb-0"><a href="#description" class="text-white fw-bold">Подробнее...</a></p>
                 </div>
             </div>
@@ -62,33 +62,30 @@
 
                     <article class="blog-post">
                         <h2 class="blog-post-title" id="description">Описание</h2>
-                        <p class="blog-post-meta" th:text="*{{'дата создания курса - '+course.dateCreating}}">
+                        <p class="blog-post-meta" th:text="*{{'дата создания курса - '+course.dateCreating.toLocalDate()}}">
                         </p>
 
-                        <p th:text="${course.description}"></p>
+                        <p th:utext="${course.description}"></p>
                         <hr>
                         <p></p>
 
                         <h2>Для кого этот курс</h2>
-                        <p th:text="${course.theTargetAudience}"></p>
-<!--                        <blockquote class="blockquote">-->
-<!--                            <p>Quoted text goes here.</p>-->
-<!--                        </blockquote>-->
+                        <p th:utext="${course.theTargetAudience}"></p>
+                        <!--                        <blockquote class="blockquote">-->
+                        <!--                            <p>Quoted text goes here.</p>-->
+                        <!--                        </blockquote>-->
                         <p></p>
                         <h3>Наши преподаватели</h3>
                         <p>Кто ведет курс:</p>
                         <ul>
-                            <th:block th:if="${teacher.lastname==null}">
-                                <li th:text="${teacher.firstname}"></li>
-                            </th:block>
-                            <th:block th:if="${teacher.lastname!=null}">
-                                <li th:text="${teacher.firstname}+' '+${teacher.lastname}"></li>
-                            </th:block>
-
-                            <th:block th:if="${teacher.lastname!=null}">
-                                <li th:text="${teacher.description}"></li>
-                            </th:block>
+                            <li>
+                                <a th:if="${teacher.lastname==null}" href="/user/profile"><p
+                                        th:text="${teacher.firstname}"></p></a>
+                                <a th:unless="${teacher.lastname==null}" href="/user/profile"><p
+                                        th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
+                            </li>
                         </ul>
+                        <hr>
 
                         <h3 id="menu">Программа курса:</h3>
                         <!--                        Модули-->
@@ -116,7 +113,9 @@
                                 </div>
                             </div>
                         </div>
+                        <br>
                         <!--                        Модули-->
+                        <hr>
 
 
                         <p>And this is a definition list:</p>
@@ -249,7 +248,6 @@
                         <a class="btn btn-outline-primary" href="#">Older</a>
                         <a class="btn btn-outline-secondary disabled">Newer</a>
                     </nav>
-
                 </div>
 
                 <div class="col-md-4">
@@ -259,10 +257,13 @@
                                 <h4 class="fst-italic" th:text="${course.level.translation}+' - уровень'"></h4>
                             </th:block>
                             <p class="mb-0">
-                            <div class="col-sm-12 d-flex align-content-center flex-wrap justify-content-center">
-                                <a href="#">
+                            <div class="col-sm-12 d-flex align-content-center flex-wrap justify-content-center" >
+                                <a href="/user/choose-your-language" th:if="${session.user==null}">
                                     <button class="btn btn-outline-secondary" type="button">Поступить на курс</button>
                                 </a>
+                            <a th:href="@{/learn/course/{courseId}/enroll(courseId=${course.courseId})}" th:unless="${session.user==null}">
+                                <button class="btn btn-outline-secondary" type="button">Поступить на курс</button>
+                            </a>
                             </div>
                             </p>
                         </div>

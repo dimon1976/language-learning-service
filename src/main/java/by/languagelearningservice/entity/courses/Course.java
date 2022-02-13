@@ -1,5 +1,6 @@
 package by.languagelearningservice.entity.courses;
 
+import by.languagelearningservice.entity.Comment;
 import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -46,6 +48,9 @@ public class Course {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Collection<Module> modules;
 
+    @OneToMany
+    private List<Comment> comments;
+
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
@@ -58,6 +63,14 @@ public class Course {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public long getCourseId() {
@@ -123,9 +136,7 @@ public class Course {
     }
 
     public void setDateCreating(LocalDateTime dateCreating) {
-        if (dateCreating != null) {
             this.dateCreating = dateCreating;
-        }
     }
 
     public LocalDateTime getDateLaunch() {
@@ -143,10 +154,7 @@ public class Course {
     }
 
     public void setTeacherId(Long teacherId) {
-        if (teacherId != null) {
             this.teacherId = teacherId;
-        }
-
     }
 
     public Collection<User> getUser() {

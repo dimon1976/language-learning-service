@@ -1,6 +1,7 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
 
+import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.CourseDto;
 import by.languagelearningservice.dto.ModuleDto;
 import by.languagelearningservice.entity.User;
@@ -18,10 +19,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/teach/courses")
@@ -33,6 +36,15 @@ public class CourseController {
     private UserService userService;
     @Autowired
     private ModelMapper mapper;
+
+
+    @GetMapping("/learn")
+    private String learn(Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        Set<Course> courseList = user.getCourses();
+        model.addAttribute("courseList", courseList);
+        return "user/learn";
+    }
 
     @GetMapping
     public String index(Model model,
@@ -84,7 +96,7 @@ public class CourseController {
                          Model model) {
         Course course = courseService.update(mapper.map(courseDto, Course.class));
         User userById = userService.getUserById(course.getTeacherId());
-        model.addAttribute("course",course);
+        model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
         return "teach/courses/info_edit";
     }
@@ -112,13 +124,15 @@ public class CourseController {
                 Sort.Direction.DESC,
                 sortBy.orElse("courseId"));
         {
+            User userById = userService.getUserById(teacherId);
+
             if (result.hasErrors()) {
                 Map<String, String> errorsMap = ExController.getErrors(result);
                 model.mergeAttributes(errorsMap);
+                model.addAttribute("teacher", userById);
                 return "teach/courses/new";
             } else {
                 Course c = courseService.save(mapper.map(courseDto, Course.class));
-                User userById = userService.getUserById(teacherId);
                 userById.getCourses().add(c);
                 userService.update(userById);
                 List<Course> coursesList = courseService.getTeacherListCourse(teacherId, pageable);
@@ -156,6 +170,15 @@ public class CourseController {
         model.addAttribute("teacher", userById);
         return "teach/courses/promo";
     }
+
+//    @GetMapping("{courseId}/promo")
+//    public String promo(@PathVariable("courseId") Long courseId, Model model) {
+//        Course course = courseService.findById(courseId);
+//        User userById = userService.getUserById(course.getTeacherId());
+//        model.addAttribute("course", course);
+//        model.addAttribute("teacher", userById);
+//        return "teach/courses/promo";
+//    }
 
     @GetMapping("{courseId}/syllabus")
     public String syllabus(@PathVariable("courseId") Long courseId, Model model) {

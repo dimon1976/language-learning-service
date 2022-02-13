@@ -1,6 +1,7 @@
 package by.languagelearningservice.entity;
 
 
+import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Comment {
@@ -19,9 +19,33 @@ public class Comment {
 
     private long postId;
 
-    private String creatorUsername;
+    private long rating;
+    private String text;
+    private String tag;
+    private String filename;
 
-    private String description;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "course_id")
+    private Course course;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public Comment(String text, String tag, User author) {
+        this.text = text;
+        this.tag = tag;
+        this.author = author;
+    }
+
+    public Comment(String text, User author,Course course) {
+        this.text = text;
+        this.author = author;
+        this.course = course;
+    }
+
+    public Comment() {
+    }
 
     @Column(updatable = false)
     private LocalDateTime dateCreating;
@@ -29,6 +53,14 @@ public class Comment {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public long getRating() {
+        return rating;
+    }
+
+    public void setRating(long rating) {
+        this.rating = rating;
     }
 
     public long getId() {
@@ -47,20 +79,36 @@ public class Comment {
         this.postId = postId;
     }
 
-    public String getCreatorUsername() {
-        return creatorUsername;
+    public String getText() {
+        return text;
     }
 
-    public void setCreatorUsername(String creatorUsername) {
-        this.creatorUsername = creatorUsername;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTag() {
+        return tag;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public LocalDateTime getDateCreating() {

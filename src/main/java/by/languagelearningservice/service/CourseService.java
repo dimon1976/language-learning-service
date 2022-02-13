@@ -1,11 +1,9 @@
 package by.languagelearningservice.service;
 
+import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
-import by.languagelearningservice.entity.courses.Module;
 import by.languagelearningservice.repository.CourseRepository;
-import by.languagelearningservice.repository.LessonRepository;
-import by.languagelearningservice.repository.ModuleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,20 +12,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
 
 @Slf4j
 @Service
 public class CourseService {
-    @Autowired
-    private LessonService lessonService;
-    @Autowired
-    private ModuleService moduleService;
+
     @Autowired
     private CourseRepository courseRepository;
-    @Autowired
-    private UserService userService;
 
     public Course save(Course course) {
         course.setCourseStatus(CourseStatus.DRAFT);
@@ -56,6 +48,12 @@ public class CourseService {
         Course course = courseRepository.getById(courseUpdate.getCourseId());
         course.setNameCourse(courseUpdate.getNameCourse());
         course.setTheTargetAudience(courseUpdate.getTheTargetAudience());
+        course.setDescription(courseUpdate.getDescription());
+        course.setShortDescription(courseUpdate.getShortDescription());
+        course.setDateLaunch(courseUpdate.getDateLaunch());
+        course.setCourseStatus(courseUpdate.getCourseStatus());
+        course.setLanguage(courseUpdate.getLanguage());
+        course.setLevel(courseUpdate.getLevel());
         return courseRepository.save(course);
     }
 
@@ -73,5 +71,15 @@ public class CourseService {
         log.info("Request delete {}", courseId);
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", courseId)));
         courseRepository.deleteAllByCourseId(courseId);
+    }
+
+    public User findTeacherCourse(Course course) {
+        log.info("Request find Teachers course id $s", course.getCourseId());
+        for (User u : course.getUser()) {
+            if (u.getTeacher()== true) {
+                return u;
+            }
+        }
+        return null;
     }
 }

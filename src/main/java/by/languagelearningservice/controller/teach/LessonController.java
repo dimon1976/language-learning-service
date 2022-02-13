@@ -1,5 +1,6 @@
-package by.languagelearningservice.controller;
+package by.languagelearningservice.controller.teach;
 
+import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.LessonDto;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,6 +35,8 @@ public class LessonController {
     private LessonService lessonService;
     @Autowired
     private ModelMapper mapper;
+
+
 
     @GetMapping("/{courseId}/modules/{moduleId}/lessons/add")
     public String addLesson(@PathVariable("courseId") Long courseId, @PathVariable("moduleId") Long moduleId, Model model) {

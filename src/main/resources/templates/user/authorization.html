@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Authorization</title>
-    <link href="../static/css/signin.css" th:href="@{/css/signin.css}" rel="stylesheet"/>
+    <link href="/static/css/signin.css" th:href="@{/css/signin.css}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
                 <div class="col-sm-6">
                     <br>
                     <h3 class="header-title">Авторизация</h3>
-                    <form class="login-form" th:action="@{/user/authorization}" th:object="${authUser}"
+                    <form class="login-form" th:action="@{/user/authorization}" th:object="${user}"
                           th:method="post">
                         <div class="form-group">
                             <span th:text="${emailError}"></span>

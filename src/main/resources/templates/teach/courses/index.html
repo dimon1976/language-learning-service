@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Курсы - преподавание</title>
-    <link href="../static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="_header :: content"></div>
@@ -128,7 +128,7 @@
                                     class="card-title"
                                     th:text="${courses.nameCourse}"></h5>
                             </a>
-                            <p class="card-text" th:text="${#strings.abbreviate(courses.description,255)}"></p>
+                            <p class="card-text" th:utext="${#strings.abbreviate(courses.description,500)}"></p>
                             <a th:href="@{/teach/courses/{courseId}/info(courseId=${courses.courseId})}"
                                class="card-link">Описание</a>
                             <a th:href="@{/teach/courses/{courseId}/syllabus(courseId=${courses.courseId})}"
@@ -136,9 +136,9 @@
                             <a th:href="@{/teach/courses/{courseId}/delete(teacherId=${teacher.userId} ,courseId=${courses.courseId})}"
                                class="card-link">Удалить!!!</a>
                         </div>
-                        <span class="card-footer text-muted"
+                        <p class="card-footer text-muted"
                               th:text="${{courses.dateCreating}}">
-                        </span>
+                        </p>
                     </div>
                 </div>
             </div>

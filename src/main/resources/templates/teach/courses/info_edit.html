@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="../static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 </head>
 <body>
 <div th:replace="_header :: content"></div>
@@ -157,12 +158,12 @@
                                           th:action="@{/teach/courses/{courseId}/update(courseId=${course.courseId})}"
                                           th:object="${course}" th:method="post">
                                         <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Название курса</label>
+                                            <label for="summernote" class="form-label">Название курса</label>
                                             <span th:text="${nameCourseError}"></span>
-                                            <input type="text" class="form-control" th:field="${course.nameCourse}"
-                                                   id="exampleInputEmail1"
+                                            <textarea type="text" class="form-control" th:field="${course.nameCourse}"
+                                                   id="summernote"
                                                    aria-describedby="emailHelp1"
-                                                   th:classappend="${nameCourseError} ? is-invalid : ''">
+                                                      th:classappend="${nameCourseError} ? is-invalid : ''"></textarea>
                                             <div id="emailHelp1" class="form-text">Минимум 3 символа</div>
                                         </div>
                                         <button>Сохранить</button>
@@ -189,5 +190,11 @@
     </div>
 </div>
 </div>
+
+<script>
+    // $(document).ready(function() {
+    //     $('#summernote').summernote();
+    // });
+</script>
 </body>
 </html>

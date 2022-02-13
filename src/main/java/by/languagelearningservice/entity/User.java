@@ -19,8 +19,11 @@ public class User {
     private long userId;
     private String email;
     private String password;
+    @Transient
+    private String password2;
     private String firstname;
     private String lastname;
+    private String filename;
 
     @Column(length = 2048)
     private String description;
@@ -39,6 +42,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Language learning;
 
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Comment> comments;
+
+    @Enumerated(EnumType.STRING)
+    private Language nativeLang;
+
     @Column(updatable = false)
     private LocalDateTime dateCreating;
 
@@ -49,6 +58,21 @@ public class User {
         this.dateCreating = LocalDateTime.now();
     }
 
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public String getPassword2() {
+        return password2;
+    }
+
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
     public long getUserId() {
         return userId;
@@ -58,6 +82,14 @@ public class User {
         this.userId = userId;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -65,6 +97,16 @@ public class User {
     public void setEmail(String email) {
         if (email != null) {
             this.email = email;
+        }
+    }
+
+    public Language getNativeLang() {
+        return nativeLang;
+    }
+
+    public void setNativeLang(Language nativeLang) {
+        if (nativeLang != null) {
+            this.nativeLang = nativeLang;
         }
     }
 
@@ -135,6 +177,7 @@ public class User {
             this.learning = learning;
         }
     }
+
 
     public LocalDateTime getDateCreating() {
         return dateCreating;
