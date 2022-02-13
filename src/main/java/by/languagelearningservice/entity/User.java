@@ -3,13 +3,9 @@ package by.languagelearningservice.entity;
 import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -46,6 +42,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Language learning;
 
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private Set<Comment> comments;
+
     @Enumerated(EnumType.STRING)
     private Language nativeLang;
 
@@ -81,6 +80,14 @@ public class User {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getEmail() {

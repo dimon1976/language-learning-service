@@ -62,7 +62,6 @@ public class UserController {
             model.addAttribute("userUpdate", userDto);
             return "/user/profile/index";
         }
-
         if (file != null && !file.getOriginalFilename().isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
@@ -81,7 +80,12 @@ public class UserController {
         httpSession.setAttribute("user", user);
         model.addAttribute("userUpdate", user);
         return "/user/profile/index";
+    }
 
+    @GetMapping("/info")
+    public String info(){
+
+        return "/user/profile/info";
     }
 
     @GetMapping("/registration")
