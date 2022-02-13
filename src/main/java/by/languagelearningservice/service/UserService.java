@@ -1,6 +1,7 @@
 package by.languagelearningservice.service;
 
 
+import by.languagelearningservice.entity.Invite;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.repository.UserRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -73,5 +75,23 @@ public class UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException(String.format(String.format("User Id %s not found", userId))));
         user.getCourses().remove(course);
         userRepository.save(user);
+    }
+
+    public List<User> getAllUsers(User user) {
+        List<User> userList = userRepository.findAll();
+        for (User u : userList) {
+            if (u.getUserId() == user.getUserId()) {
+                userList.remove(u);
+                return userList;
+            }
+        }
+        return userList;
+    }
+
+    public List<User> getUsersByReq(User user){
+
+
+
+        return null;
     }
 }

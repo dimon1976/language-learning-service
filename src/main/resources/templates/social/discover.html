@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Курсы - обучение</title>
+    <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <style>
+
+    </style>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+    <div class="row">
+        <!--            Sidebar-->
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+            <div th:replace="/include/sidebar :: sidebar_learn_course"></div>
+        </div>
+        <!--            Sidebar-->
+
+        <div class="col-sm-9 p-3">
+
+            <blockquote class="blockquote">
+                <p>Сообщество</p>
+            </blockquote>
+            <div class="row p-2">
+
+            </div>
+            <div class="row mb-2">
+                <div class="col-md-12" th:each="user:${userList}">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col-auto d-none d-lg-block">
+                            <a th:if="${user.filename==null}" class="d-block link-dark text-decoration-none"
+                               href="#">
+                                <img width="200px" height="250"
+                                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                            </a>
+                        </div>
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <!--                            <p>Говорит на - <strong class="d-inline-block mb-2 text-primary"-->
+                            <!--                                                  th:text="${user.nativeLang.translation}"></strong></p>-->
+                            <!--                            <p>Изучает - <strong class="d-inline-block mb-2 text-primary"-->
+                            <!--                                                 th:text="${user.learning.translation}"></strong></p>-->
+                            <th:block th:if="${user.firstname!=null}">
+                                <h3 class="mb-0" th:text="${user.firstname+' '}"></h3></th:block>
+                            <div class="mb-1 text-muted" th:text="${{user.dateCreating.toLocalDate()}}"></div>
+                            <p class="card-text mb-auto" th:text="${user.shortDescription}"></p>
+                            <a th:href="@{/user/profile(userId=${user.userId})}" class="stretched-link">Подробнее</a>
+                            <!--                            <th:block th:if="${}">-->
+                            <a th:href="@{/social/addFriend(userId=${user.userId},requestInvite='REQUEST')}"
+                               class="stretched-link">Добавить в друзья</a>
+                            <!--                            </th:block>-->
+                        </div>
+                    </div>
+                </div>
+                <p>Запросы мне в друзья</p>
+                <div th:each="invite:${user.getInvites()}">
+                    <th:block th:unless="${invite.from.userId==session.user.userId}">
+                    <p th:if="${invite.status.name()=='REQUEST'}" th:text="${invite.getFrom().firstname}"></p>
+                    </th:block>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

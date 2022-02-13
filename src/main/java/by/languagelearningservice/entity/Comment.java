@@ -55,6 +55,14 @@ public class Comment {
         this.dateCreating = LocalDateTime.now();
     }
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
     public long getRating() {
         return rating;
     }

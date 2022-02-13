@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Info user</title>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="/static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
 </head>
 <body>
+<div th:replace="_header :: content"></div>
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img th:if="${user.filename==null}" class="rounded-circle mt-5" width="150px"
+                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
 
+                <img th:if="${user.filename!=null}" class="rounded-circle mt-5" width="150px"
+                     th:src="${'/img/'+user.filename}" th:alt="${'Photo -'+userInfo.firstname}"><span
+                    class="font-weight-bold" th:text="${user.firstname}"></span>
+                <span class="text-black-50" th:text="${user.email}"></span>
+            </div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Профиль</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label class="labels">Имя</label>
+                        <p th:text="${user.firstname}"></p>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Фамилия</label>
+                        <p th:text="${user.lastname}"></p>
+                        <p th:if="${user.lastname==null}" th:text="'-'"></p>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <label class="labels">Родной язык</label>
+                    <p th:text="${user.nativeLang}"></p>
+                    <p th:if="${user.nativeLang==null}" th:text="'-'"></p>
+                    <div class="col-md-12">
+                        <label class="labels">Зарегистрирован</label>
+                        <p th:text="${{user.dateCreating}}"></p>
+                    </div>
+                    <br> <br> <br>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <br>
+                <br>
+                <div class="col-md-12">
+                    <label class="labels">Обо мне</label>
+                    <p th:text="*{user.description}"></p>
+                    <p th:if="${user.description==null}" th:text="'-'"></p>
+
+                </div>
+                <br>
+                <div class="col-md-12">
+                    <label class="labels">Биография</label>
+                    <p th:text="*{user.shortDescription}"></p>
+                    <p th:if="${user.shortDescription==null}" th:text="'-'"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>

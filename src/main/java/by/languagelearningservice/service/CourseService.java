@@ -1,5 +1,6 @@
 package by.languagelearningservice.service;
 
+import by.languagelearningservice.entity.Comment;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
@@ -82,4 +83,11 @@ public class CourseService {
         }
         return null;
     }
+
+    public Course addComment(Course course, Comment comment){
+        log.info(String.format("Request Add comment %s in course %s", comment,course));
+        course.getComments().add(comment);
+       return courseRepository.save(course);
+    }
+
 }

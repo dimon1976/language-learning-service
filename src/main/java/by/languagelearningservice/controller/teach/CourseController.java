@@ -4,9 +4,11 @@ package by.languagelearningservice.controller.teach;
 import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.CourseDto;
 import by.languagelearningservice.dto.ModuleDto;
+import by.languagelearningservice.entity.Comment;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
+import by.languagelearningservice.service.CommentsService;
 import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -48,21 +50,19 @@ public class CourseController {
 
     @GetMapping
     public String index(Model model,
-                        @RequestParam("userId") Long userId,
+                        @RequestParam("userId") User user,
                         @RequestParam Optional<Integer> page,
                         @RequestParam Optional<Integer> size,
                         @RequestParam Optional<String> sortBy) {
         Pageable pageable = PageRequest.of(page.orElse(0), size.orElse(5), Sort.Direction.DESC, sortBy.orElse("courseId"));
-        User userById = userService.getUserById(userId);
-        List<Course> coursesList = courseService.getTeacherListCourse(userId, pageable);
+        List<Course> coursesList = courseService.getTeacherListCourse(user.getUserId(), pageable);
         model.addAttribute("coursesListIndex", coursesList);
-        model.addAttribute("teacher", userById);
+        model.addAttribute("teacher", user);
         return "/teach/courses/index";
     }
 
     @GetMapping("{courseId}/info")
-    public String info(@PathVariable("courseId") Long courseId, Model model) {
-        Course course = courseService.findById(courseId);
+    public String info(@PathVariable("courseId") Course course, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
@@ -70,8 +70,7 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}/setting")
-    public String status(@PathVariable("courseId") Long courseId, CourseStatus status, Model model) {
-        Course course = courseService.findById(courseId);
+    public String status(@PathVariable("courseId") Course course, CourseStatus status, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
         course.setCourseStatus(status);
         courseService.update(course);
@@ -81,8 +80,7 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}/update")
-    public String update(@PathVariable("courseId") Long courseId, Model model) {
-        Course course = courseService.findById(courseId);
+    public String update(@PathVariable("courseId") Course course, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
@@ -90,16 +88,25 @@ public class CourseController {
     }
 
     @PostMapping("{courseId}/update")
-    public String update(@PathVariable("courseId") Long courseId,
-                         @ModelAttribute("courseNull") @Valid CourseDto courseDto,
+    public String update(@ModelAttribute("course") @Valid CourseDto courseDto,
                          BindingResult result,
-                         Model model) {
+                         Model model){
+    if(result.hasErrors())
+    {
+        Map<String, String> errorsMap = ExController.getErrors(result);
+        model.mergeAttributes(errorsMap);
+        model.addAttribute("course", courseDto);
+        return "teach/courses/new";
+    } else
+
+    {
         Course course = courseService.update(mapper.map(courseDto, Course.class));
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
         model.addAttribute("teacher", userById);
         return "teach/courses/info_edit";
     }
+}
 
 
     @GetMapping("/new")
@@ -163,26 +170,18 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}/promo")
-    public String promo(@PathVariable("courseId") Long courseId, Model model) {
-        Course course = courseService.findById(courseId);
+    public String promo(@PathVariable("courseId") Course course, Model model) {
+        Iterable<Comment> commentList = course.getComments();
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("course", course);
+        model.addAttribute("comments", commentList);
         model.addAttribute("teacher", userById);
         return "teach/courses/promo";
     }
 
-//    @GetMapping("{courseId}/promo")
-//    public String promo(@PathVariable("courseId") Long courseId, Model model) {
-//        Course course = courseService.findById(courseId);
-//        User userById = userService.getUserById(course.getTeacherId());
-//        model.addAttribute("course", course);
-//        model.addAttribute("teacher", userById);
-//        return "teach/courses/promo";
-//    }
 
     @GetMapping("{courseId}/syllabus")
-    public String syllabus(@PathVariable("courseId") Long courseId, Model model) {
-        Course course = courseService.findById(courseId);
+    public String syllabus(@PathVariable("courseId") Course course, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
         model.addAttribute("teacher", userById);
         model.addAttribute("course", course);
@@ -190,8 +189,7 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}/edit{module}")
-    public String edit(@PathVariable("courseId") Long courseId, String module, Model model) {
-        Course course = courseService.findById(courseId);
+    public String edit(@PathVariable("courseId") Course course, String module, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
         if (module != null && module.equals("add")) {
             model.addAttribute("newModule", new ModuleDto());
@@ -205,7 +203,7 @@ public class CourseController {
     }
 
     @GetMapping("{courseId}/delete{teacherId}")
-    public String delete(@PathVariable("courseId") Long courseId,
+    public String delete(@PathVariable("courseId") Course course,
                          Long teacherId,
                          @RequestParam Optional<Integer> page,
                          @RequestParam Optional<Integer> size,
@@ -216,12 +214,40 @@ public class CourseController {
                 Sort.Direction.DESC,
                 sortBy.orElse("courseId"));
         {
-            courseService.deleteById(courseId);
+            courseService.deleteById(course.getCourseId());
             User userById = userService.getUserById(teacherId);
             List<Course> coursesList = courseService.getTeacherListCourse(teacherId, pageable);
             model.addAttribute("teacher", userById);
             model.addAttribute("coursesListIndex", coursesList);
             return "teach/courses/index";
         }
+    }
+
+//    @GetMapping("{courseId}/comments")
+//    public String comments(@PathVariable("courseId") Course course, Model model) {
+//        Iterable<Comment> commentList = commentsService.findAllByCourseId();
+//        model.addAttribute("comments", commentList);
+//        model.addAttribute("comment", new Comment());
+//        model.addAttribute("course", course);
+//        return "/teach/courses/comments";
+//    }
+//
+//    @PostMapping("{courseId}/comments/add")
+//    public String comments(@PathVariable("courseId") Course course, @RequestParam String text, Model model, HttpSession httpSession) {
+//        {
+//            getUserSession(course, text, model, httpSession, commentsService);
+//            return "/teach/courses/comments";
+//        }
+//    }
+
+    public static void getUserSession(@PathVariable("courseId") Course course, @RequestParam String text, Model model, HttpSession httpSession, CommentsService commentsService, CourseService courseService) {
+        User user = (User) httpSession.getAttribute("user");
+        Comment comment = new Comment(text, user, course);
+        commentsService.save(comment);
+        courseService.addComment(course, comment);
+        Iterable<Comment> commentList = course.getComments();
+        model.addAttribute("comments", commentList);
+        model.addAttribute("comment", new Comment());
+        model.addAttribute("course", course);
     }
 }
