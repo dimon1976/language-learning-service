@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/social")
@@ -24,6 +25,15 @@ public class SocialController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/notifications")
+    public String notifications(Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        List<Invite> inviteList = inviteService.getAllInvitesByToUser(user.getUserId());
+        model.addAttribute("user", user);
+        model.addAttribute("inviteList", inviteList);
+        return "/social/notifications";
+    }
+
     @GetMapping
     public String index(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
@@ -33,20 +43,25 @@ public class SocialController {
         return "/social/discover";
     }
 
-    @GetMapping("/addFriend{userId}")
-    public String addFriend(@RequestParam("userId") User userTo, @RequestParam("requestInvite") InviteStatus requestInvite, Model model, HttpSession httpSession) {
-        User userFrom = (User) httpSession.getAttribute("user");
-        Invite invite = new Invite(userFrom, userTo, requestInvite);
-        if (inviteService.save(invite, userFrom)) {
-            userTo.getInvites().add(invite);
-            userFrom.getInvites().add(invite);
-            userService.update(userFrom);
-            userService.update(userTo);
+    @GetMapping("/invite{userId}{inviteId}")
+    public String addFriend(@RequestParam(value = "userId", required = false) User userTo,
+                            @RequestParam(value = "inviteId", required = false) Invite invite,
+                            @RequestParam("requestInvite") InviteStatus requestInvite,
+                            Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (invite == null) {
+            Invite inviteNew = new Invite(user, userTo, requestInvite);
+            inviteService.save(inviteNew);
+        }else {
+            invite.setStatus(requestInvite);
+            inviteService.save(invite);
         }
-        List<User> userList = userService.getAllUsers(userFrom);
+        Set<User> friend = userService.getAllFriends(user.getUserId());
+        List<Invite> inviteList = inviteService.getAllInvitesByToUser(user.getUserId());
+        List<User> userList = userService.getAllUsers(user);
         model.addAttribute("userList", userList);
-        httpSession.setAttribute("user", userFrom);
-        model.addAttribute("user", userFrom);
+        model.addAttribute("user", user);
+        model.addAttribute("inviteList", inviteList);
         return "social/discover";
     }
 }

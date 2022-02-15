@@ -27,10 +27,7 @@ public class LessonService {
     public Collection<Lesson> findByModuleId(long id) {
         log.info(String.format("Get Lesson list by %s module", id));
         Optional<Module> module = moduleRepository.findById(id);
-        if (module.isPresent()) {
-            return module.get().getLessons();
-        }
-        return null;
+        return module.map(Module::getLessons).orElse(null);
     }
 
     public Lesson save(Lesson lesson) {

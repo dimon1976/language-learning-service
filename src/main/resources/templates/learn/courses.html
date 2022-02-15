@@ -109,7 +109,7 @@
                 <div class="row g-1" th:each="course:${courseList}">
                     <div class="card">
                         <div class="card-body">
-                            <a th:href="@{/teach/course/{courseId}/syllabus(courseId=${course.courseId})}"><h5
+                            <a th:href="@{/learn/course/{courseId}/syllabus(courseId=${course.courseId})}"><h5
                                     class="card-title"
                                     th:text="${course.nameCourse}"></h5>
                             </a>
@@ -159,6 +159,6 @@
         </div>
     </div>
 </div>
-</div>
+<div th:replace="/include/_footer :: footer"></div>
 </body>
 </html>

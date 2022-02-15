@@ -32,14 +32,12 @@ public class CourseService {
     }
 
     public List<Course> getTeacherListCourse(Long userId, Pageable pageable) {
-        List<Course> allCourseByUserId = courseRepository.findAllByTeacherId(userId, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", userId)));
-        return allCourseByUserId;
+        return courseRepository.findAllByTeacherId(userId, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", userId)));
     }
 
     public Course findById(Long id) {
         log.info(String.format("Request Course findById %s exist", id));
-        Course course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", id)));
-        return course;
+        return courseRepository.findById(id).orElseThrow(() -> new RuntimeException(String.format("Course %s not found", id)));
     }
 
     @Modifying
@@ -62,8 +60,7 @@ public class CourseService {
         if (status.toString().equals("ALL")) {
             return courseRepository.findAllByTeacherId(userId, pageable).get();
         } else {
-            List<Course> byCourseTeacherId = courseRepository.findAllByTeacherIdAndCourseStatus(userId, status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
-            return byCourseTeacherId;
+            return courseRepository.findAllByTeacherIdAndCourseStatus(userId, status, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", status)));
         }
     }
 
@@ -77,7 +74,7 @@ public class CourseService {
     public User findTeacherCourse(Course course) {
         log.info("Request find Teachers course id $s", course.getCourseId());
         for (User u : course.getUser()) {
-            if (u.getTeacher()== true) {
+            if (u.getTeacher()) {
                 return u;
             }
         }

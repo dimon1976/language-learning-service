@@ -46,6 +46,14 @@ public class LearnCourseController {
         }
     }
 
+    @GetMapping("/course/{courseId}/syllabus")
+    public String syllabus(@PathVariable("courseId") Course course, Model model) {
+        User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("teacher", userById);
+        model.addAttribute("course", course);
+        return "learn/course/syllabus";
+    }
+
     @GetMapping("/courses/info")
     private String courses(Model model, HttpSession httpSession,
                            @RequestParam Optional<Integer> page,

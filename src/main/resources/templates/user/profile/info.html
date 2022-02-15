@@ -38,14 +38,12 @@
                     </div>
                     <div class="col-md-6">
                         <label class="labels">Фамилия</label>
-                        <p th:text="${user.lastname}"></p>
-                        <p th:if="${user.lastname==null}" th:text="'-'"></p>
+                        <p th:text="${user.lastname==null} ?'-' :${user.lastname}"></p>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <label class="labels">Родной язык</label>
-                    <p th:text="${user.nativeLang}"></p>
-                    <p th:if="${user.nativeLang==null}" th:text="'-'"></p>
+                    <p th:text="${user.nativeLang==null} ? '-' : ${user.nativeLang.translation}"></p>
                     <div class="col-md-12">
                         <label class="labels">Зарегистрирован</label>
                         <p th:text="${{user.dateCreating}}"></p>
@@ -61,20 +59,18 @@
                 <br>
                 <div class="col-md-12">
                     <label class="labels">Обо мне</label>
-                    <p th:text="*{user.description}"></p>
-                    <p th:if="${user.description==null}" th:text="'-'"></p>
+                    <p th:text="${user.description==null} ? '-': *{user.description}"></p>
 
                 </div>
                 <br>
                 <div class="col-md-12">
                     <label class="labels">Биография</label>
-                    <p th:text="*{user.shortDescription}"></p>
-                    <p th:if="${user.shortDescription==null}" th:text="'-'"></p>
+                    <p th:text="${user.shortDescription==null} ? '-' : *{user.shortDescription}" ></p>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+<div th:replace="/include/_footer :: footer"></div>
 </body>
 </html>

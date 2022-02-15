@@ -1,13 +1,14 @@
 package by.languagelearningservice.service;
 
 
-import by.languagelearningservice.entity.Invite;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -88,10 +89,14 @@ public class UserService {
         return userList;
     }
 
-    public List<User> getUsersByReq(User user){
+
+    public User getUsersById(long id) {
+        return userRepository.findById(id).get();
+    }
 
 
-
-        return null;
+    public Set<User> getAllFriends(long id) {
+        User user = getUserById(id);
+        return user.getFriends();
     }
 }

@@ -4,8 +4,33 @@
     <meta charset="UTF-8">
     <title>Курсы - обучение</title>
     <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
+        body {
+            background-color: #f9f9fa
+        }
 
+        .flex {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto
+        }
+
+        @media (max-width:991.98px) {
+            .padding {
+                padding: 1.5rem
+            }
+        }
+
+        @media (max-width:767.98px) {
+            .padding {
+                padding: 1rem
+            }
+        }
+
+        .padding {
+            padding: 5rem
+        }
     </style>
 </head>
 <body>
@@ -19,51 +44,63 @@
         <!--            Sidebar-->
 
         <div class="col-sm-9 p-3">
-
             <blockquote class="blockquote">
-                <p>Сообщество</p>
+                <p>Помогать</p>
             </blockquote>
             <div class="row p-2">
+                <div class="b-b b-theme nav-active-theme mb-3">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Изучай</a></li>
+                        <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Друзья</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content mb-4">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row mb-2">
+                            <div class="col-md-12" th:each="user:${userList}">
+                                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                    <div class="col-auto d-none d-lg-block">
+                                        <a th:if="${user.filename==null}" class="d-block link-dark text-decoration-none"
+                                           th:href="@{/user/profile(userId=${user.userId})}">
+                                            <img width="200px" height="250"
+                                                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                        </a>
+                                    </div>
+                                    <div class="col p-2 d-flex flex-column position-static">
+                                        <p>Говорит на - <strong class="text-primary"
+                                                                th:text="${user.nativeLang !=null} ? ${user.nativeLang.translation} :'нет информации'"></strong></p>
+                                        <p>Изучает - <strong class="text-primary"
+                                                             th:text="${user.learning !=null} ? ${user.learning.translation} : 'нет информации'"></strong></p>
+                                        <th:block th:if="${user.firstname!=null}">
+                                            <h3 class="mb-0" th:text="${user.firstname+' '}"></h3>
+                                        </th:block>
+                                        <div class="mb-1 text-muted" th:text="${{user.dateCreating.toLocalDate()}}"></div>
+                                        <p class="card-text mb-auto" th:text="${user.shortDescription}"></p>
+                                        <hr>
+                                        <span class="py-1 my-1">
+                                <ul class="nav justify-content-start border-bottom pb-3 mb-3">
+                                    <li class="nav-item p-1"><a th:href="@{/user/profile(userId=${user.userId})}" class="btn btn-outline-primary btn-sm">Подробнее</a></li>
+                                    <li class="nav-item p-1"><a th:href="@{/social/invite(userId=${user.userId},requestInvite='REQUEST')}" class="btn btn-outline-primary btn-sm">Добавить в друзья</a></li>
+                                </ul>
+                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            </div>
-            <div class="row mb-2">
-                <div class="col-md-12" th:each="user:${userList}">
-                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                        <div class="col-auto d-none d-lg-block">
-                            <a th:if="${user.filename==null}" class="d-block link-dark text-decoration-none"
-                               href="#">
-                                <img width="200px" height="250"
-                                     src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                            </a>
-                        </div>
-                        <div class="col p-4 d-flex flex-column position-static">
-                            <!--                            <p>Говорит на - <strong class="d-inline-block mb-2 text-primary"-->
-                            <!--                                                  th:text="${user.nativeLang.translation}"></strong></p>-->
-                            <!--                            <p>Изучает - <strong class="d-inline-block mb-2 text-primary"-->
-                            <!--                                                 th:text="${user.learning.translation}"></strong></p>-->
-                            <th:block th:if="${user.firstname!=null}">
-                                <h3 class="mb-0" th:text="${user.firstname+' '}"></h3></th:block>
-                            <div class="mb-1 text-muted" th:text="${{user.dateCreating.toLocalDate()}}"></div>
-                            <p class="card-text mb-auto" th:text="${user.shortDescription}"></p>
-                            <a th:href="@{/user/profile(userId=${user.userId})}" class="stretched-link">Подробнее</a>
-                            <!--                            <th:block th:if="${}">-->
-                            <a th:href="@{/social/addFriend(userId=${user.userId},requestInvite='REQUEST')}"
-                               class="stretched-link">Добавить в друзья</a>
-                            <!--                            </th:block>-->
-                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <p>For what reason would it be advisable for me business content?</p>
                     </div>
                 </div>
-                <p>Запросы мне в друзья</p>
-                <div th:each="invite:${user.getInvites()}">
-                    <th:block th:unless="${invite.from.userId==session.user.userId}">
-                    <p th:if="${invite.status.name()=='REQUEST'}" th:text="${invite.getFrom().firstname}"></p>
-                    </th:block>
-                </div>
 
 
             </div>
+
+
         </div>
     </div>
 </div>
+<div th:replace="/include/_footer :: footer"></div>
 </body>
 </html>

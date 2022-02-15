@@ -48,8 +48,10 @@
                 <div class="col-sm-8 align-items-md-stretch mt-3">
                     <div class="p-3 bg-light border rounded-3">
                         <h6>Преподаватель </h6>
-                        <a th:if="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p th:text="${teacher.firstname}"></p></a>
-                        <a th:unless="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
+                        <a th:if="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p
+                                th:text="${teacher.firstname}"></p></a>
+                        <a th:unless="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p
+                                th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
                     </div>
                 </div>
             </div>
@@ -57,8 +59,6 @@
         <!--                Content-->
     </div>
 </div>
-</div>
-</div>
-</div>
+<div th:replace="/include/_footer :: footer"></div>
 </body>
 </html>
