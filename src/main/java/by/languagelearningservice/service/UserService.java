@@ -1,15 +1,15 @@
 package by.languagelearningservice.service;
 
 
+import by.languagelearningservice.entity.Invite;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -80,13 +80,13 @@ public class UserService {
 
     public List<User> getAllUsers(User user) {
         List<User> userList = userRepository.findAll();
+        List<User> users = new ArrayList<>();
         for (User u : userList) {
-            if (u.getUserId() == user.getUserId()) {
-                userList.remove(u);
-                return userList;
+            if (u.getUserId() != user.getUserId() && u.getTeacher().equals(user.getTeacher())) {
+                users.add(u);
             }
         }
-        return userList;
+        return users;
     }
 
 
@@ -98,5 +98,19 @@ public class UserService {
     public Set<User> getAllFriends(long id) {
         User user = getUserById(id);
         return user.getFriends();
+    }
+
+    public void addFriend(Invite invite){
+        User user = userRepository.findById(invite.getTo().getUserId()).
+                orElseThrow(() -> new RuntimeException(String.format("Request User findById %s", invite.getFrom().getUserId())));
+        user.getFriends().add(invite.getFrom());
+        userRepository.save(user);
+    }
+
+    public void removeFriends(Invite invite){
+        User user = userRepository.findById(invite.getTo().getUserId()).
+                orElseThrow(() -> new RuntimeException(String.format("Request User findById %s", invite.getFrom().getUserId())));
+        user.getFriends().remove(invite.getFrom());
+        userRepository.save(user);
     }
 }

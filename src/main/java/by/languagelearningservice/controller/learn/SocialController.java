@@ -25,9 +25,12 @@ public class SocialController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/notifications")
-    public String notifications(Model model, HttpSession httpSession) {
+    @GetMapping("/notifications{removeUser}")
+    public String notifications(@RequestParam(value = "removeUser", required = false) User removeUser, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
+        if (removeUser != null) {
+            inviteService.remove(user, removeUser);
+        }
         List<Invite> inviteList = inviteService.getAllInvitesByToUser(user.getUserId());
         model.addAttribute("user", user);
         model.addAttribute("inviteList", inviteList);
@@ -38,7 +41,9 @@ public class SocialController {
     public String index(Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         List<User> userList = userService.getAllUsers(user);
+        Set<User> friendList = userService.getAllFriends(user.getUserId());
         model.addAttribute("userList", userList);
+        model.addAttribute("friendList", friendList);
         model.addAttribute("user", user);
         return "/social/discover";
     }
@@ -52,11 +57,10 @@ public class SocialController {
         if (invite == null) {
             Invite inviteNew = new Invite(user, userTo, requestInvite);
             inviteService.save(inviteNew);
-        }else {
+        } else {
             invite.setStatus(requestInvite);
             inviteService.save(invite);
         }
-        Set<User> friend = userService.getAllFriends(user.getUserId());
         List<Invite> inviteList = inviteService.getAllInvitesByToUser(user.getUserId());
         List<User> userList = userService.getAllUsers(user);
         model.addAttribute("userList", userList);
