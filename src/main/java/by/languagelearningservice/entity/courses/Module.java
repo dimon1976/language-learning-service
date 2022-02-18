@@ -28,8 +28,6 @@ public class Module {
     @OneToMany(orphanRemoval = true)
     private Collection<Lesson> lessons;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Course courses;
 
 
     public long getModuleId() {

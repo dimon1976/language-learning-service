@@ -295,7 +295,11 @@ INSERT INTO "PUBLIC"."MODULE_LESSONS" VALUES
 INSERT INTO "PUBLIC"."USERS" VALUES
                                  (1, TIMESTAMP '2022-02-09 21:55:36.411474', NULL, 'dima2000@tut.by', NULL,STRINGDECODE('\u041a\u0438\u0440\u0438\u043b\u043b'), STRINGDECODE('\u041a\u043e\u043d\u0434\u0440\u0430\u0448\u043e\u0432'), NULL,NULL, 'stargaser', NULL, TRUE),
                                  (2, TIMESTAMP '2022-02-10 14:24:35.484884', NULL, 'dima2002@tut.by', NULL,STRINGDECODE('\u0415\u043b\u0438\u0437\u0430\u0432\u0435\u0442\u0430'), NULL, NULL,NULL, 'stargaser', NULL, TRUE),
-                                 (3, TIMESTAMP '2022-02-10 18:24:08.403683', NULL, 'dima2003@tut.by',NULL, 'Dimon', NULL, 'EN',NULL, 'stargaser', NULL, FALSE);
+                                 (3, TIMESTAMP '2022-02-10 18:24:08.403683', NULL, 'dima2003@tut.by',NULL, 'Rob', NULL, 'EN','RU', 'stargaser', NULL, FALSE),
+                                 (4, TIMESTAMP '2022-02-10 18:24:08.403685', NULL, 'dima2004@tut.by',NULL, 'Кирилл', NULL, 'RU','JA', 'stargaser', NULL, FALSE),
+                                 (5, TIMESTAMP '2022-02-10 18:24:08.403686', NULL, 'dima2005@tut.by',NULL, 'Margo', NULL, 'IT','RU', 'stargaser', NULL, FALSE),
+                                 (6, TIMESTAMP '2022-02-10 18:24:08.403687', NULL, 'dima2006@tut.by',NULL, 'Dimon', NULL, 'RU','EN', 'stargaser', NULL, FALSE),
+                                 (7, TIMESTAMP '2022-02-10 18:24:08.406688', NULL, 'dima2007@tut.by',NULL, 'Дарья', NULL, 'EN','RU', 'stargaser', NULL, FALSE);
 
 INSERT INTO "PUBLIC"."USERS_COURSES" VALUES
                                          (2, 1),

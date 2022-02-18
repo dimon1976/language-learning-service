@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Отзывы курса</title>
+  <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="_header :: content"></div>
+<div class="container">
+  <div class="row">
+    <!--            Sidebar-->
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+      <div th:replace="/include/sidebar :: sidebar_teach_course"></div>
+    </div>
+    <!--            Sidebar-->
+
+    <div class="col py-3">
+      Отзывы
+    </div>
+  </div>
+</div>
+<div th:replace="/include/_footer :: footer"></div>
+</body>
+</html>

@@ -3,6 +3,7 @@ package by.languagelearningservice.entity;
 import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -39,10 +40,23 @@ public class User {
     })
     private Set<Course> courses;
 
+    @JoinTable(name = "users_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<User> friends;
+
+
+    @JoinTable(name = "users_invites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "invite_id"))
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Invite> invites;
+
     @Enumerated(EnumType.STRING)
     private Language learning;
 
-    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
     @Enumerated(EnumType.STRING)
@@ -56,6 +70,23 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public Set<Invite> getInvites() {
+        return invites;
+    }
+
+    public void setInvites(Set<Invite> invites) {
+        this.invites = invites;
+    }
+
+    @Transactional
+    public Set<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(Set<User> friends) {
+        this.friends = friends;
     }
 
     public String getFilename() {

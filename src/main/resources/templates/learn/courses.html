@@ -7,18 +7,64 @@
     <link href="/static/css/modals.css" th:href="@{/css/modals.css}" rel="stylesheet"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/modals/">
     <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
+        body {
+            margin: 0;
+            font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: .8125rem;
+            font-weight: 400;
+            line-height: 1.5385;
+            color: #333;
+            text-align: left;
+            background-color: #2196F3
         }
 
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
+        .mt-50 {
+            margin-top: 50px
+        }
+
+        .mb-50 {
+            margin-bottom: 50px
+        }
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: .1875rem
+        }
+
+        @media (min-width: 576px) {
+            .blog-horizontal .card-img-actions {
+                width: 45%;
+                float: left;
+                max-width: 25rem;
+                z-index: 10
             }
+        }
+
+        a {
+            text-decoration: none !important
+        }
+
+        .course-button {
+            border: 1px solid #007bff;
+            padding: 5px;
+            background-color: #007bff;
+            padding-right: 10px;
+            padding-top: 3px;
+            color: #fff;
+            border-radius: 3px
+        }
+
+        .course-button:hover {
+            color: #fff
         }
     </style>
     <link href="modals.css" rel="stylesheet">
@@ -27,83 +73,9 @@
 <div th:replace="_header :: content"></div>
 <div class="container">
     <div class="row">
+        <!--            Sidebar-->
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-            <!--            Sidebar-->
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a th:href="@{/learn}" class="nav-link" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" fill="currentColor"
-                             class="bi bi-book" viewBox="0 0 24 16">
-                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                        </svg>
-                        Моё обучение
-                    </a>
-                </li>
-
-                <!--                Collapse item-->
-
-                <li class="nav-item">
-                    <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#home-collapse"
-                       aria-expanded="true" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" fill="currentColor"
-                             class="bi bi-book" viewBox="0 0 24 16">
-                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                        </svg>
-                        Курсы
-                    </a>
-                    <div class="collapse show" id="home-collapse">
-                        <ul class="btn-toggle-nav small">
-                            <li><a th:href="@{/learn/courses/info}"
-                                   class="link-dark rounded">Прохожу</a></li>
-                            <li><a th:href="@{/learn/courses/favorites}"
-                                   class="link-dark rounded">Избранное</a></li>
-                            <li><a th:href="@{/learn/courses/wishlist}"
-                                   class="link-dark rounded">Хочу пройти</a></li>
-                            <li><a th:href="@{/learn/courses/archive}"
-                                   class="link-dark rounded">Архив</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <!--                Collapse item-->
-
-                <li class="nav-item">
-                    <a th:href="@{/learn}" class="nav-link" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" fill="currentColor"
-                             class="bi bi-book" viewBox="0 0 24 16">
-                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                        </svg>
-                        Классы
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/learn}" class="nav-link" aria-current="page">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" fill="currentColor"
-                             class="bi bi-book" viewBox="0 0 24 16">
-                            <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/>
-                        </svg>
-                        Уведомления
-                    </a>
-                </li>
-
-                <hr>
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                       id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="rounded-circle me-2 bi bi-person"></i>
-                        <th:block th:if="${session.user.firstname!=null}">
-                            <strong th:text="${session.user.firstname+' '}"></strong></th:block>
-                    </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                        <li><a class="dropdown-item" href="#">Настройки</a></li>
-                        <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="/user/logout">Выйти</a></li>
-                    </ul>
-                </div>
-            </ul>
+            <div th:replace="/include/sidebar :: sidebar_learn_course"></div>
         </div>
         <!--            Sidebar-->
 
@@ -137,7 +109,7 @@
                 <div class="row g-1" th:each="course:${courseList}">
                     <div class="card">
                         <div class="card-body">
-                            <a th:href="@{/teach/course/{courseId}/syllabus(courseId=${course.courseId})}"><h5
+                            <a th:href="@{/learn/course/{courseId}/syllabus(courseId=${course.courseId})}"><h5
                                     class="card-title"
                                     th:text="${course.nameCourse}"></h5>
                             </a>
@@ -155,10 +127,38 @@
                     </div>
                 </div>
             </div>
+
+<!--            Test-->
+<!--            <div class="row p-2" th:if="${courseList!=null}">-->
+<!--                <div class="card blog-horizontal">-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="card-img-actions mr-sm-3 mb-3"> <a href="#course_preview" data-toggle="modal" data-abc="true"> <img src="https://i.imgur.com/OJHNsX9.jpg" class="img-fluid card-img" alt=""> </a> </div>-->
+<!--                        <div class="mb-3">-->
+<!--                            <h5 class="d-flex font-weight-semibold flex-nowrap my-1"> <a href="#" class="text-default mr-2" data-abc="true">Advanced Java Course</a> <span class="text-danger-400 ml-auto">Free</span> </h5>-->
+<!--                            <ul class="list-inline list-inline-dotted text-muted mb-0">-->
+<!--                                <li class="list-inline-item">By <a href="#" class="text-muted" data-abc="true">Timona Shai</a></li>-->
+<!--                                <li class="list-inline-item"> Nov 3rd, 2019</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</p> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim <a href="#" data-abc="true">[...]</a>-->
+<!--                    </div>-->
+<!--                    <div class="card-footer d-sm-flex justify-content-sm-between align-items-sm-center">-->
+<!--                        <ul class="list-inline list-inline-dotted mb-0">-->
+<!--                            <li class="list-inline-item"><i class="fa fa-user mr-1"></i> 272</li>-->
+<!--                            <li class="list-inline-item"><i class="fa fa-calendar-check-o mr-1"></i> 15 hours</li>-->
+<!--                            <li class="list-inline-item"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <span class="text-muted ml-1">(12)</span> </li>-->
+<!--                        </ul>-->
+<!--                        <div class="mt-2 mt-sm-0"> <a href="#" data-abc="true" class="course-button"><i class="fa fa-check font-size-base mr-1"></i> Take course</a> </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            Test-->
+
+
             <!--                Список курсов-->
         </div>
     </div>
 </div>
-</div>
+<div th:replace="/include/_footer :: footer"></div>
 </body>
 </html>

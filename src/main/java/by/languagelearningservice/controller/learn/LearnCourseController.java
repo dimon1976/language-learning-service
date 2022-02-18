@@ -1,27 +1,21 @@
 package by.languagelearningservice.controller.learn;
 
-import by.languagelearningservice.controller.ExController;
-import by.languagelearningservice.dto.CommentDto;
-import by.languagelearningservice.entity.Comment;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
-import by.languagelearningservice.service.CommentsService;
 import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,10 +23,7 @@ import java.util.Set;
 @RequestMapping("/learn")
 public class LearnCourseController {
 
-    @Autowired
-    private ModelMapper mapper;
-    @Autowired
-    private CommentsService commentsService;
+
     @Autowired
     private CourseService courseService;
     @Autowired
@@ -53,6 +44,14 @@ public class LearnCourseController {
             model.addAttribute("courseList", courseList);
             return "/learn/index";
         }
+    }
+
+    @GetMapping("/course/{courseId}/syllabus")
+    public String syllabus(@PathVariable("courseId") Course course, Model model) {
+        User userById = userService.getUserById(course.getTeacherId());
+        model.addAttribute("teacher", userById);
+        model.addAttribute("course", course);
+        return "learn/course/syllabus";
     }
 
     @GetMapping("/courses/info")
@@ -160,9 +159,8 @@ public class LearnCourseController {
 
 
     @GetMapping("/course/{courseId}/enroll")
-    public String enrollCourse(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
+    public String enrollCourse(@PathVariable("courseId") Course course, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        Course course = courseService.findById(courseId);
         userService.addLearnCourse(user.getUserId(), course);
         model.addAttribute("course", course);
         return "/learn/course/syllabus";
@@ -170,9 +168,8 @@ public class LearnCourseController {
 
 
     @GetMapping("/course/{courseId}/leave")
-    public String leaveCourse(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
+    public String leaveCourse(@PathVariable("courseId") Course course, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        Course course = courseService.findById(courseId);
         userService.removeCourse(user.getUserId(), course);
         Set<Course> courseList = userService.getUserById(user.getUserId()).getCourses();
         model.addAttribute("courseList", courseList);
@@ -180,8 +177,7 @@ public class LearnCourseController {
     }
 
     @GetMapping("/course/{courseId}/info")
-    public String info(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
-        Course course = courseService.findById(courseId);
+    public String info(@PathVariable("courseId") Course course, Model model, HttpSession httpSession) {
         User teacher = courseService.findTeacherCourse(course);
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
@@ -189,40 +185,16 @@ public class LearnCourseController {
     }
 
     @GetMapping("/course/{courseId}/news")
-    public String news(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
-        Course course = courseService.findById(courseId);
+    public String news(@PathVariable("courseId") Course course, Model model, HttpSession httpSession) {
         User teacher = courseService.findTeacherCourse(course);
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);
         return "/learn/course/news";
     }
 
-    @GetMapping("/course/{courseId}/comments")
-    public String comments(@PathVariable("courseId") Course course, Model model) {
-        Iterable<Comment> commentList = commentsService.findAllByCourseId();
-        model.addAttribute("comments", commentList);
-        model.addAttribute("comment", new Comment());
-        model.addAttribute("course", course);
-        return "/learn/course/comments";
-    }
-
-    @PostMapping("/course/{courseId}/comments/add")
-    public String comments(@PathVariable("courseId") Course course, @RequestParam String text, Model model, HttpSession httpSession) {
-        {
-            User user = (User) httpSession.getAttribute("user");
-            Comment comment = new Comment(text, user, course);
-            commentsService.save(comment);
-            Iterable<Comment> commentList = commentsService.findAllByCourseId();
-            model.addAttribute("comments", commentList);
-            model.addAttribute("comment", new Comment());
-            model.addAttribute("course", course);
-            return "/learn/course/comments";
-        }
-    }
 
     @GetMapping("/course/{courseId}/reviews")
-    public String reviews(@PathVariable("courseId") long courseId, Model model, HttpSession httpSession) {
-        Course course = courseService.findById(courseId);
+    public String reviews(@PathVariable("courseId") Course course, Model model, HttpSession httpSession) {
         User teacher = courseService.findTeacherCourse(course);
         model.addAttribute("teacher", teacher);
         model.addAttribute("course", course);

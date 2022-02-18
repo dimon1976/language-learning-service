@@ -4,7 +4,6 @@ import by.languagelearningservice.dto.UserDto;
 import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Level;
-import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,16 +36,25 @@ public class UserController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/profile")
-    public String profile(Model model, HttpSession httpSession) {
+
+
+    @GetMapping("/profile{userId}")
+    public String profile(@RequestParam("userId") User user, Model model, HttpSession httpSession) {
         if (httpSession.getAttribute("user") == null) {
             return "redirect:/user/authorization";
+        } else {
+            User userSession = (User) httpSession.getAttribute("user");
+            if (user.getUserId() == userSession.getUserId()) {
+                Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
+                model.addAttribute("languages", languages);
+                model.addAttribute("userUpdate", userSession);
+                return "user/profile/index";
+            }
+            Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
+            model.addAttribute("languages", languages);
+            model.addAttribute("user", user);
+            return "user/profile/info";
         }
-        User user = (User) httpSession.getAttribute("user");
-        Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
-        model.addAttribute("languages", languages);
-        model.addAttribute("userUpdate", user);
-        return "user/profile/index";
     }
 
     @PostMapping("/profile/update")
@@ -82,9 +90,9 @@ public class UserController {
         return "/user/profile/index";
     }
 
-    @GetMapping("/info")
-    public String info(){
-
+    @GetMapping("/info{userId}")
+    public String info(@RequestParam("userId") User user, Model model) {
+        model.addAttribute("userInfo", user);
         return "/user/profile/info";
     }
 
@@ -138,7 +146,6 @@ public class UserController {
     @GetMapping("/logout")
     public String logout(HttpSession httpSession, Model model) {
         httpSession.invalidate();
-//        model.addAttribute("newUser", new User());
         return "redirect:/";
     }
 
