@@ -35,19 +35,19 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-6">
-                            <label class="labels" for="first_name">Ваше имя*</label>
+                            <label class="labels">Ваше имя*</label>
                             <span th:text="${firstnameError}"></span>
                             <input type="text" class="form-control" th:field="*{firstname}" placeholder="Имя"
                                    th:classappend="${firstnameError} ? is-invalid : ''"></div>
                         <div class="col-md-6">
-                            <label class="labels" for="last_name">Фамилия *</label>
+                            <label class="labels">Фамилия *</label>
                             <span th:text="${lastnameError}"></span>
                             <input type="text" class="form-control" th:field="*{lastname}" placeholder="Фамилия"
                                    th:classappend="${lastnameError} ? is-invalid : ''"></div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12">
-                            <label class="labels" for="email">Email</label>
+                            <label class="labels">Email</label>
                             <span th:text="${emailError}"></span>
                             <input type="email" class="form-control" th:field="*{email}" placeholder="Email"
                                    th:classappend="${emailError} ? is-invalid : ''"></div>

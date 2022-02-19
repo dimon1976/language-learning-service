@@ -23,6 +23,7 @@ public class CourseService {
     private CourseRepository courseRepository;
 
     public Course save(Course course) {
+        log.info(String.format("Request save Course Id %s ", course.getCourseId()));
         course.setCourseStatus(CourseStatus.DRAFT);
         return courseRepository.save(course);
     }
@@ -44,7 +45,7 @@ public class CourseService {
     @Transactional
     public Course update(Course courseUpdate) {
         log.info(String.format("Request  update Course %s", courseUpdate));
-        Course course = courseRepository.getById(courseUpdate.getCourseId());
+        Course course = courseRepository.findById(courseUpdate.getCourseId()).get();
         course.setNameCourse(courseUpdate.getNameCourse());
         course.setTheTargetAudience(courseUpdate.getTheTargetAudience());
         course.setDescription(courseUpdate.getDescription());
@@ -53,10 +54,13 @@ public class CourseService {
         course.setCourseStatus(courseUpdate.getCourseStatus());
         course.setLanguage(courseUpdate.getLanguage());
         course.setLevel(courseUpdate.getLevel());
+        course.setFilename(courseUpdate.getFilename());
+        course.setRequirements(courseUpdate.getRequirements());
         return courseRepository.save(course);
     }
 
     public List<Course> getTeacherListCourseByStatus(CourseStatus status, Pageable pageable, Long userId) {
+        log.info(String.format("Request list by status Course %s ", status));
         if (status.toString().equals("ALL")) {
             return courseRepository.findAllByTeacherId(userId, pageable).get();
         } else {

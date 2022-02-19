@@ -16,6 +16,7 @@ public class CommentsService {
 
 
     public Comment save(Comment comment) {
+        log.info(String.format("Request save comment id %s ", comment.getId()));
         commentsRepository.save(comment);
         return comment;
     }

@@ -1,0 +1,51 @@
+<div th:fragment="pager">
+
+    <div class="pagination justify-content-center mb-0">
+        <nav aria-label="">
+            <ul class="pagination">
+                <li th:if="${page.hasPrevious()}" class="page-item">
+                    <a th:href="@{${url}(page=${page.number-1},size=${page.size})}"
+                       class="page-link">Назад</a>
+                </li>
+                <th:block th:each="i:${#numbers.sequence(0,page.totalPages-1)}">
+                    <li th:if="${page.number == i}" class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">[[${i}+1]]</a>
+                    </li>
+                    <li th:unless="${page.number == i}" class="page-item" aria-current="page">
+                        <a class="page-link" th:href="@{${url}(page=${i},size=${page.size})}">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li th:if="${page.hasNext()}" class="page-item">
+                    <a th:href="@{${url}(page=${page.number+1},size=${page.size})}"
+                       class="page-link" href="#">Вперед</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<div th:fragment="pager_discovery">
+    <div class="pagination justify-content-center mb-0">
+        <nav aria-label="">
+            <ul class="pagination">
+                <li th:if="${userList.hasPrevious()}" class="page-item">
+                    <a th:href="@{${url}(page=${userList.number-1},size=${userList.size})}"
+                       class="page-link">Назад</a>
+                </li>
+                <th:block th:each="i:${#numbers.sequence(0,userList.totalPages-1)}">
+                    <li th:if="${userList.number == i}" class="page-item active" aria-current="page">
+                        <a class="page-link" href="#">[[${i}+1]]</a>
+                    </li>
+                    <li th:unless="${userList.number == i}" class="page-item" aria-current="page">
+                        <a class="page-link" th:href="@{${url}(page=${i},size=${userList.size})}">[[${i}+1]]</a>
+                    </li>
+                </th:block>
+                <li th:if="${userList.hasNext()}" class="page-item">
+                    <a th:href="@{${url}(page=${userList.number+1},size=${userList.size})}"
+                       class="page-link" href="#">Вперед</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

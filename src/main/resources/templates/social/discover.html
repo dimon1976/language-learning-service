@@ -7,19 +7,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         .p-4 {
-            padding: 1.5rem!important;
+            padding: 1.5rem !important;
         }
+
         .mb-0, .my-0 {
-            margin-bottom: 0!important;
+            margin-bottom: 0 !important;
         }
+
         .shadow-sm {
-            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
         }
 
         /* user-dashboard-info-box */
         .user-dashboard-info-box .candidates-list .thumb {
             margin-right: 20px;
         }
+
         .user-dashboard-info-box .candidates-list .thumb img {
             width: 80px;
             height: 80px;
@@ -81,12 +84,14 @@
             -webkit-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
         }
+
         .candidate-list:hover {
             -webkit-box-shadow: 0px 0px 34px 4px rgba(33, 37, 41, 0.06);
             box-shadow: 0px 0px 34px 4px rgba(33, 37, 41, 0.06);
             position: relative;
             z-index: 99;
         }
+
         .candidate-list:hover a.candidate-list-favourite {
             color: #e74c3c;
             -webkit-box-shadow: -1px 4px 10px 1px rgba(24, 111, 201, 0.1);
@@ -100,6 +105,7 @@
             flex: 0 0 80px;
             border: none;
         }
+
         .candidate-list .candidate-list-image img {
             width: 80px;
             height: 80px;
@@ -119,6 +125,7 @@
             flex-wrap: wrap;
             margin-bottom: 0px;
         }
+
         .candidate-list-details ul li {
             margin: 5px 10px 5px 0px;
             font-size: 13px;
@@ -132,10 +139,12 @@
             -ms-flex: 0 0 90px;
             flex: 0 0 90px;
         }
+
         .candidate-list .candidate-list-favourite-time span {
             display: block;
             margin: 0 auto;
         }
+
         .candidate-list .candidate-list-favourite-time .candidate-list-favourite {
             display: inline-block;
             position: relative;
@@ -151,6 +160,7 @@
             font-size: 16px;
             color: #646f79;
         }
+
         .candidate-list .candidate-list-favourite-time .candidate-list-favourite:hover {
             background: #ffffff;
             color: #e74c3c;
@@ -167,13 +177,15 @@
         /*    background-color: #ffffff !important;*/
         /*}*/
         .p-4 {
-            padding: 1.5rem!important;
+            padding: 1.5rem !important;
         }
+
         .mb-0, .my-0 {
-            margin-bottom: 0!important;
+            margin-bottom: 0 !important;
         }
+
         .shadow-sm {
-            box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+            box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
         }
 
         .user-dashboard-info-box .candidates-list .thumb {
@@ -198,13 +210,32 @@
             <div class="row p-2">
                 <div class="b-b b-theme nav-active-theme mb-3">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Изучай</a></li>
-                        <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Друзья</a></li>
+                        <li class="nav-item"><a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                                                role="tab" aria-controls="home" aria-selected="true">Изучай</a></li>
+                        <li class="nav-item"><a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                                                role="tab" aria-controls="profile" aria-selected="false">Друзья</a></li>
                     </ul>
                 </div>
                 <div class="tab-content mb-4">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row mb-2">
+                            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start mb-2">
+                                <div class="nav col-8 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></div>
+                                <form class="row g-3" th:action="@{/social}"
+                                      th:method="get">
+                                    <div class="col-auto">
+                                    <select name="filter" class="form-select form-select-sm"
+                                            aria-label=".form-select-sm example">
+                                        <option disabled selected>Выберите язык</option>
+                                        <option th:each="lang:${languages}" th:value="${lang.key}"
+                                                th:text="${lang.value}"></option>
+                                    </select>
+                                    </div>
+                                    <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary btn-sm">Выбрать</button>
+                                    </div>
+                                </form>
+                            </div>
                             <div class="col-md-12" th:each="user:${userList}">
                                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div class="col-auto d-none d-lg-block">
@@ -216,19 +247,25 @@
                                     </div>
                                     <div class="col p-2 d-flex flex-column position-static">
                                         <p>Говорит на - <strong class="text-primary"
-                                                                th:text="${user.nativeLang !=null} ? ${user.nativeLang.translation} :'нет информации'"></strong></p>
+                                                                th:text="${user.nativeLang !=null} ? ${user.nativeLang.translation} :'нет информации'"></strong>
+                                        </p>
                                         <p>Изучает - <strong class="text-primary"
-                                                             th:text="${user.learning !=null} ? ${user.learning.translation} : 'нет информации'"></strong></p>
+                                                             th:text="${user.learning !=null} ? ${user.learning.translation} : 'нет информации'"></strong>
+                                        </p>
                                         <th:block th:if="${user.firstname!=null}">
                                             <h3 class="mb-0" th:text="${user.firstname+' '}"></h3>
                                         </th:block>
-                                        <div class="mb-1 text-muted" th:text="${{user.dateCreating.toLocalDate()}}"></div>
+                                        <div class="mb-1 text-muted"
+                                             th:text="${{user.dateCreating.toLocalDate()}}"></div>
                                         <p class="card-text mb-auto" th:text="${user.shortDescription}"></p>
                                         <hr>
                                         <span class="py-1 my-1">
                                 <ul class="nav justify-content-start border-bottom pb-3 mb-3">
-                                    <li class="nav-item p-1"><a th:href="@{/user/profile(userId=${user.userId})}" class="btn btn-outline-primary btn-sm">Подробнее</a></li>
-                                    <li class="nav-item p-1"><a th:href="@{/social/invite(userId=${user.userId},requestInvite='REQUEST')}" class="btn btn-outline-primary btn-sm">Добавить в друзья</a></li>
+                                    <li class="nav-item p-1"><a th:href="@{/user/profile(userId=${user.userId})}"
+                                                                class="btn btn-outline-primary btn-sm">Подробнее</a></li>
+                                    <li class="nav-item p-1"><a
+                                            th:href="@{/social/invite(userId=${user.userId},requestInvite='REQUEST')}"
+                                            class="btn btn-outline-primary btn-sm">Добавить в друзья</a></li>
                                 </ul>
                             </span>
                                     </div>
@@ -238,17 +275,17 @@
 
                     </div>
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <p>Мы нашли носителей, которые помогут тебе изучать aнглийский. Добавь их в друзья, чтобы получать больше исправлений и помогать друг другу учиться.</p>
                         <div class="container mt-3 mb-4">
                             <div class="col-lg-12 mt-4 mt-lg-0">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="user-dashboard-info-box table-responsive mb-0 bg-white p-4 shadow-sm">
-                                            <table class="table manage-candidates-top mb-0">
+                                            <p th:text="${friendList.isEmpty()}? 'Пока Ваш список друзей пуст (:'"></p>
+                                            <table class="table manage-candidates-top mb-0" th:if="${!friendList.isEmpty()}">
                                                 <thead>
                                                 <tr>
                                                     <th>Имя</th>
-                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Родной язык</th>
                                                     <th class="action text-right">Action</th>
                                                 </tr>
                                                 </thead>
@@ -256,45 +293,53 @@
                                                 <tr class="candidates-list" th:each="friend:${friendList}">
                                                     <td class="title">
                                                         <div class="thumb">
-                                                            <img class="img-fluid" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="">
+                                                            <img class="img-fluid"
+                                                                 src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                                 alt="">
                                                         </div>
                                                         <div class="candidate-list-details">
                                                             <div class="candidate-list-info">
                                                                 <div class="candidate-list-title">
-                                                                    <h5 class="mb-0"><a href="#" th:text="${friend.firstname}"></a></h5>
+                                                                    <h5 class="mb-0"><a href="#"
+                                                                                        th:text="${friend.firstname}"></a>
+                                                                    </h5>
                                                                 </div>
                                                                 <div class="candidate-list-option">
                                                                     <ul class="list-unstyled">
-                                                                        <li><i class="fas fa-filter pr-1"></i>Information Technology</li>
-                                                                        <li><i class="fas fa-map-marker-alt pr-1"></i>Rolling Meadows, IL 60008</li>
+                                                                        <li><i class="bi bi-calendar-date"
+                                                                               th:text="${{friend.dateCreating}}"></i>
+                                                                        </li>
+                                                                        <li><i class="bi bi-envelope"
+                                                                               th:text="${' '+friend.email}"></i></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="candidate-list-favourite-time text-center">
-                                                        <a class="candidate-list-favourite order-2 text-danger" href="#"><i class="fas fa-heart"></i></a>
-                                                        <span class="candidate-list-time order-1">Shortlisted</span>
+                                                        <a class="candidate-list-favourite order-2 text-danger"
+                                                           href="#"><i class="bi bi-translate"></i></a>
+                                                        <span class="candidate-list-time order-1"
+                                                              th:text="${friend.nativeLang}? ${friend.nativeLang.translation}:'--'"></span>
                                                     </td>
                                                     <td>
                                                         <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                                            <li><a th:href="@{/user/profile(userId=${friend.userId})}" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
-                                                            <li><a th:href="@{/social/notifications(removeUser=${friend.userId})}" class="text-danger" data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a></li>
+                                                            <li><a th:href="@{/user/profile(userId=${friend.userId})}"
+                                                                   class="text-primary" data-toggle="tooltip" title=""
+                                                                   data-original-title="view"><i class="far fa-eye"></i></a>
+                                                            </li>
+                                                            <li>
+                                                                <a th:href="@{/social/notifications(removeUser=${friend.userId})}"
+                                                                   class="text-danger" data-toggle="tooltip" title=""
+                                                                   data-original-title="Delete"><i
+                                                                        class="far fa-trash-alt"></i></a></li>
                                                         </ul>
                                                     </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            <div class="text-center mt-3 mt-sm-3">
-                                                <ul class="pagination justify-content-center mb-0">
-                                                    <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
-                                                    <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span class="sr-only">(current)</span></li>
-                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">...</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">25</a></li>
-                                                    <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
-                                                </ul>
+                                            <div class="text-center mt-3 mt-sm-3" th:if="${!friendList.isEmpty()}">
+
                                             </div>
                                         </div>
                                     </div>

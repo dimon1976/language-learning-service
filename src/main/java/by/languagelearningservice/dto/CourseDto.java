@@ -28,11 +28,9 @@ public class CourseDto {
     @Length(min = 3, max = 1024,message = "Значение меньше 3-х либо больше 1024")
     private String shortDescription;
     private Long teacherId;
-
+    private String filename;
     private Boolean published;
-    @Length(min = 3,message = "Значение меньше 3-х")
     private String requirements;
-    @Length(min = 3,message = "Значение меньше 3-х")
     private String TheTargetAudience;
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;

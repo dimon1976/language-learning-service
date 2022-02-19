@@ -64,7 +64,7 @@
                                            class="btn-link text-semibold media-heading box-inline"
                                            th:text="${comment.author.firstname}"></a>
                                         <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i><span
-                                                th:text="${{' - '+(comment.dateCreating.toLocalDate())}}"></span>
+                                                th:text="${{' - '+(comment.dateCreating)}}"></span>
                                         </p>
                                     </div>
                                     <p th:text="${comment.text}"></p>

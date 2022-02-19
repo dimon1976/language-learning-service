@@ -20,41 +20,6 @@
                 </div>
             </div>
 
-            <!--            Карточки-->
-            <!--            <div class="row mb-2">-->
-            <!--                <div class="col-md-6">-->
-            <!--                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
-            <!--                        <div class="col p-4 d-flex flex-column position-static">-->
-            <!--                            <strong class="d-inline-block mb-2 text-primary">World</strong>-->
-            <!--                            <h3 class="mb-0">Featured post</h3>-->
-            <!--                            <div class="mb-1 text-muted">Nov 12</div>-->
-            <!--                            <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>-->
-            <!--                            <a href="#" class="stretched-link">Continue reading</a>-->
-            <!--                        </div>-->
-            <!--                        <div class="col-auto d-none d-lg-block">-->
-            <!--                            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col-md-6">-->
-            <!--                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">-->
-            <!--                        <div class="col p-4 d-flex flex-column position-static">-->
-            <!--                            <strong class="d-inline-block mb-2 text-success">Design</strong>-->
-            <!--                            <h3 class="mb-0">Post title</h3>-->
-            <!--                            <div class="mb-1 text-muted">Nov 11</div>-->
-            <!--                            <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>-->
-            <!--                            <a href="#" class="stretched-link">Continue reading</a>-->
-            <!--                        </div>-->
-            <!--                        <div class="col-auto d-none d-lg-block">-->
-            <!--                            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!--            Карточки-->
-
             <div class="row g-5">
                 <div class="col-md-8">
                     <h3 class="pb-4 mb-4 fst-italic border-bottom">
@@ -73,16 +38,23 @@
 
                         <h2>Для кого этот курс</h2>
                         <p th:utext="${course.theTargetAudience}"></p>
-                        <!--                        <blockquote class="blockquote">-->
-                        <!--                            <p>Quoted text goes here.</p>-->
-                        <!--                        </blockquote>-->
-                        <p></p>
+<!--                                                <blockquote class="blockquote">-->
+<!--                                                    <p>Quoted text goes here.</p>-->
+<!--                                                </blockquote>-->
+                        <hr>
+                        <h2>Требования</h2>
+                        <p th:utext="${course.requirements}"></p>
+                        <hr>
                         <h3>Наши преподаватели</h3>
                         <p>Кто ведет курс:</p>
                         <ul>
                             <li>
-                                <a th:if="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p th:text="${teacher.firstname}"></p></a>
-                                <a th:unless="${teacher.lastname==null}" th:href="@{/user/profile(userId=${teacher.userId})}"><p th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
+                                <a th:if="${teacher.lastname==null}"
+                                   th:href="@{/user/profile(userId=${teacher.userId})}"><p
+                                        th:text="${teacher.firstname}"></p></a>
+                                <a th:unless="${teacher.lastname==null}"
+                                   th:href="@{/user/profile(userId=${teacher.userId})}"><p
+                                        th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
                             </li>
                         </ul>
                         <hr>
@@ -107,7 +79,6 @@
                                                      th:text="${counts2.count}+${'. '+lessons.name}"></div>
                                                 <i class="mb-1" th:text="${lessons.description}"></i>
                                             </div>
-                                            <!--                                            <i class="badge bg-primary rounded-pill">14</i>-->
                                         </span>
                                     </span>
                                 </div>
@@ -160,7 +131,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!--  Конец отзывов-->
 
                     </article>
@@ -194,9 +164,10 @@
                             <h4 class="fst-italic">В курс входят</h4>
                             <span class="list-unstyled mb-0">
                                 <p th:text="${course.modules.size()+' Модулей'}"></p>
-
-                                <!--                                <p th:text="${course.getModules()}"><a id="lesson" th:text="' Уроков'"></a></p>-->
-
+<!--                                <th:block th:each="modul:${course.modules}">-->
+<!--                                    <ul th:text="${modul.name}"></ul>-->
+<!--                                <li th:text="${modul.lessons.size()}"></li>-->
+<!--                                </th:block>-->
                             </span>
                             <hr>
                             <a href="#menu">

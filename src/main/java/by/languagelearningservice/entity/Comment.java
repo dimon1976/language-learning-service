@@ -3,8 +3,6 @@ package by.languagelearningservice.entity;
 
 import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,9 +14,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private long postId;
-
     private long rating;
     private String text;
     private String tag;

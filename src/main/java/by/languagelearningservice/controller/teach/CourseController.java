@@ -5,6 +5,7 @@ import by.languagelearningservice.controller.ExController;
 import by.languagelearningservice.dto.CourseDto;
 import by.languagelearningservice.dto.ModuleDto;
 import by.languagelearningservice.entity.Comment;
+import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
@@ -13,6 +14,7 @@ import by.languagelearningservice.service.CourseService;
 import by.languagelearningservice.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,13 +22,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/teach/courses")
@@ -38,6 +42,8 @@ public class CourseController {
     private UserService userService;
     @Autowired
     private ModelMapper mapper;
+    @Value("${upload.path}")
+    private String uploadPath;
 
 
     @GetMapping("/learn")
@@ -82,31 +88,43 @@ public class CourseController {
     @GetMapping("{courseId}/update")
     public String update(@PathVariable("courseId") Course course, Model model) {
         User userById = userService.getUserById(course.getTeacherId());
+        Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
         model.addAttribute("course", course);
+        model.addAttribute("languages", languages);
         model.addAttribute("teacher", userById);
         return "teach/courses/info_edit";
     }
 
     @PostMapping("{courseId}/update")
-    public String update(@ModelAttribute("course") @Valid CourseDto courseDto,
+    public String update(@RequestParam("file") MultipartFile file, @PathVariable("courseId") Course courseByid, @ModelAttribute("course") @Valid CourseDto courseDto,
                          BindingResult result,
-                         Model model){
-    if(result.hasErrors())
-    {
-        Map<String, String> errorsMap = ExController.getErrors(result);
-        model.mergeAttributes(errorsMap);
-        model.addAttribute("course", courseDto);
-        return "teach/courses/new";
-    } else
-
-    {
-        Course course = courseService.update(mapper.map(courseDto, Course.class));
-        User userById = userService.getUserById(course.getTeacherId());
-        model.addAttribute("course", course);
-        model.addAttribute("teacher", userById);
-        return "teach/courses/info_edit";
+                         Model model) throws IOException {
+        if (result.hasErrors()) {
+            Map<String, String> errorsMap = ExController.getErrors(result);
+            model.mergeAttributes(errorsMap);
+            model.addAttribute("teacher", userService.getUserById(courseByid.getTeacherId()));
+            model.addAttribute("course", courseDto);
+            return "teach/courses/new";
+        } else {
+            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+                String uuidFile = UUID.randomUUID().toString();
+                String resultFileName = uuidFile + "." + file.getOriginalFilename();
+                file.transferTo(new File(uploadPath + "/" + resultFileName));
+                courseDto.setFilename(resultFileName);
+            }
+            Course course = courseService.update(mapper.map(courseDto, Course.class));
+            User userById = userService.getUserById(course.getTeacherId());
+            Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
+            model.addAttribute("languages", languages);
+            model.addAttribute("course", course);
+            model.addAttribute("teacher", userById);
+            return "teach/courses/info_edit";
+        }
     }
-}
 
 
     @GetMapping("/new")
@@ -179,6 +197,13 @@ public class CourseController {
         return "teach/courses/promo";
     }
 
+    @GetMapping("/{courseId}/comments")
+    public String comments(@PathVariable("courseId") Course course, Model model) {
+        Iterable<Comment> commentList = course.getComments();
+        model.addAttribute("comments", commentList);
+        model.addAttribute("course", course);
+        return "/teach/courses/comments";
+    }
 
     @GetMapping("{courseId}/syllabus")
     public String syllabus(@PathVariable("courseId") Course course, Model model) {
@@ -223,22 +248,6 @@ public class CourseController {
         }
     }
 
-//    @GetMapping("{courseId}/comments")
-//    public String comments(@PathVariable("courseId") Course course, Model model) {
-//        Iterable<Comment> commentList = commentsService.findAllByCourseId();
-//        model.addAttribute("comments", commentList);
-//        model.addAttribute("comment", new Comment());
-//        model.addAttribute("course", course);
-//        return "/teach/courses/comments";
-//    }
-//
-//    @PostMapping("{courseId}/comments/add")
-//    public String comments(@PathVariable("courseId") Course course, @RequestParam String text, Model model, HttpSession httpSession) {
-//        {
-//            getUserSession(course, text, model, httpSession, commentsService);
-//            return "/teach/courses/comments";
-//        }
-//    }
 
     public static void getUserSession(@PathVariable("courseId") Course course, @RequestParam String text, Model model, HttpSession httpSession, CommentsService commentsService, CourseService courseService) {
         User user = (User) httpSession.getAttribute("user");
