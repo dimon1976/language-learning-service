@@ -1,9 +1,7 @@
 <div th:fragment="sidebar_teach_course">
     <a th:href="@{/teach/courses/{courseId}/info(courseId=${course.courseId})}"
        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-        <svg class="bi me-2" width="40" height="32">
-        </svg>
-        <span class="fs-4" th:text="${course.nameCourse}"></span>
+        <span class="fs-5" th:text="${course.nameCourse}"></span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
@@ -36,12 +34,12 @@
             </a>
             <div class="collapse" id="user-collapse">
                 <ul class="btn-toggle-nav small">
-                    <li><a href="#" class="link-dark rounded">Новости</a></li>
+<!--                    <li><a href="#" class="link-dark rounded">Новости</a></li>-->
                     <li><a th:href="@{/teach/courses/{courseId}/comments(courseId=${course.courseId})}"
                            class="link-dark rounded">Комментарии</a></li>
-                    <li><a th:href="@{/teach/courses/{courseId}/reviews(courseId=${course.courseId})}"
-                           class="link-dark rounded">Отзывы</a></li>
-                </ul>
+<!--                    <li><a th:href="@{/teach/courses/{courseId}/reviews(courseId=${course.courseId})}"-->
+<!--                           class="link-dark rounded">Отзывы</a></li>-->
+<!--                </ul>-->
             </div>
         </li>
         <li class="nav-item">
@@ -55,10 +53,10 @@
                 Настройки
             </a>
             <div class="collapse" id="setting-collapse">
-                <ul class="btn-toggle-nav small">
-                    <li><a th:href="@{/teach/courses/{courseId}/settings(courseId=${course.courseId})}"
-                           class="link-dark rounded">Публикация</a></li>
-                </ul>
+<!--                <ul class="btn-toggle-nav small">-->
+<!--                    <li><a th:href="@{/teach/courses/{courseId}/settings(courseId=${course.courseId})}"-->
+<!--                           class="link-dark rounded">Публикация</a></li>-->
+<!--                </ul>-->
             </div>
         </li>
         <hr>

@@ -2,10 +2,14 @@ package by.languagelearningservice.controller.learn;
 
 import by.languagelearningservice.entity.Invite;
 import by.languagelearningservice.entity.InviteStatus;
+import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.service.InviteService;
 import by.languagelearningservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/social")
@@ -38,13 +45,21 @@ public class SocialController {
     }
 
     @GetMapping
-    public String index(Model model, HttpSession httpSession) {
+    public String index(@RequestParam(value = "filter", required = false) Language language, Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
-        List<User> userList = userService.getAllUsers(user);
+        if (language != null) {
+            List<User> userList = userService.getUsersByNativeLanguage(user, language);
+            model.addAttribute("userList", userList);
+        } else {
+            List<User> userList = userService.getAllUsers(user);
+            model.addAttribute("userList", userList);
+        }
         Set<User> friendList = userService.getAllFriends(user.getUserId());
-        model.addAttribute("userList", userList);
+        Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
+        model.addAttribute("languages", languages);
         model.addAttribute("friendList", friendList);
         model.addAttribute("user", user);
+
         return "/social/discover";
     }
 
@@ -52,6 +67,7 @@ public class SocialController {
     public String addFriend(@RequestParam(value = "userId", required = false) User userTo,
                             @RequestParam(value = "inviteId", required = false) Invite invite,
                             @RequestParam("requestInvite") InviteStatus requestInvite,
+                            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                             Model model, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (invite == null) {

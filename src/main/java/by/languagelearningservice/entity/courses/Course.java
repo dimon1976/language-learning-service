@@ -29,11 +29,12 @@ public class Course {
     @Column(length = 2048)
     private String shortDescription;
     private String requirements;
-    private String TheTargetAudience;
+    private String theTargetAudience;
     @Column(updatable = false)
     private LocalDateTime dateCreating;
     private LocalDateTime dateLaunch;
     private Long teacherId;
+    private String filename;
     @JoinTable(name = "users_courses",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -63,6 +64,17 @@ public class Course {
     @PrePersist
     protected void onCreate() {
         this.dateCreating = LocalDateTime.now();
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        if (filename != null) {
+            this.filename = filename;
+        }
+
     }
 
     public List<Comment> getComments() {
@@ -116,18 +128,18 @@ public class Course {
     }
 
     public void setRequirements(String requirements) {
-        if (shortDescription != null) {
+        if (requirements != null) {
             this.requirements = requirements;
         }
     }
 
     public String getTheTargetAudience() {
-        return TheTargetAudience;
+        return theTargetAudience;
     }
 
     public void setTheTargetAudience(String theTargetAudience) {
         if (theTargetAudience != null) {
-            TheTargetAudience = theTargetAudience;
+            this.theTargetAudience = theTargetAudience;
         }
     }
 
@@ -202,6 +214,5 @@ public class Course {
         if (level != null) {
             this.level = level;
         }
-
     }
 }

@@ -2,11 +2,13 @@ package by.languagelearningservice.service;
 
 
 import by.languagelearningservice.entity.Invite;
+import by.languagelearningservice.entity.Language;
 import by.languagelearningservice.entity.User;
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -79,10 +81,24 @@ public class UserService {
     }
 
     public List<User> getAllUsers(User user) {
+        log.info(String.format("Request list Users by user %s ", user.getUserId()));
         List<User> userList = userRepository.findAll();
         List<User> users = new ArrayList<>();
         for (User u : userList) {
             if (u.getUserId() != user.getUserId() && u.getTeacher().equals(user.getTeacher())) {
+                users.add(u);
+            }
+        }
+        return users;
+    }
+
+    public List<User> getUsersByNativeLanguage(User user, Language language) {
+        log.info(String.format("Request list Users by nativeLang %s ", language));
+        List<User> userList = userRepository.findAll();
+        List<User> users = new ArrayList<>();
+        for (User u : userList) {
+            if (u.getUserId() != user.getUserId() && u.getTeacher().equals(user.getTeacher())) {
+                if(u.getNativeLang().name().equals(language.name()))
                 users.add(u);
             }
         }
@@ -96,11 +112,13 @@ public class UserService {
 
 
     public Set<User> getAllFriends(long id) {
+        log.info(String.format("Request list Friend by user id %s ", id));
         User user = getUserById(id);
         return user.getFriends();
     }
 
     public void addFriend(Invite invite){
+        log.info(String.format("Request add friend id %s ", invite.getFrom().getUserId()));
         User user = userRepository.findById(invite.getTo().getUserId()).
                 orElseThrow(() -> new RuntimeException(String.format("Request User findById %s", invite.getFrom().getUserId())));
         user.getFriends().add(invite.getFrom());
@@ -108,6 +126,7 @@ public class UserService {
     }
 
     public void removeFriends(Invite invite){
+        log.info(String.format("Request remove friend id %s ", invite.getFrom().getUserId()));
         User user = userRepository.findById(invite.getTo().getUserId()).
                 orElseThrow(() -> new RuntimeException(String.format("Request User findById %s", invite.getFrom().getUserId())));
         user.getFriends().remove(invite.getFrom());

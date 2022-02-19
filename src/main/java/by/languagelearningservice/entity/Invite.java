@@ -1,7 +1,6 @@
 package by.languagelearningservice.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 public class Invite {
@@ -30,19 +29,6 @@ public class Invite {
 
     public Invite() {
 
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Invite invite = (Invite) o;
-        return Objects.equals(from, invite.from) && Objects.equals(to, invite.to) && status == invite.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to, status);
     }
 
     public Long getId() {

@@ -22,6 +22,7 @@ public class InviteService {
     private InviteRepository inviteRepository;
 
     public void save(Invite invite) {
+        log.info(String.format("Request save Invite id %s ", invite.getId()));
         List<Invite> invites = inviteRepository.getAllByToUserId(invite.getTo().getUserId());
         for (Invite i : invites) {
             if (i.getFrom().getUserId() == invite.getFrom().getUserId()) {
@@ -38,14 +39,12 @@ public class InviteService {
 
 
     public List<Invite> getAllInvitesByToUser(long id) {
+        log.info(String.format("Request get invites by user id %s ", id));
         return inviteRepository.findInvitesByTo_UserId(id);
     }
 
-    public Invite getById(long id) {
-        return inviteRepository.getById(id);
-    }
-
     public void remove(User to, User from) {
+        log.info("Request remove invite");
         List<Invite> invites = inviteRepository.getAllByToUserId(to.getUserId());
         for (Invite i : invites) {
             if (i.getFrom().getUserId() == from.getUserId()) {

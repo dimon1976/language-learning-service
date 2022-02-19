@@ -85,9 +85,9 @@
                         <h6>Преподаватель </h6>
 
                         <th:block th:if="${session.user.userId==teacher.userId}">
-                            <a th:if="${teacher.lastname==null}" href="/user/profile"><p
+                            <a th:if="${teacher.lastname==null}" th:href="@{/user/profile(userId=${session.user.userId})}"><p
                                     th:text="${teacher.firstname}"></p></a>
-                            <a th:unless="${teacher.lastname==null}" href="/user/profile"><p
+                            <a th:unless="${teacher.lastname==null}" th:href="@{/user/profile(userId=${session.user.userId})}"><p
                                     th:text="${teacher.firstname}+' '+${teacher.lastname}"></p></a>
                         </th:block>
                         <th:block th:if="${session.user.userId!=teacher.userId}">

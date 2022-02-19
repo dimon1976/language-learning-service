@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,7 +53,7 @@ public class UserController {
             }
             Map<String, String> languages = Stream.of(Language.values()).collect(Collectors.toMap(Language::name, Language::getTranslation));
             model.addAttribute("languages", languages);
-            model.addAttribute("user", user);
+            model.addAttribute("userInfo", user);
             return "user/profile/info";
         }
     }
@@ -70,7 +71,7 @@ public class UserController {
             model.addAttribute("userUpdate", userDto);
             return "/user/profile/index";
         }
-        if (file != null && !file.getOriginalFilename().isEmpty()) {
+        if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();

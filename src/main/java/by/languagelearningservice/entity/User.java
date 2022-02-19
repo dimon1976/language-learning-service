@@ -3,7 +3,6 @@ package by.languagelearningservice.entity;
 import by.languagelearningservice.entity.courses.Course;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -46,13 +45,6 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<User> friends;
 
-
-    @JoinTable(name = "users_invites",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "invite_id"))
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Invite> invites;
-
     @Enumerated(EnumType.STRING)
     private Language learning;
 
@@ -72,15 +64,6 @@ public class User {
         this.dateCreating = LocalDateTime.now();
     }
 
-    public Set<Invite> getInvites() {
-        return invites;
-    }
-
-    public void setInvites(Set<Invite> invites) {
-        this.invites = invites;
-    }
-
-    @Transactional
     public Set<User> getFriends() {
         return friends;
     }

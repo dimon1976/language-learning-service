@@ -5,6 +5,7 @@
     <title>Title</title>
     <link href="/static/css/sidebars.css" th:href="@{/css/sidebars.css}" rel="stylesheet"/>
     <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <div th:replace="_header :: content"></div>
@@ -17,106 +18,130 @@
         </div>
         <!--            Sidebar-->
 
-                <div class="col py-3">
-                    <div class="row">
-                        <div class="col-md-12 align-items-md-stretch">
-                            <div class="h-100 p-3">
-                                <h4>Описание</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8 align-items-md-stretch">
-                            <div class="row">
-                                <div class="col-sm-8 d-flex justify-content-start">
-                                    <p>У этого курса есть промо-страница, которую гости сайта видят до того, как на него
-                                        поступить
-                                    </p>
-                                </div>
-                                <div class="col-sm-4 d-flex align-content-center flex-wrap justify-content-center">
-                                    <a th:href="@{/teach/courses/{courseId}/promo(courseId=${course.courseId})}">
-                                        <button class="btn btn-outline-secondary" type="button">Посмотреть</button>
-                                    </a>
+        <div class="col py-3">
+            <form class="login-form" th:action="@{/teach/courses/{courseId}/update(courseId=${course.courseId})}" th:object="${course}" th:method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-md-12 align-items-md-stretch">
+                        <div class="row mt-3">
+                            <div class="col-sm-8 align-items-md-stretch">
+                                <div class="p-3 bg-light border rounded-3">
+                                    <label for="nameCourse" class="form-label">Название курса</label>
+                                    <br>
+                                    <span th:text="${nameCourseError}"></span>
+                                    <textarea type="text" class="form-control" th:field="${course.nameCourse}"
+                                              id="nameCourse"
+                                              aria-describedby="emailHelp1"
+                                              th:classappend="${nameCourseError} ? is-invalid : ''"></textarea>
+                                    <div id="emailHelp1" class="form-text">Минимум 3 символа</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="h-100 d-flex align-content-center flex-wrap justify-content-center">
-                                <button class="btn btn-outline-secondary" type="button">Редактировать информацию
-                                </button>
+                            <div class="col-sm-4">
+                                <div class="card" style="width: 18rem;">
+                                    <img th:if="${course.filename==null}" style="max-height: 55px"
+                                         src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
+                                         class="img-fluid rounded mx-auto d-block" alt="">
+                                    <img th:if="${course.filename!=null}" class="img-fluid" style="max-height: 55px"
+                                         th:src="${'/img/'+course.filename}" th:alt="${'Photo -'+course.nameCourse}">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Сменить Фото</h6>
+                                        <input type="file" class="form-control" name="file">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-sm-8 align-items-md-stretch">
-                            <div class="h-100 p-3 bg-light border rounded-3">
+                            <div class="p-3 bg-light border rounded-3">
                                 <h4>Описание курса</h4>
-                                <p th:if="${course.description.isEmpty()}">Поле не заполнено. Пожалуйста, заполните его
-                                    в редакторе курса.</p>
-                                <p th:unless="${course.description.isEmpty()}"
-                                   th:text="${#strings.abbreviate(course.description,1024)}"></p>
+                                <span th:text="${descriptionError}"></span>
+                                <textarea type="text" class="form-control" th:field="*{description}"
+                                          placeholder="описание"
+                                          th:classappend="${descriptionError} ? is-invalid : ''"></textarea>
+
+                            </div>
+                            <div class="p-3 mt-1 bg-light border rounded-3">
+                                <h4>Требования</h4>
+                                <span th:text="${requirementsError}"></span>
+                                <textarea type="text" class="form-control" rows="2" th:field="*{requirements}"
+                                          placeholder="Требования"
+                                          th:classappend="${requirementsError} ? is-invalid : ''"></textarea>
+
                             </div>
                         </div>
+
                         <div class="col-sm-4 align-items-md-stretch">
                             <div class="row">
                                 <div class=" align-items-md-stretch">
                                     <div class="p-3 bg-light border rounded-3">
                                         <h6>Коротко о курсе - </h6>
-                                        <p th:if="${course.shortDescription.isEmpty()}">Поле не заполнено. Пожалуйста,
-                                            заполните его
-                                            в редакторе курса.</p>
-                                        <p th:unless="${course.shortDescription.isEmpty()}"
-                                           th:text="${course.shortDescription}"></p>
+                                        <label for="shortDescription" class="form-label">Название курса</label>
+                                        <br>
+                                        <span th:text="${shortDescriptionError}"></span>
+                                        <textarea type="text" class="form-control" rows="5"
+                                                  th:field="${course.shortDescription}"
+                                                  id="shortDescription"
+                                                  aria-describedby="emailHelp1"
+                                                  th:classappend="${shortDescriptionError} ? is-invalid : ''"></textarea>
+                                        <div id="emailHelp1" class="form-text">Минимум 3 символа</div>
+
                                         <hr>
-                                        <h6>Язык - </h6>
-                                        <p text-muted th:if="${course.language==null}">Поле не заполнено. Пожалуйста,
-                                            заполните его
-                                            в редакторе курса.</p>
-                                        <p th:unless="${course.language==null}"
-                                           th:text="${course.language.translation}"></p>
+                                        <h6>Язык</h6>
+                                        <select name="language" class="form-select form-select-sm"
+                                                aria-label=".form-select-sm example">
+                                            <option th:if="${course.language==null}" disabled selected>Выберите язык
+                                            </option>
+                                            <th:block th:if="${course.language==null}">
+                                                <option th:each="lang:${languages}" th:value="${lang.key}"
+                                                        th:text="${lang.value}"></option>
+                                            </th:block>
+                                            <th:block th:if="${course.language!=null}">
+                                                <option th:each="lang:${languages}"
+                                                        th:selected="${course.language.name().equals(lang.key)}"
+                                                        th:value="${lang.key}" th:text="${lang.value}"></option>
+                                            </th:block>
+                                        </select>
+
+
+
                                     </div>
-                                    <form class="login-form"
-                                          th:action="@{/teach/courses/{courseId}/update(courseId=${course.courseId})}"
-                                          th:object="${course}" th:method="post">
-                                        <div class="mb-3">
-                                            <label for="summernote" class="form-label">Название курса</label>
-                                            <span th:text="${nameCourseError}"></span>
-                                            <textarea type="text" class="form-control" th:field="${course.nameCourse}"
-                                                   id="summernote"
-                                                   aria-describedby="emailHelp1"
-                                                      th:classappend="${nameCourseError} ? is-invalid : ''"></textarea>
-                                            <div id="emailHelp1" class="form-text">Минимум 3 символа</div>
+                                    <div class="mb-3">
+                                        <div class="p-3 mt-1 bg-light border rounded-3">
+                                            <h6>Целевая аудитория</h6>
+                                            <span th:text="${theTargetAudienceError}"></span>
+                                            <textarea type="text" class="form-control" rows="2"
+                                                      th:field="*{theTargetAudience}"
+                                                      placeholder="Целевая аудитория"
+                                                      th:classappend="${theTargetAudienceError} ? is-invalid : ''"></textarea>
+
                                         </div>
-                                        <button>Сохранить</button>
-                                    </form>
+                                    </div>
+                                    <div class="mt-5 text-center">
+                                        <button class="btn btn-primary profile-button" type="submit">Сохранить</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-8 align-items-md-stretch mt-3">
-                            <div class="p-3 bg-light border rounded-3">
-                                <h6>Преподаватель </h6>
-                                <a href="/user/profile"><p th:text="${teacher.firstname}">
-                                    <!--                                    <p th:if="${teacher.lastname!=null}" th:text="${teacher.lastname}"></p>-->
-                                </a>
-                            </div>
-                        </div>
                     </div>
-
-
                 </div>
-            </div>
+<!--            </form>-->
         </div>
-
-
     </div>
 </div>
-</div>
+
 
 <script>
-    // $(document).ready(function() {
-    //     $('#summernote').summernote();
-    // });
+    ClassicEditor.create(document.querySelector('#description'))
+        .catch(error => {
+            console.error(error);
+        })
+    ;
+    ClassicEditor.create(document.querySelector('#shortDescription'))
+        .catch(error => {
+            console.error(error);
+        })
+    ;
 </script>
 <div th:replace="/include/_footer :: footer"></div>
 </body>
