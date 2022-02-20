@@ -33,6 +33,7 @@ public class CourseService {
     }
 
     public List<Course> getTeacherListCourse(Long userId, Pageable pageable) {
+        log.info(String.format("Request Teacher list Course by id %s", userId));
         return courseRepository.findAllByTeacherId(userId, pageable).orElseThrow(() -> new RuntimeException(String.format("Course by status %s null", userId)));
     }
 
@@ -85,13 +86,14 @@ public class CourseService {
         return null;
     }
 
-    public Course addComment(Course course, Comment comment){
-        log.info(String.format("Request Add comment %s in course %s", comment,course));
+    public Course addComment(Course course, Comment comment) {
+        log.info(String.format("Request Add comment %s in course %s", comment, course));
         course.getComments().add(comment);
-       return courseRepository.save(course);
+        return courseRepository.save(course);
     }
 
     public Page<Course> findAllByNameCourseLike(String search, Pageable pageable) {
-        return courseRepository.findAllByNameCourseContains(search,pageable);
+        log.info(String.format("Request find course by search %s", search));
+        return courseRepository.findAllByNameCourseContains(search, pageable);
     }
 }

@@ -67,15 +67,23 @@
                 </li>
                 <hr>
                 <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle"
-                       id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="rounded-circle me-2 bi bi-person"></i>
-                        <th:block th:if="${teacher.firstname!=null}">
-                            <strong th:text="${teacher.firstname+' '}"></strong></th:block>
+                    <a th:if="${session.user.filename==null}" class="d-block link-dark text-decoration-none dropdown-toggle"
+                       href="#" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img width="50px"
+                             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                        <th:block th:if="${session.user.firstname!=null}">
+                            <strong th:text="${session.user.firstname+' '}"></strong></th:block>
+                    </a>
+                    <a th:if="${session.user.filename!=null}" class="d-block link-dark text-decoration-none dropdown-toggle"
+                       href="#" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="rounded-circle" width="40px" th:src="${'/img/'+session.user.filename}"
+                             th:alt="${session.user.firstname}">
+                        <th:block th:if="${session.user.firstname!=null}">
+                            <strong th:text="${session.user.firstname+' '}"></strong></th:block>
                     </a>
                     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
                         <li><a class="dropdown-item" href="#">Настройки</a></li>
-                        <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
+                        <li><a class="dropdown-item" th:href="@{/user/profile(userId=${session.user.userId})}">Профиль</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
