@@ -10,5 +10,10 @@
       "name": "upload.path",
       "type": "java.lang.String",
       "description": "Description for upload.path."
+    },
+    {
+      "name": "upload.path",
+      "type": "java.lang.String",
+      "description": "Description for upload.path."
     }
   ] }
