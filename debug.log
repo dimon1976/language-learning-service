@@ -6499,3 +6499,41 @@ Database is already closed (to disable automatic closing at VM shutdown, add ";D
 2022-02-20 12:40:44.594  INFO 17584 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2022-02-20 12:40:46.690  INFO 17584 --- [http-nio-8080-exec-2] b.l.service.CourseService                : Request find all Course 
 2022-02-20 12:40:49.102  INFO 17584 --- [http-nio-8080-exec-8] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:42:59.420  INFO 17584 --- [http-nio-8080-exec-8] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:43:28.354  INFO 17584 --- [http-nio-8080-exec-6] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:43:32.595  INFO 17584 --- [http-nio-8080-exec-9] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:43:49.626  INFO 17584 --- [http-nio-8080-exec-5] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:43:50.339  INFO 17584 --- [http-nio-8080-exec-2] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:44:07.671  INFO 17584 --- [http-nio-8080-exec-10] b.l.service.UserService                  : Request User findById 8 exist
+2022-02-20 12:44:20.414  INFO 17584 --- [http-nio-8080-exec-3] b.l.service.CourseService                : Request findAllByNameCourseLike Course name Китайский 
+2022-02-20 12:44:28.259  INFO 17584 --- [http-nio-8080-exec-9] b.l.service.CourseService                : Request findAllByNameCourseLike Course name Испанский 
+2022-02-20 12:44:30.178  INFO 17584 --- [http-nio-8080-exec-10] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:44:36.685  INFO 17584 --- [http-nio-8080-exec-6] b.l.service.CourseService                : Request findAllByNameCourseLike Course name Испанский 
+2022-02-20 12:44:40.233  INFO 17584 --- [http-nio-8080-exec-2] b.l.service.UserService                  : Request User findById 8 exist
+2022-02-20 12:44:45.104  INFO 17584 --- [http-nio-8080-exec-7] b.l.service.CourseService                : Request findAllByNameCourseLike Course name Испанский 
+2022-02-20 12:45:02.163  INFO 17584 --- [http-nio-8080-exec-5] b.l.service.CourseService                : Request find all Course 
+2022-02-20 12:45:13.344  INFO 17584 --- [http-nio-8080-exec-2] b.l.service.CourseService                : Request findAllByNameCourseLike Course name Англ 
+2022-02-20 13:11:42.644  INFO 17584 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-20 13:11:42.885  WARN 17584 --- [SpringApplicationShutdownHook] o.s.b.f.support.DisposableBeanAdapter    : Invocation of destroy method failed on bean with name 'inMemoryDatabaseShutdownExecutor': org.h2.jdbc.JdbcSQLNonTransientConnectionException: База данных уже закрыта (чтобы отключить автоматическое закрытие базы данных при останове JVM, добавьте ";DB_CLOSE_ON_EXIT=FALSE" в URL)
+Database is already closed (to disable automatic closing at VM shutdown, add ";DB_CLOSE_ON_EXIT=FALSE" to the db URL) [90121-200]
+2022-02-20 13:11:42.885  INFO 17584 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2022-02-20 13:11:42.942  INFO 17584 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2022-02-20 13:23:13.457  INFO 3184 --- [main] .LanguageLearningServiceApplicationTests : Starting LanguageLearningServiceApplicationTests using Java 11.0.13 on Dimon-notebook with PID 3184 (started by dima2 in D:\project\language-learning-service)
+2022-02-20 13:23:13.461  INFO 3184 --- [main] .LanguageLearningServiceApplicationTests : No active profile set, falling back to default profiles: default
+2022-02-20 13:23:14.286  INFO 3184 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-02-20 13:23:14.374  INFO 3184 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 6 JPA repository interfaces.
+2022-02-20 13:23:15.159  INFO 3184 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-02-20 13:23:15.235  INFO 3184 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.4.Final
+2022-02-20 13:23:15.454  INFO 3184 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-02-20 13:23:15.948  INFO 3184 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-02-20 13:23:16.264  INFO 3184 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-02-20 13:23:16.328  INFO 3184 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2022-02-20 13:23:17.613  INFO 3184 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-02-20 13:23:17.628  INFO 3184 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-02-20 13:23:18.891  WARN 3184 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-02-20 13:23:19.284  INFO 3184 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/bd'. Database available at 'jdbc:h2:mem:db'
+2022-02-20 13:23:19.405  INFO 3184 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2022-02-20 13:23:19.946  INFO 3184 --- [main] .LanguageLearningServiceApplicationTests : Started LanguageLearningServiceApplicationTests in 6.885 seconds (JVM running for 8.695)
+2022-02-20 13:23:20.225  INFO 3184 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-02-20 13:23:20.239  INFO 3184 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-02-20 13:23:20.256  INFO 3184 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
