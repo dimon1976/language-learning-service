@@ -239,11 +239,17 @@
                             <div class="col-md-12" th:each="user:${userList}">
                                 <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div class="col-auto d-none d-lg-block">
-                                        <a th:if="${user.filename==null}" class="d-block link-dark text-decoration-none"
-                                           th:href="@{/user/profile(userId=${user.userId})}">
-                                            <img width="200px" height="250"
-                                                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                                        </a>
+<!--                                        <a th:if="${user.filename==null}" class="d-block link-dark text-decoration-none"-->
+<!--                                           th:href="@{/user/profile(userId=${user.userId})}">-->
+<!--                                            <img width="200px" height="250"-->
+<!--                                                 src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">-->
+<!--                                        </a>-->
+                                        <img th:if="${user.filename==null}" class="rounded-circle mt-5" width="150px" height="200"
+                                             src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+
+                                        <img th:if="${user.filename!=null}" class="rounded-circle mt-5" width="150px" height="200"
+                                             th:src="${'/img/'+user.filename}" th:alt="${'Photo -'+user.firstname}">
+
                                     </div>
                                     <div class="col p-2 d-flex flex-column position-static">
                                         <p>Говорит на - <strong class="text-primary"
@@ -257,14 +263,14 @@
                                         </th:block>
                                         <div class="mb-1 text-muted"
                                              th:text="${{user.dateCreating.toLocalDate()}}"></div>
-                                        <p class="card-text mb-auto" th:text="${user.shortDescription}"></p>
+                                        <p class="card-text mb-auto" th:utext="${user.shortDescription}"></p>
                                         <hr>
                                         <span class="py-1 my-1">
                                 <ul class="nav justify-content-start border-bottom pb-3 mb-3">
-                                    <li class="nav-item p-1"><a th:href="@{/user/profile(userId=${user.userId})}"
+                                    <li class="nav-item p-1"><a th:href="@{/user/info(userId=${user.userId})}"
                                                                 class="btn btn-outline-primary btn-sm">Подробнее</a></li>
                                     <li class="nav-item p-1"><a
-                                            th:href="@{/social/invite(userId=${user.userId},requestInvite='REQUEST')}"
+                                            th:href="@{/social/info(userId=${user.userId},requestInvite='REQUEST')}"
                                             class="btn btn-outline-primary btn-sm">Добавить в друзья</a></li>
                                 </ul>
                             </span>

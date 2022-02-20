@@ -91,4 +91,7 @@ public class CourseService {
        return courseRepository.save(course);
     }
 
+    public Page<Course> findAllByNameCourseLike(String search, Pageable pageable) {
+        return courseRepository.findAllByNameCourseContains(search,pageable);
+    }
 }

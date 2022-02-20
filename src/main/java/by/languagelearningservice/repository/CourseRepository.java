@@ -2,6 +2,7 @@ package by.languagelearningservice.repository;
 
 import by.languagelearningservice.entity.courses.Course;
 import by.languagelearningservice.entity.courses.CourseStatus;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseRepository extends PagingAndSortingRepository<Course, Long> {
+
+    Page<Course> findAllByNameCourseContains(String search,Pageable pageable);
 
     Optional<List<Course>> findAllByTeacherId(Long teacherId, Pageable pageable);
 
