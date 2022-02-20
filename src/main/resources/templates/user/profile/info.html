@@ -59,13 +59,13 @@
                 <br>
                 <div class="col-md-12">
                     <label class="labels">Обо мне</label>
-                    <p th:text="${userInfo.description==null} ? '-': *{userInfo.description}"></p>
+                    <p th:utext="${userInfo.description==null} ? '-': *{userInfo.description}"></p>
 
                 </div>
                 <br>
                 <div class="col-md-12">
                     <label class="labels">Биография</label>
-                    <p th:text="${userInfo.shortDescription==null} ? '-' : *{userInfo.shortDescription}" ></p>
+                    <p th:utext="${userInfo.shortDescription==null} ? '-' : *{userInfo.shortDescription}" ></p>
                 </div>
             </div>
         </div>
